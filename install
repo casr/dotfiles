@@ -2,9 +2,11 @@
 
 export LN='ln -Fish'
 
-# git submodule update --init
 
 for conf in `ls -d *-conf`
 do
+    pushd $conf >/dev/null
+    git submodule update --init --recursive
+    popd >/dev/null
     sh $conf/install.sh
 done
