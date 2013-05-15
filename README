@@ -1,6 +1,8 @@
 dotfiles-vim
 ============
 
+Configuration files for vim.
+
 Run:
 
   git submodule --init
