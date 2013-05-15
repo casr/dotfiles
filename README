@@ -9,4 +9,13 @@ Simple staging for dotfiles
 
 Submodules are encouraged and will be updated as part of the `install` script.
 
-See https://github.com/casr/dotfiles-vim for an example.
+Example usage:
+
+  % cd Source
+  % git clone https://github.com/casr/dotfiles.git
+  % cd dotfiles
+  % git clone https://github.com/casr/dotfiles-vim.git vim-conf
+  % ./install
+  replace /Users/casr/.vim? y
+  replace /Users/casr/.vimrc? y
+  # Done.
