@@ -7,9 +7,11 @@ Simple staging for dotfiles
      b) Use a *-conf/install.sh file to instruct symlink locations.
   3. Run ./install
 
-Submodules are encouraged and will be updated as part of the `install` script.
+Git Submodules are encouraged and will be updated as part of the `install` script.
 
-Example usage:
+
+Example usage
+-------------
 
   % cd Source
   % git clone https://github.com/casr/dotfiles.git
@@ -19,3 +21,15 @@ Example usage:
   replace /Users/casr/.vim? y
   replace /Users/casr/.vimrc? y
   # Done.
+
+
+Example install.sh
+------------------
+
+  LN=${LN:-ln -sh}              # Default link command
+
+  BASEDIR=$(pwd)/$(dirname $0)  # Link to the right place
+  BASEDIR=${BASEDIR#$HOME/}     # Saner links
+
+  ${LN} $BASEDIR/vim   $HOME/.vim
+  ${LN} $BASEDIR/vimrc $HOME/.vimrc
