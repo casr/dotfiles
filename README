@@ -8,6 +8,11 @@ Run:
   sh install.sh
 
 to setup symlinks in the home directory to from where ever the script is run.
+Remember to add in any user specific info like:
+
+  git config --global user.name  'John Smith'
+  git config --global user.email 'jsmith@example.com'
+
 
 Alternatively, you can use [https://github.com/casr/dotfiles] to batch up a few
 dot file creations.
