@@ -17,9 +17,11 @@ Example usage
   % git clone https://github.com/casr/dotfiles.git
   % cd dotfiles
   % git clone https://github.com/casr/dotfiles-vim.git vim-conf
+  % git clone https://github.com/casr/dotfiles-zsh.git zsh-conf
   % ./install
   replace /Users/casr/.vim? y
   replace /Users/casr/.vimrc? y
+  replace /Users/casr/.zshenv? n
   # Done.
 
 
