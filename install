@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+export LN='ln -Fish'
+
+# git submodule update --init
+
+for conf in `ls -d *-conf`
+do
+    sh $conf/install.sh
+done

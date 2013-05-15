@@ -1,0 +1,12 @@
+Simple staging for dotfiles
+===========================
+
+  1. Clone in the dot files for your favourite programmes.
+  2. Convention:
+     a) Adhere to a *-conf/ directory structure.
+     b) Use a *-conf/install.sh file to instruct symlink locations.
+  3. Run ./install
+
+Submodules are encouraged and will be updated as part of the `install` script.
+
+See https://github.com/casr/dotfiles-vim for an example.
