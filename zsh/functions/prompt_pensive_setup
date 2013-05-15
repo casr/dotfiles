@@ -1,0 +1,29 @@
+prompt_pensive_help () {
+  cat <<'EOF'
+You can invoke this theme with:
+
+  prompt pensive
+EOF
+}
+
+prompt_pensive_setup () {
+
+if [[ "$TERM" != "dumb" ]]; then
+    local RCODE="%{$fg_bold[red]%}%(?..%?%{$fg_no_bold[blue]%}:)"
+    local TIME="%{$fg_bold[yellow]%}%D{%H:%M}%{$fg_no_bold[blue]%}:"
+    local PRIV="%{$fg_no_bold[green]%}%#%{$reset_color%} "
+
+    if [[ "$SSH_TTY" == "$(tty)" ]]; then
+        local MACH="%{$fg_no_bold[magenta]%}%m%{$fg_no_bold[blue]%}:"
+        export PROMPT="$RCODE$TIME$MACH$PRIV"
+    else
+        export PROMPT="$RCODE$TIME$PRIV"
+    fi
+    export RPROMPT="%{$fg_no_bold[${1:-green}]%}%~%{$reset_color%}"
+else
+    export PROMPT="%(?..[%?] )%n@%m:%~> "
+fi
+
+}
+
+prompt_pensive_setup "$@"
