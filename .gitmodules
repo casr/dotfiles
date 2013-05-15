@@ -1,0 +1,3 @@
+[submodule "vim/bundle/noctu"]
+	path = vim/bundle/noctu
+	url = https://github.com/noahfrederick/vim-noctu.git
