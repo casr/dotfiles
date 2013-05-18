@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-export LN='ln -Fish'
+export LN='ln -Fins'
 
 
 for conf in `ls -d *-conf`
