@@ -157,6 +157,8 @@ if has("gui_running")
     set guioptions-=T
 endif
 
+set shortmess+=I
+
 " }}}
 
 " Shortcut mappings {{{
