@@ -161,6 +161,8 @@ set shortmess+=I
 
 " }}}
 
+runtime macros/matchit.vim
+
 " Shortcut mappings {{{
 
 " Clears the search register
