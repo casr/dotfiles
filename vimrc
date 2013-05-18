@@ -142,10 +142,11 @@ endfunction
 " Highlighting {{{
 
 if &t_Co > 2 || has("gui_running")
-   colorscheme noctu
-   set background=light
     syntax on                    " switch syntax highlighting on, when the
                                  "   terminal has colors
+    set t_Co=16
+    set background=dark
+    colorscheme desert
 endif
 
 " if &t_Co >= 256 || has("gui_running")
