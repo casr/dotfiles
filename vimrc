@@ -49,12 +49,16 @@ set nolist                      " don't show invisible characters by default,
 set pastetoggle=<F2>            " when in insert mode, press <F2> to go to
                                 "   paste mode, where you can paste mass
                                 "   data that won't be autoindented
-set mouse=a                     " enable using the mouse if terminal emulator
+if exists("&mouse")
+  set mouse=a                   " enable using the mouse if terminal emulator
+endif
                                 "   supports it (xterm does)
 set fileformats="unix,dos,mac"
 set formatoptions+=1            " When wrapping paragraphs, don't end lines
                                 "   with 1-letter words (looks stupid)
-set colorcolumn=80              " Show right margin
+if exists("&colorcolumn")
+  set colorcolumn=+1            " Show right margin
+endif
 
 " Thanks to Steve Losh for this liberating tip
 " See http://stevelosh.com/blog/2010/09/coming-home-to-vim
