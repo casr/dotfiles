@@ -1,9 +1,9 @@
 [alias]
-    st = status
-    co = checkout
+	st = status
+	co = checkout
 [color]
 	ui = true
 [push]
-    default = simple
+	default = simple
 [core]
 	excludesfile = ~/.gitignore_global
