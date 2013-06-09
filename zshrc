@@ -1,3 +1,8 @@
+# Mac Aliases
+alias vu='osascript -e "set volume output volume (output volume of (get volume settings) + 7)"'
+alias vd='osascript -e "set volume output volume (output volume of (get volume settings) - 7)"'
+alias mute='osascript -e "set volume output muted not (output muted of (get volume settings))"'
+
 # Aliases
 alias mv='mv -i'
 alias cp='cp -i'
