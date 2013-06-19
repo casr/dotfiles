@@ -19,3 +19,6 @@
 [submodule "vim/bundle/javascript"]
 	path = vim/bundle/javascript
 	url = https://github.com/pangloss/vim-javascript.git
+[submodule "vim/bundle/sass"]
+	path = vim/bundle/sass
+	url = https://github.com/tpope/vim-haml.git
