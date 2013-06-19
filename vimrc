@@ -125,8 +125,8 @@ let g:ctrlp_map = '<leader>p'
 " Copy everything to the * register (clipboard)
 map <leader>c :%y*<CR>
 
-" Quick make.
-nmap <silent> <leader>m :make<CR>
+" Quick dispatch make.
+nmap <silent> <leader>m :Dispatch<CR>
 
 " Tame the quickfix window (open/close using ,f)
 nmap <silent> <leader>f :QFix<CR>
