@@ -7,7 +7,8 @@ Simple staging for dotfiles
      b) Use a *-conf/install.sh file to instruct symlink locations.
   3. Run ./install
 
-Git Submodules are encouraged and will be updated as part of the `install` script.
+Git Submodules are encouraged and will be updated as part of the
+`install` script.
 
 
 Example usage
