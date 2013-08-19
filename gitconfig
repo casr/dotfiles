@@ -1,6 +1,7 @@
 [alias]
 	st = status
 	co = checkout
+	serve = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
 [color]
 	ui = true
 [push]
