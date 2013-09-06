@@ -148,14 +148,8 @@ endfunction
 if &t_Co > 2 || has("gui_running")
     syntax on                    " switch syntax highlighting on, when the
                                  "   terminal has colors
-    set t_Co=16
-    set background=dark
-    colorscheme desert
+    set background=light
 endif
-
-" if &t_Co >= 256 || has("gui_running")
-"     colorscheme github
-" endif
 
 if has("gui_running")
     set guioptions-=T
