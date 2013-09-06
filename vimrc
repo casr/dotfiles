@@ -126,7 +126,7 @@ let g:ctrlp_map = '<leader>p'
 map <leader>c :%y*<CR>
 
 " Quick dispatch make.
-nmap <silent> <leader>m :Dispatch<CR>
+nmap <silent> <leader>m :Make!<CR>
 
 " Tame the quickfix window (open/close using ,f)
 nmap <silent> <leader>f :QFix<CR>
