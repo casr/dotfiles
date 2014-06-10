@@ -68,6 +68,8 @@ vnoremap / /\v
 " Speed up scrolling of the viewport slightly
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
+
+let g:syntastic_mode_map = {'passive_filetypes': ['html']}
 " }}}
 
 " Editor layout {{{
