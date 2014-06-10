@@ -180,4 +180,6 @@ if has("autocmd")
       \ if line("'\"") > 0 && line ("'\"") <= line("$") |
       \   exe "normal! g'\"" |
       \ endif
+
+    autocmd BufNewFile,BufRead */README setf markdown
 endif
