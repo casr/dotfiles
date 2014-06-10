@@ -112,8 +112,6 @@ set wildmode=longest:full,full  " show a list when pressing tab and complete
                                 "   first full match
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set title                       " change the terminal's title
-"set visualbell                  " don't beep
-"set noerrorbells                " don't beep
 set ruler                       " show the col, line info
 set showcmd                     " show (partial) command in the last line of
                                 "   the screen this also shows visual
