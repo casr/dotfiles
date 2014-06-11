@@ -65,7 +65,13 @@ endif
 set wildmode=list:longest,full
 
 if !exists('g:colors_name')
-  silent! colorscheme default
+  "set background=dark
+
+  if (&background == 'light')
+    silent! colorscheme base16-google
+  else
+    silent! colorscheme base16-tomorrow
+  endif
 endif
 
 " }}}
