@@ -59,7 +59,7 @@ if exists('+undofile')
 endif
 
 if exists('+colorcolumn')
-  set colorcolumn=+1
+  set colorcolumn=+1,79
 endif
 
 set wildmode=list:longest,full
