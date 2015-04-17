@@ -48,6 +48,8 @@ set smartcase
 
 set shortmess+=I
 
+set hidden
+
 call EnsureDirExists($HOME . '/.vim/.swap')
 set directory=$HOME/.vim/.swap,/tmp
 
