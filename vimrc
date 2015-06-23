@@ -72,7 +72,7 @@ if !exists('g:colors_name')
   if (&background == 'light')
     silent! colorscheme base16-google
   else
-    silent! colorscheme base16-tomorrow
+    silent! colorscheme lucius
   endif
 endif
 

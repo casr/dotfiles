@@ -28,3 +28,6 @@
 [submodule "vim/bundle/mustache-handlebars"]
 	path = vim/bundle/mustache-handlebars
 	url = https://github.com/mustache/vim-mustache-handlebars.git
+[submodule "vim/bundle/lucius"]
+	path = vim/bundle/lucius
+	url = https://github.com/jonathanfilip/vim-lucius.git
