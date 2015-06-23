@@ -97,6 +97,12 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 " Plugin options {{{
 
 let g:ctrlp_map='<leader>p'
+let g:ctrlp_user_command = {
+    \ 'types': {
+        \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+        \ },
+    \ 'fallback': 'find %s -type f'
+    \ }
 let g:netrw_list_hide='\.DS_Store$'
 let g:syntastic_mode_map = {'passive_filetypes': ['html']}
 
