@@ -31,3 +31,6 @@
 [submodule "vim/bundle/lucius"]
 	path = vim/bundle/lucius
 	url = https://github.com/jonathanfilip/vim-lucius.git
+[submodule "vim/bundle/better-whitespace"]
+	path = vim/bundle/better-whitespace
+	url = https://github.com/ntpeters/vim-better-whitespace
