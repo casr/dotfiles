@@ -85,8 +85,10 @@ let mapleader=','
 set pastetoggle=<F2>
 nnoremap / /\v
 vnoremap / /\v
-map <leader>c :%y*<CR>      " Copy file to system clipboard
-nmap <silent> <leader>l 0v$h"*y       " Copy line to system clipboard
+" Copy file to system clipboard
+map <leader>c :%y*<CR>
+" Copy line to system clipboard
+nmap <silent> <leader>l 0v$h"*y
 nmap <silent> <leader>m :Make!<CR>
 nmap <silent> <leader>f :QFix<CR>
 nmap <silent> <leader>/ :nohlsearch<CR>
