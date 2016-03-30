@@ -1,3 +1,10 @@
+if command -v npm >/dev/null 2>&1; then
+  path=($(npm -g bin 2>/dev/null) $path)
+fi
+if command -v python >/dev/null 2>&1; then
+  path=($(python -c "from distutils.sysconfig import PREFIX; print(PREFIX+'/bin')") $path)
+fi
+
 # Mac Aliases
 alias vu='osascript -e "set volume output volume (output volume of (get volume settings) + 7)"'
 alias vd='osascript -e "set volume output volume (output volume of (get volume settings) - 7)"'
