@@ -50,7 +50,7 @@ autoload -U compinit colors promptinit
 compinit -C
 colors
 promptinit
-prompt pensive
+prompt pure
 
 export FZF_DEFAULT_COMMAND='
     ( git ls-files . --cached --others --exclude-standard ||
