@@ -51,3 +51,10 @@ compinit -C
 colors
 promptinit
 prompt pensive
+
+export FZF_DEFAULT_COMMAND='
+    ( git ls-files . --cached --others --exclude-standard ||
+      find . -type f -print -o -type l -print ) 2>/dev/null'
+export FZF_CTRL_T_COMMAND='locate ${PWD}'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
