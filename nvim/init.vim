@@ -54,6 +54,7 @@ let g:pencil_gutter_color = 1
 
 " vim-airline/vim-airline {{{
 let g:airline_theme = 'lucius'
+let g:airline_powerline_fonts = 1
 " }}}
 "
 " mhinz/vim-signify {{{
