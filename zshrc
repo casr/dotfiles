@@ -21,6 +21,7 @@ alias l.='ls -d .[^.]*'
 alias cd..='cd ../'
 alias st='git status'
 alias d='git diff'
+alias view='tmux split-window -h -l 84 nvim -R -u ~/.config/nvim/readonly.vim'
 
 # Case insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
