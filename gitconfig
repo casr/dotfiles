@@ -9,6 +9,7 @@
 	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
 	branchdate = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' refs/heads
 	alias = config --get-regexp ^alias\\.
+	plog = log --oneline --graph
 [color]
 	ui = true
 [push]
