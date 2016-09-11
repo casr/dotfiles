@@ -117,4 +117,8 @@ map <leader>c :%y*<CR>
 
 " Copy line to system clipboard
 nmap <silent> <leader>l 0v$h"*y
+
+" Work around being in a Python virtualenv
+let g:python_host_prog='/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/python'
+
 " }}}
