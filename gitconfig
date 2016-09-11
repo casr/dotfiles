@@ -7,6 +7,7 @@
 	bl = branch --list
 	files = "!f() { git diff --name-status $(git merge-base HEAD $1) HEAD; }; f"
 	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
+	branchdate = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' refs/heads
 [color]
 	ui = true
 [push]
