@@ -96,6 +96,7 @@ set colorcolumn=+1,79
 
 set background=dark
 colorscheme lucius
+LuciusDarkHighContrast
 " }}}
 
 " Miscelaneous {{{
