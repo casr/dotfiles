@@ -3,8 +3,6 @@ set nocompatible
 " Plugins {{{
 call plug#begin()
 
-"Plug 'Shougo/deoplete.nvim'
-"Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 Plug 'Valloric/YouCompleteMe', {'do': './install.py --tern-completer'}
 Plug 'benekastah/neomake'
 Plug 'digitaltoad/vim-pug'
