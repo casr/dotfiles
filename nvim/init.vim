@@ -8,8 +8,8 @@ Plug 'benekastah/neomake'
 Plug 'digitaltoad/vim-pug'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-signify'
-Plug 'mileszs/ack.vim'
 Plug 'moll/vim-node'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'reedes/vim-colors-pencil'
@@ -29,15 +29,6 @@ call plug#end()
 
 " Valloric/YouCompleteMe {{{
 let g:ycm_autoclose_preview_window_after_completion = 1
-" }}}
-
-" mileszs/ack.vim {{{
-call system('git rev-parse --is-inside-work-tree >/dev/null 2>&1')
-if v:shell_error
-  let g:ackprg = 'ag -u --vimgrep'
-else
-  let g:ackprg = 'git grep -n --untracked'
-endif
 " }}}
 
 " reedes/vim-pencil {{{
@@ -108,8 +99,8 @@ set wildmode=list:longest,full
 let mapleader=','
 set pastetoggle=<F2>
 nmap <silent> <leader>f :QFix<CR>
-nmap <silent> <leader>p :FZF<CR>
-nnoremap <leader>s :Ack<space>
+nmap <silent> <leader>p :Files<CR>
+nnoremap <leader>s :Ag<CR>
 
 " Copy file to system clipboard
 map <leader>c :%y*<CR>

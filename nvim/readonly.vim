@@ -5,19 +5,10 @@ call plug#begin()
 
 Plug 'jonathanfilip/vim-lucius'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'mileszs/ack.vim'
+Plug 'junegunn/fzf.vim'
 Plug 'reedes/vim-pencil'
 
 call plug#end()
-" }}}
-
-" mileszs/ack.vim {{{
-call system('git rev-parse --is-inside-work-tree >/dev/null 2>&1')
-if v:shell_error
-  let g:ackprg = 'ag -u --vimgrep'
-else
-  let g:ackprg = 'git grep -n --untracked'
-endif
 " }}}
 
 " reedes/vim-pencil {{{
@@ -67,8 +58,9 @@ set shortmess+=I
 set wildmode=list:longest,full
 
 let mapleader=','
-nmap <silent> <leader>p :FZF<CR>
-nnoremap <leader>s :Ack<space>
+nmap <silent> <leader>f :QFix<CR>
+nmap <silent> <leader>p :Files<CR>
+nnoremap <leader>s :Ag<CR>
 
 " Copy file to system clipboard
 map <leader>c :%y*<CR>
