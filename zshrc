@@ -58,5 +58,6 @@ export FZF_DEFAULT_COMMAND='
     ( git ls-files . --cached --others --exclude-standard ||
       find . -type f -print -o -type l -print ) 2>/dev/null'
 export FZF_CTRL_T_COMMAND='locate ${PWD}'
+export FZF_CTRL_R_OPTS='--sort'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
