@@ -4,7 +4,6 @@ set nocompatible
 call plug#begin()
 
 Plug 'Valloric/YouCompleteMe', {'do': './install.py --tern-completer'}
-Plug 'benekastah/neomake'
 Plug 'digitaltoad/vim-pug'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -24,6 +23,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'w0rp/ale'
 
 call plug#end()
 " }}}
@@ -46,10 +46,15 @@ let g:pencil_gutter_color = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_theme = 'lucius'
 let g:airline_powerline_fonts = 1
+let g:airline_section_error = '%{ALEGetStatusLine()}'
 " }}}
 "
 " mhinz/vim-signify {{{
 let g:signify_vcs_list = [ 'git', 'hg', 'svn' ]
+" }}}
+
+" w0rp/ale {{{
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
 " }}}
 
 " Helper functions {{{
