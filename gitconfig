@@ -1,6 +1,5 @@
 [alias]
 	st = status
-	co = checkout
 	serve = "!f() { echo 'git clone git://[ip]/ project'; echo 'Slash is important!'; git daemon --reuseaddr --verbose --base-path=. --export-all ./.git; }; f"
 	prlog = log --reverse develop..HEAD
 	blr = branch -r --list
