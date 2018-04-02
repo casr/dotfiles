@@ -1,6 +1,5 @@
 [alias]
 	st = status
-	serve = "!f() { echo 'git clone git://[ip]/ project'; echo 'Slash is important!'; git daemon --reuseaddr --verbose --base-path=. --export-all ./.git; }; f"
 	prlog = log --reverse develop..HEAD
 	bl = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' --no-merged origin/master refs/heads
 	blr = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' --no-merged origin/master refs/remotes/origin
