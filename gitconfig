@@ -2,11 +2,10 @@
 	st = status
 	serve = "!f() { echo 'git clone git://[ip]/ project'; echo 'Slash is important!'; git daemon --reuseaddr --verbose --base-path=. --export-all ./.git; }; f"
 	prlog = log --reverse develop..HEAD
-	blr = branch -r --list
-	bl = branch --list
+	bl = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' --no-merged origin/master refs/heads
+	blr = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' --no-merged origin/master refs/remotes/origin
 	files = "!f() { git diff --name-status $(git merge-base HEAD $1) HEAD; }; f"
 	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
-	branchdate = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' refs/heads
 	alias = config --get-regexp ^alias\\.
 	plog = log --oneline --graph
 [color]
