@@ -27,8 +27,8 @@ check_backup() {
 
 check_backup $HOME/.zsh && $LN $BASEDIR/zsh $HOME/.zsh
 check_backup $HOME/.zshrc && {
-  printf -- "source $BASEDIR/zshrc\n" >$HOME/.zshrc
+  printf -- "source \"\${HOME}/$BASEDIR/zshrc\"\n" >$HOME/.zshrc
 }
 check_backup $HOME/.zshenv && {
-  printf -- "source $BASEDIR/zshenv\n" >$HOME/.zshenv
+  printf -- "source \"\${HOME}/$BASEDIR/zshenv\"\n" >$HOME/.zshenv
 }
