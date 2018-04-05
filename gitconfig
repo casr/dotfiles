@@ -1,8 +1,8 @@
 [alias]
 	st = status
-	prlog = log --reverse develop..HEAD
 	bl = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' --no-merged origin/master refs/heads
 	blr = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' --no-merged origin/master refs/remotes/origin
+	prlog = "!f() { git log --decorate=no --oneline --reverse $(git merge-base HEAD $1)..HEAD; }; f"
 	files = "!f() { git diff --name-status $(git merge-base HEAD $1) HEAD; }; f"
 	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
 	alias = config --get-regexp ^alias\\.
