@@ -7,6 +7,7 @@
 	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
 	alias = config --get-regexp ^alias\\.
 	plog = log --oneline --graph
+	rmerged = for-each-ref --format='%(refname:strip=3)' --merged origin/master refs/remotes/origin
 [color]
 	ui = true
 [push]
