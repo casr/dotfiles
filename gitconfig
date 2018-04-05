@@ -11,7 +11,7 @@
 [color]
 	ui = true
 [push]
-	default = simple
+	default = current
 [core]
 	excludesfile = ~/.gitignore_global
 [merge]
