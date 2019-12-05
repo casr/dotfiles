@@ -50,14 +50,14 @@ set shortmess+=I
 
 set hidden
 
-call EnsureDirExists($HOME . '/.vim/.swap')
-set directory=$HOME/.vim/.swap,/tmp
+call EnsureDirExists($HOME . '/.vim/swap')
+set directory=$HOME/.vim/swap,/tmp
 
 if exists('+undofile')
   set undofile
 
-  call EnsureDirExists($HOME . '/.vim/.undo')
-  set undodir=$HOME/.vim/.undo,/tmp
+  call EnsureDirExists($HOME . '/.vim/undo')
+  set undodir=$HOME/.vim/undo,/tmp
 endif
 
 if exists('+colorcolumn')
