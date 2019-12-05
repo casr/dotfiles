@@ -12,8 +12,6 @@
 	ui = true
 [push]
 	default = current
-[core]
-	excludesfile = ~/.gitignore_global
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
