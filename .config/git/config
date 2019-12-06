@@ -1,0 +1,26 @@
+[alias]
+	st = status
+	bl = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' --no-merged origin/master refs/heads
+	blr = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=40)%(refname:short)%(end)%(committerdate:relative)' --no-merged origin/master refs/remotes/origin
+	prlog = "!f() { git log --decorate=no --oneline --reverse $(git merge-base HEAD $1)..HEAD; }; f"
+	files = "!f() { git diff --name-status $(git merge-base HEAD $1) HEAD; }; f"
+	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
+	alias = config --get-regexp ^alias\\.
+	plog = log --oneline --graph
+	rmerged = for-each-ref --format='%(refname:strip=3)' --merged origin/master refs/remotes/origin
+[color]
+	ui = true
+[push]
+	default = current
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = true
+	keepBackup = false
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[credential]
+	helper = osxkeychain

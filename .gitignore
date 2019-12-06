@@ -1,1 +1,6 @@
-/*-conf/
+/.config/nvim/.netrwhist
+/.config/nvim/autoload/plug.vim.old
+/.config/nvim/plugged/
+/.vim/.netrwhist
+/.vim/swap/
+/.vim/undo/
