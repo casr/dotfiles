@@ -5,10 +5,10 @@ set -e
 if [ -d "${HOME}/.dotfiles" ]; then
 	cd "${HOME}/.dotfiles"
 	git pull --ff-only
-	git submodule update
 else
 	git clone https://github.com/casr/dotfiles.git "${HOME}/.dotfiles"
-	cd "${HOME}/.dotfiles" && git submodule update --init
+	git clone https://github.com/k-takata/minpac.git \
+		"${HOME}/.dotfiles/.vim/pack/minpac/opt/minpac"
 fi
 
 mkdir -p "${HOME}/.config"
@@ -17,3 +17,6 @@ do
 	rm -f "${HOME}/$f"
 	ln -s "${HOME}/.dotfiles/$f" "${HOME}/$f"
 done
+
+
+printf "Finish Vim set up with:\n\n\t%s\n" "vim -c PackUpdate -c qall"

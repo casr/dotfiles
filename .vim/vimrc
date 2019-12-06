@@ -1,8 +1,57 @@
-set nocompatible
-execute pathogen#infect()
+" Prelude {{{
+runtime defaults.vim
 
+if !has('nvim')
+	packadd! matchit
 
-" Helper functions {{{
+	" set Vim-specific sequences for RGB colors
+	let &t_8f = "\e[38;2;%lu;%lu;%lum"
+	let &t_8b = "\e[48;2;%lu;%lu;%lum"
+
+	" Better mouse support for dragging
+	set ttymouse=sgr
+endif
+" Remove start up nag screen
+set shortmess+=I
+set updatetime=300
+set titlestring=%{getcwd()}
+" }}}
+
+" Viewing {{{
+set termguicolors
+try
+	set background=dark
+	colorscheme cosmic_latte
+	highlight SpecialKey ctermfg=237 guifg=#2b3740
+catch /^Vim\%((\a\+)\)\=:E185:/
+	silent! colorscheme desert
+	highlight CursorLine term=NONE cterm=NONE guibg=Grey17
+	highlight ColorColumn guibg=Grey30
+endtry
+set colorcolumn=+1
+set cursorline
+set list listchars=tab:›\ ,trail:•,extends:#,nbsp:.
+" @@@ on last line
+set display=lastline
+if exists('+breakindent')
+	" Wrap and indent lines by the current line's plus shift
+	set breakindent breakindentopt=shift:2,sbr linebreak showbreak=… wrap
+endif
+set splitbelow splitright
+
+if executable('ag')
+	set grepprg=ag\ --vimgrep\ $* grepformat=%f:%l:%c:%m
+endif
+if &t_Co > 2 || has('gui_running')
+	set hlsearch
+endif
+set ignorecase smartcase
+" Set up 'very magic' search mode. See :h \\v
+nnoremap / /\v
+vnoremap / /\v
+vnoremap // yh/\V<C-R>=escape(@",'/\')<CR><CR>
+" Use <C-L> to clear the highlighting of :set hlsearch.
+nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
 command! -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
@@ -14,120 +63,243 @@ function! QFixToggle(forced)
     let g:qfix_win = bufnr("$")
   endif
 endfunction
-
-function! EnsureDirExists (dir)
-  if !isdirectory(a:dir)
-    if exists('*mkdir')
-      call mkdir(a:dir, 'p')
-    else
-      echo 'Unable to create directory: ' . a:dir
-    endif
-  endif
-
-  if exists('*filewritable')
-    if (filewritable(a:dir) != 2)
-      echo 'Unable to write to directory: ' . a:dir
-    endif
-  endif
-endfunction
-
-" }}}
-
-
-" Common settings {{{
-
-set nomodeline
-set nowrap
-set expandtab
-set softtabstop=4
-set shiftwidth=4
-
-set hlsearch
-set ignorecase
-set smartcase
-
-set shortmess+=I
-
-set hidden
-
-call EnsureDirExists($HOME . '/.vim/swap')
-set directory=$HOME/.vim/swap,/tmp
-
-if exists('+undofile')
-  set undofile
-
-  call EnsureDirExists($HOME . '/.vim/undo')
-  set undodir=$HOME/.vim/undo,/tmp
-endif
-
-if exists('+colorcolumn')
-  set colorcolumn=+1,79
-endif
-
-set wildmode=list:longest,full
-
-if !exists('g:colors_name')
-  set background=dark
-
-  if (&background == 'light')
-    silent! colorscheme base16-google
-  else
-    silent! colorscheme lucius
-  endif
-endif
-
-" }}}
-
-
-" Shortcuts {{{
-
-let mapleader=','
-set pastetoggle=<F2>
-nnoremap / /\v
-vnoremap / /\v
-" Copy file to system clipboard
-map <leader>c :%y*<CR>
-" Copy line to system clipboard
-nmap <silent> <leader>l 0v$h"*y
-nmap <silent> <leader>m :Make!<CR>
 nmap <silent> <leader>f :QFix<CR>
-nmap <silent> <leader>/ :nohlsearch<CR>
-
 " }}}
 
-
-" Plugin options {{{
-
-let g:ctrlp_map='<leader>p'
-let g:ctrlp_user_command = {
-    \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-        \ },
-    \ 'fallback': 'find %s -type f'
-    \ }
-let g:netrw_list_hide='\.DS_Store$'
-let g:syntastic_mode_map = {'passive_filetypes': ['html']}
-
+" Folds and IDE mode {{{
+set foldlevelstart=99
+if get(g:, '__ide_mode_enabled', 0)
+	set foldenable foldcolumn=4
+	set signcolumn=yes
+else
+	set nofoldenable
+endif
 " }}}
 
+" Editing {{{
+" Allow unsaved buffers
+set hidden
+" Do not let random files mess with the settings
+set nomodeline
+" Copy the file then save it (useful for some filesystem watch mechanisms)
+set backupcopy=yes
+set autoread
+" }}}
 
-" Autocmds {{{
-
-if has("autocmd")
-  autocmd User fugitive
-    \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-    \   nnoremap <buffer> .. :edit %:h<CR> |
-    \ endif
-
-  autocmd BufReadPost fugitive://* set bufhidden=delete
-
-  " Open the file from the last cursor position
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-    \   exe "normal! g'\"" |
-    \ endif
-
-  autocmd BufNewFile,BufRead */README setf markdown
+" Undo, swap and info {{{
+set noswapfile
+if has('persistent_undo')
+	let &undodir=simplify(fnamemodify($MYVIMRC, ':h') . '/undo')
+	set undofile
+	if exists('*mkdir')
+		if !isdirectory(&undodir)
+			call mkdir(&undodir, 'p', 0700)
+		endif
+	else
+		echom 'Unable to create undodir'
+	endif
 endif
 
+if has('viminfo')
+	let &viminfo=&viminfo . ',n' .
+		\ simplify(fnamemodify($MYVIMRC, ':h') . '/info')
+endif
+" }}}
+
+" Status line {{{
+augroup Get_Git_Status
+	autocmd!
+	if exists('*FugitiveStatusline')
+		let g:git_status = "[Git(...)]"
+		autocmd CursorHold * let g:git_status = FugitiveStatusline()
+	endif
+augroup END
+
+""" Sample status line:
+" [23] Source/dotfiles/vim/init.vim [+] [dos]        32% « 70, 10
+" Always reset when re-sourced
+set statusline=
+" buffer number, full path, modified
+set statusline+=\ [%n]\ %<%f\ %m
+if exists('*FugitiveStatusline')
+	set statusline+=\ %{g:git_status}
+endif
+" file format
+set statusline+=\ %{&ff!='unix'?'['.&ff.']':''}
+" ruler
+set statusline+=%=%p%%\ «\ %l,\ %c\
+set laststatus=2
+" }}}
+
+" Plugin settings {{{
+
+" netrw {{{
+let g:netrw_dirhistmax=0
+let g:netrw_banner=0
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+" }}}
+
+" srstevenson/vim-picker {{{
+nmap <leader>t <Plug>(PickerEdit)
+nmap <leader>s <Plug>(PickerVsplit)
+" }}}
+
+" prabirshrestha/asyncomplete.vim {{{
+imap <C-g> <Plug>(asyncomplete_force_refresh)
+" }}}
+
+" prabirshrestha/vim-lsp {{{
+let g:lsp_diagnostics_echo_cursor = 1
+" }}}
+
+" ledger/vim-ledger {{{
+let g:ledger_maxwidth = 61
+let g:ledger_fold_blanks = 1
+let g:ledger_align_at = 58
+let g:ledger_default_commodity = 'GBP'
+let g:ledger_commodity_before = 0
+let g:ledger_commodity_sep = ' '
+" }}}
+
+" }}}
+
+if has('autocmd')
+	" Web {{{
+	augroup web
+		autocmd!
+		autocmd FileType
+			\ css,javascript,javascriptreact,json,sass,scss,typescript,typescriptreact
+			\ setlocal expandtab shiftwidth=2 softtabstop=2
+				\ textwidth=80
+	augroup END
+	" }}}
+	" Ledger {{{
+	augroup ledger
+		autocmd!
+		autocmd FileType ledger
+			\ setlocal expandtab shiftwidth=4 softtabstop=4
+				\ textwidth=80 foldmethod=syntax foldenable
+				\ foldcolumn=2
+		autocmd FileType ledger nmap <leader>f :LedgerAlign<CR>
+	augroup END
+	" }}}
+	" Vim {{{
+	augroup ft_vim
+		autocmd!
+		autocmd FileType vim setlocal foldmethod=marker
+		autocmd FileType help setlocal colorcolumn=0
+	augroup END
+	" }}}
+	" Prose {{{
+	augroup prose
+		autocmd!
+		autocmd FileType gitcommit,gitsendmail,mail,markdown,text
+			\ setlocal spell spelllang=en_gb
+			\ | let &l:formatprg = 'par -w' .
+			\ (&textwidth > 0 ? &textwidth : 74)
+	augroup END
+	" }}}
+	" LSP setup {{{
+	augroup lsp_setup
+		autocmd!
+		if executable('pyls')
+			autocmd User lsp_setup call lsp#register_server({
+				\ 'name': 'pyls',
+				\ 'cmd': {server_info->['pyls']},
+				\ 'whitelist': ['python'],
+			\ })
+		endif
+		if executable('typescript-language-server')
+			autocmd User lsp_setup call lsp#register_server({
+				\ 'name': 'typescript-language-server',
+				\ 'cmd': {server_info->[
+					\ &shell,
+					\ &shellcmdflag,
+					\ 'typescript-language-server --stdio',
+				\ ]},
+				\ 'root_uri':{server_info->lsp#utils#path_to_uri(
+					\ lsp#utils#find_nearest_parent_file_directory(
+						\ lsp#utils#get_buffer_path(),
+						\ ['tsconfig.json', 'package.json']
+					\ )
+				\ )},
+				\ 'whitelist': [
+					\ 'javascript',
+					\ 'typescript',
+					\ 'typescriptreact'
+				\ ],
+			\ })
+		endif
+	augroup END
+	augroup asyncomplete_setup
+		autocmd!
+		autocmd User asyncomplete_setup call asyncomplete#register_source(
+			\ asyncomplete#sources#omni#get_source_options({
+				\ 'name': 'omni',
+				\ 'whitelist': ['*'],
+				\ 'blacklist': [
+					\ 'c',
+					\ 'cpp',
+					\ 'html',
+					\ 'javascript',
+					\ 'typescript',
+					\ 'typescriptreact',
+				\ ],
+				\ 'completor': function('asyncomplete#sources#omni#completor')
+			\ }))
+	augroup END
+	" }}}
+endif
+
+" Plugins {{{
+if exists('*minpac#init')
+	call minpac#init()
+	call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+	call minpac#add('AndrewRadev/splitjoin.vim')
+	call minpac#add('moll/vim-node')
+	call minpac#add('ledger/vim-ledger')
+	call minpac#add('nightsense/cosmic_latte')
+	call minpac#add('reedes/vim-pencil')
+	call minpac#add('sgur/vim-editorconfig')
+	call minpac#add('sheerun/vim-polyglot')
+	call minpac#add('srstevenson/vim-picker')
+	call minpac#add('tmhedberg/SimpylFold')
+	call minpac#add('tmux-plugins/vim-tmux-focus-events')
+	call minpac#add('tpope/vim-commentary')
+	call minpac#add('tpope/vim-eunuch')
+	call minpac#add('tpope/vim-surround')
+	call minpac#add('tpope/vim-unimpaired')
+
+	" IDE stuff
+	call minpac#add('mhinz/vim-signify', {'type': 'opt'})
+	call minpac#add('tpope/vim-fugitive', {'type': 'opt'})
+	call minpac#add('tpope/vim-rhubarb', {'type': 'opt'})
+	call minpac#add('prabirshrestha/async.vim', {'type': 'opt'})
+	call minpac#add('prabirshrestha/vim-lsp', {'type': 'opt'})
+	call minpac#add('prabirshrestha/asyncomplete.vim', {'type': 'opt'})
+	call minpac#add('prabirshrestha/asyncomplete-lsp.vim', {'type': 'opt'})
+	call minpac#add('yami-beta/asyncomplete-omni.vim', {'type': 'opt'})
+endif
+
+command! PackUpdate packadd minpac | source $MYVIMRC |
+	\ call minpac#update('', {'do': 'call minpac#status()'})
+command! PackClean packadd minpac | source $MYVIMRC | call minpac#clean()
+command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
+
+command! IDE
+	\   packadd vim-signify
+	\ | packadd vim-fugitive
+	\ | packadd vim-rhubarb
+	\ | packadd async.vim
+	\ | packadd vim-lsp
+	\ | packadd asyncomplete.vim
+	\ | packadd asyncomplete-lsp.vim
+	\ | packadd asyncomplete-omni.vim
+	\ | let g:__ide_mode_enabled = 1
+	\ | source $MYVIMRC
+	\ | call lsp#enable()
+	\ | call asyncomplete#enable_for_buffer()
+	\ | call FugitiveDetect(expand('<amatch>:p'))
 " }}}
