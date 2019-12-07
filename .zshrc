@@ -1,30 +1,19 @@
-source "${HOME}/.zsh/aliases.zsh"
-source "${HOME}/.zsh/vi.zsh"
-source "${HOME}/.zsh/autoenv/autoenv.zsh"
+. ${HOME}/.dotfiles/aliases.sh
+. ${HOME}/.dotfiles/prompt.sh
 
-# history {{{
-HISTFILE=~/.zhistory
-HISTSIZE=10000
-SAVEHIST=10000
-setopt APPEND_HISTORY HIST_IGNORE_ALL_DUPS
-# }}}
+bindkey -e
 
-# completions {{{
+setopt INC_APPEND_HISTORY HIST_IGNORE_DUPS
 unsetopt FLOW_CONTROL
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
-
 autoload -U compinit && compinit
-# }}}
 
 WORDCHARS=${WORDCHARS//\/}
 
-setopt TRANSIENT_RPROMPT
-autoload -Uz promptinit && promptinit
-prompt corrupt
-
-# Pick up current directory. Useful for new tabs/windows of the terminal
-# emulator
-precmd() {
-  print -Pn "\e]2; %~/ \a"
-}
+setopt PROMPT_SUBST
+if [ "${TERM}" = "vt220" ]; then
+	PS1=$'\e]2;%d\a\n%~$(__git_ps1 \'  %s\')\n\$(__subshell '(%s) ')${__prompt_symbol}'
+else
+	PS1=$'\e]2;%d\a\n\e[34m%~\e[0m\e[35m$(__git_ps1 \' %s\')\e[0m\n\$(__subshell '(%s) ')${__prompt_symbol}'
+fi

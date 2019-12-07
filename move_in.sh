@@ -11,8 +11,16 @@ else
 		"${HOME}/.dotfiles/.vim/pack/minpac/opt/minpac"
 fi
 
+sys_name=$(uname -s)
+sys_profile=".profile.${sys_name}"
+
+if [ -f "${sys_profile}" ]; then
+        rm -f "${HOME}/.profile"
+        ln -s "${HOME}/.dotfiles/${sys_profile}" "${HOME}/.profile"
+fi
+
 mkdir -p "${HOME}/.config"
-for f in .config/git .config/nvim .tmux.conf .vim .zsh .zshenv .zshrc
+for f in .config/git .config/nvim .kshrc .tmux.conf .vim .zprofile .zshrc
 do
 	rm -f "${HOME}/$f"
 	ln -s "${HOME}/.dotfiles/$f" "${HOME}/$f"
