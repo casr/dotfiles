@@ -1,0 +1,27 @@
+#!/bin/sh
+
+BASE="${1:-origin/master}"
+COMPARE="${2:-HEAD}"
+
+# prettier name
+if [ "${COMPARE}" = "HEAD" ]; then
+	COMPARE=$(git symbolic-ref --short HEAD 2>/dev/null || echo HEAD)
+fi
+# now we are getting desperate
+if [ "${COMPARE}" = "HEAD" ]; then
+	COMPARE=$(git describe --contains --all HEAD 2>/dev/null || echo HEAD)
+fi
+
+ANCESTOR="$(git rev-parse --short $(git merge-base ${COMPARE} ${BASE}))"
+ANCESTOR_DATE="$(git log -1 --format=%cd "${ANCESTOR}")"
+
+if [ $? -eq 0 ]; then
+	FILES_CHANGED="$(git --no-pager diff --name-status "${BASE}...${COMPARE}")"
+	COMMITS="$(git --no-pager log --color --decorate=no --oneline --reverse "${BASE}..${COMPARE}")"
+	printf "base: %s\ncompare: %s\nancestor: %s (%s)\n\nfiles affected: %s, number of commits: %s\n\n%s\n\n%s\n" \
+		"${BASE}" "${COMPARE}" "${ANCESTOR}" "${ANCESTOR_DATE}" \
+		"$(printf "%s\n" "${FILES_CHANGED}" | wc -l | tr -d ' ')" \
+		"$(printf "%s\n" "${COMMITS}" | wc -l | tr -d ' ')" \
+		"${FILES_CHANGED}" "${COMMITS}" \
+	| env LESS="${LESS} -e" ${PAGER:-less}
+fi

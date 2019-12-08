@@ -20,7 +20,10 @@ if [ -f "${sys_profile}" ]; then
 fi
 
 mkdir -p "${HOME}/.config"
-for f in .config/git .config/nvim .kshrc .tmux.conf .vim .zprofile .zshrc
+for f in \
+.Xdefaults .compton.conf .config/git .config/nvim .exrc .fonts.conf .kshrc \
+.mailcap .npmrc .sqliterc .tmux.conf .vim .xmodmaprc .xsession .zprofile \
+.zshrc bin
 do
 	rm -f "${HOME}/$f"
 	ln -s "${HOME}/.dotfiles/$f" "${HOME}/$f"

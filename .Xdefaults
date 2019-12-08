@@ -1,0 +1,74 @@
+#define XLFD_UI_FONT -*-lucida-medium-r-*-*-26-*-*-*-*-*-*-*
+#define XLFD_MONO_FONT -*-fixed-medium-r-*-*-20-*-*-*-*-*-*-*
+
+! Zenburn Colors
+#define COLOR0 #3f3f3f
+#define COLOR1 #cc9393
+#define COLOR2 #7f9f7f
+#define COLOR3 #d0bf8f
+#define COLOR4 #6ca0a3
+#define COLOR5 #dc8cc3
+#define COLOR6 #93e0e3
+#define COLOR7 #dcdccc
+
+#define COLOR8 #000000
+#define COLOR9 #dca3a3
+#define COLOR10 #bfebbf
+#define COLOR11 #f0dfaf
+#define COLOR12 #8cd0d3
+#define COLOR13 #dc8cc3
+#define COLOR14 #93e0e3
+#define COLOR15 #ffffff
+
+#define COLOR16 #aaaaaa
+
+Xcursor.theme: dmz-aa
+Xcursor.size: 32
+
+XTerm.termName: xterm-256color
+XTerm.vt100.faceName: monospace:antialias=true:autohint=true
+XTerm.vt100.faceSize: 11
+XTerm.vt100.scrollBar: false
+
+! special
+XTerm.vt100.foreground: COLOR7
+XTerm.vt100.background: COLOR0
+XTerm.vt100.cursorColor: COLOR16
+! in pairs: black, red, green, yellow, blue, magenta, cyan, white
+XTerm.vt100.color0: COLOR0
+XTerm.vt100.color8: COLOR8
+XTerm.vt100.color1: COLOR1
+XTerm.vt100.color9: COLOR9
+XTerm.vt100.color2: COLOR2
+XTerm.vt100.color10: COLOR10
+XTerm.vt100.color3: COLOR3
+XTerm.vt100.color11: COLOR11
+XTerm.vt100.color4: COLOR4
+XTerm.vt100.color12: COLOR12
+XTerm.vt100.color5: COLOR5
+XTerm.vt100.color13: COLOR13
+XTerm.vt100.color6: COLOR6
+XTerm.vt100.color14: COLOR14
+XTerm.vt100.color7: COLOR7
+XTerm.vt100.color15: COLOR15
+XTerm.vt100.locale: true
+
+XConsole.text.background: #3f3f3f
+XConsole.text.textSink.font: XLFD_MONO_FONT
+XConsole.text.textSink.foreground: #dcdccc
+XConsole.text.textSink.cursorColor: #aaaaaa
+XConsole.text.Scrollbar.background: #2e3330
+XConsole.text.Scrollbar.foreground: #000000
+XConsole.text.Scrollbar.width: 20
+XConsole.geometry: 960x260-10-10
+
+XCalc.ti.Command.font: XLFD_UI_FONT
+XCalc.ti.bevel.screen.Label.font: XLFD_MONO_FONT
+XCalc.ti.bevel.screen.Toggle.font: XLFD_UI_FONT
+XCalc.geometry: 400x600+10+40
+
+XFontSel*commandBox*font: XLFD_UI_FONT
+XFontSel*fieldBox*font: XLFD_UI_FONT
+XFontSel*fontName*font: XLFD_UI_FONT
+
+Xft.dpi: 144

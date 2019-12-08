@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME=$(basename $0)
+case "${NAME}" in
+	npkg)
+		QUERY="{ name: .name, devDependencies: .devDependencies, dependencies: .dependencies }"
+		;;
+	nscr)
+		QUERY="{ name: .name, scripts: .scripts }"
+		;;
+esac
+
+if [ -e package.json ]; then
+	jq "${QUERY}" package.json | ${PAGER:-more}
+else
+	printf '%s: package.json not found\n' "${NAME}" 1>&2
+	exit 1
+fi

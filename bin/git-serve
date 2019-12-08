@@ -1,0 +1,14 @@
+#!/bin/sh
+
+GIT_DIR="$(git rev-parse --show-toplevel)"
+if [ $? -eq 0 ]; then
+	project="$(basename $GIT_DIR)"
+
+	printf "%s\n\n" 'On the other machine do:'
+	for ip in $(ip -n); do
+		printf "    git clone git://%s/ %s\n" "${ip}" "${project}"
+	done
+	printf "\n%s\n\n" 'Note: slash is important!'
+
+	git daemon --reuseaddr --verbose --base-path=. --export-all --enable=receive-pack ./.git
+fi

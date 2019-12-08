@@ -1,0 +1,9 @@
+application/pdf; mupdf %s
+audio/mpeg; ffplay -hide_banner -loglevel error %s
+image/gif; sxiv -a %s
+image/bmp; sxiv %s
+image/jpeg; sxiv %s
+image/pjpeg; sxiv %s
+image/png; sxiv %s
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+video/mp4; ffplay %s
