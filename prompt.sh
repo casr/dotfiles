@@ -1,5 +1,5 @@
 __subshell() {
-	if [ "z${PIPENV_ACTIVE}" == "z1" ]; then
+	if [ "z${PIPENV_ACTIVE}" = "z1" ]; then
 		# Set this so that the shell is not super slow...
 		if [ -z "${PIPENV_NAME}" ]; then
 			s="$(pipenv --where)"

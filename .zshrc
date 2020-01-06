@@ -13,7 +13,7 @@ WORDCHARS=${WORDCHARS//\/}
 
 setopt PROMPT_SUBST
 if [ "${TERM}" = "vt220" ]; then
-	PS1=$'\e]2;%d\a\n%~$(__git_ps1 \'  %s\')\n\$(__subshell '(%s) ')${__prompt_symbol}'
+	PS1=$'\e]2;%d\a\n%~$(__git_ps1 \'  %s\')\n\$(__subshell \'(%s) \')${__prompt_symbol}'
 else
-	PS1=$'\e]2;%d\a\n\e[34m%~\e[0m\e[35m$(__git_ps1 \' %s\')\e[0m\n\$(__subshell '(%s) ')${__prompt_symbol}'
+	PS1=$'\e]2;%d\a\n\e[34m%~\e[0m\e[35m$(__git_ps1 \' %s\')\e[0m\n\$(__subshell \'(%s) \')${__prompt_symbol}'
 fi
