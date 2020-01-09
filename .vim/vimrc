@@ -127,7 +127,7 @@ endif
 " file format
 set statusline+=\ %{&ff!='unix'?'['.&ff.']':''}
 " ruler
-set statusline+=%=%p%%\ «\ %l,\ %c\
+set statusline+=%=%p%%\ «\ %l,\ %c\ 
 set laststatus=2
 " }}}
 
