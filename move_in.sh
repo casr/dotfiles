@@ -27,7 +27,7 @@ do
 	ln -s "${HOME}/.dotfiles/$f" "${HOME}/$f"
 done
 
-if [ -d "${HOME}/.dotfiles/.vim/pack/minpac/opt/minpac" ]; then
+if [ ! -d "${HOME}/.dotfiles/.vim/pack/minpac/opt/minpac" ]; then
 	git clone https://github.com/k-takata/minpac.git \
 		"${HOME}/.dotfiles/.vim/pack/minpac/opt/minpac"
 fi
