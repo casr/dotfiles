@@ -3,18 +3,20 @@
 set -e
 
 __dock_item() {
+	app_path="$(mdfind "kMDItemKind=Application \
+	                    && kMDItemDisplayName=\"$1\"")"
 	printf '%s%s%s%s%s' \
 	       '<dict><key>tile-data</key><dict><key>file-data</key><dict>' \
 	       '<key>_CFURLString</key><string>' \
-	       "$1" \
+	       "${app_path}" \
 	       '</string><key>_CFURLStringType</key><integer>0</integer>' \
 	       '</dict></dict></dict>'
 }
 
 printf '%s' 'Setting up Dock icons...'
 defaults write com.apple.dock \
-               persistent-apps -array "$(__dock_item /System/Applications/Utilities/Terminal.app)" \
-                                      "$(__dock_item /Applications/Safari.app)"
+               persistent-apps -array "$(__dock_item Terminal)" \
+                                      "$(__dock_item Safari)"
 killall Dock
 printf '%s\n' ' done.'
 
