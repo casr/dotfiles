@@ -13,10 +13,16 @@ __dock_item() {
 	       '</dict></dict></dict>'
 }
 
-printf '%s' 'Setting up Dock icons...'
+printf '%s' 'Setting up Dock...'
 defaults write com.apple.dock \
                persistent-apps -array "$(__dock_item Terminal)" \
                                       "$(__dock_item Safari)"
+defaults write com.apple.dock showhidden -bool yes
+defaults write com.apple.dock show-recents -bool no
+defaults write com.apple.dock tilesize -int 50
+defaults write com.apple.dock size-immutable -bool yes
+defaults write com.apple.dock position-immutable -bool yes
+defaults write com.apple.dock contents-immutable -bool yes
 killall Dock
 printf '%s\n' ' done.'
 
