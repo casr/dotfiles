@@ -12,8 +12,22 @@ autoload -Uz compinit && compinit
 WORDCHARS=${WORDCHARS//\/}
 
 setopt PROMPT_SUBST
-if [ "${TERM}" = "vt220" ]; then
-	PS1=$'\e]2;%d\a\n%~$(__git_ps1 \'  %s\')\n\$(__subshell \'(%s) \')${__prompt_symbol}'
-else
-	PS1=$'\e]2;%d\a\n\e[34m%~\e[0m\e[35m$(__git_ps1 \' %s\')\e[0m\n\$(__subshell \'(%s) \')${__prompt_symbol}'
-fi
+
+# man zshcontrib /GATHERING INFORMATION FROM VERSION CONTROL SYSTEMS
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' formats "  %b"
+zstyle ':vcs_info:*' actionformats "  %b (%a)"
+precmd() { vcs_info }
+
+# man zshmisc /EXPANSION OF PROMPT SEQUENCES
+PS1=
+# a gap between the last command's output is nice
+PS1+=$'\n'
+# the current path
+PS1+=%~
+# show branch info
+PS1+='${vcs_info_msg_0_}'
+PS1+=$'\n'
+# indicate if user is running with privileges. i.e. root
+PS1+=%(!.# .$ )
