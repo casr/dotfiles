@@ -17,11 +17,9 @@ printf '%s' 'Setting up Dock...'
 defaults write com.apple.dock \
                persistent-apps -array "$(__dock_item Terminal)" \
                                       "$(__dock_item Safari)"
-defaults write com.apple.dock showhidden -bool yes
 defaults write com.apple.dock show-recents -bool no
-defaults write com.apple.dock tilesize -int 50
+defaults write com.apple.dock tilesize -int 40
 defaults write com.apple.dock size-immutable -bool yes
-defaults write com.apple.dock position-immutable -bool yes
 defaults write com.apple.dock contents-immutable -bool yes
 killall Dock
 printf '%s\n' ' done.'
@@ -29,6 +27,10 @@ printf '%s\n' ' done.'
 printf '%s' 'Removing copy style from Terminal.app...'
 defaults write com.apple.Terminal \
                CopyAttributesProfile com.apple.Terminal.no-attributes
+printf '%s\n' ' done.'
+
+printf '%s' 'Removing shadow from screenshots...'
+defaults write com.apple.screencapture disable-shadow -bool true
 printf '%s\n' ' done.'
 
 if ! command -v xcode-select >/dev/null; then
@@ -112,14 +114,7 @@ sed -i '' '1i\\
 /^\\/opt\\/local\\/share\\/man$/d' /etc/manpaths
 
 /opt/local/bin/port -cq selfupdate
-/opt/local/bin/port -cq install entr fzy git ledger neovim openssh par pass \
-                        pinentry the_silver_searcher tmux tmux-pasteboard vim \
-                        zsh
-
-sed -i '' '\$a\\
-\\/opt\\/local\\/bin\\/zsh\\
-
-/^\\/opt\\/local\\/bin\\/zsh$/d' /etc/shells
-# Grab the original username by NOT escaping
-chsh -s /opt/local/bin/zsh "${USER}"
+/opt/local/bin/port -cq install entr fzy git jq miller neovim openssh par pass \
+                                pinentry the_silver_searcher tig tmux \
+                                tmux-pasteboard vim zsh-completions
 EOM
