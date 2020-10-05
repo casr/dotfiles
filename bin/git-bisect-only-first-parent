@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# NAME
+#      git-bisect-only-first-parent - bisect only first parents
+#
+# SYNOPSIS
+#      git bisect-only-first-parent [<bad> <good>]
+#
+# DESCRIPTION
+#      Sometimes the most interesting thing about a bisect is which merge
+#      introduced the error (i.e. branch) and not the exact commit. After
+#      having begun a bisect, this command can skip commits which are not first
+#      parents from consideration.
+
+BAD=$1
+GOOD=$2
+
+usage() {
+	printf 'usage: %s [bad] [good]\n' "$(basename "$0")"
+}
+
+if [ $# -lt 2 ]; then
+	usage
+	exit 1
+fi
+
+for rev in $(git rev-list "^${GOOD}" "${BAD}" --merges --first-parent); do
+	git rev-list $rev^2 --not $rev^
+done | xargs git bisect skip
