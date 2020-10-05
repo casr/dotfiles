@@ -6,8 +6,8 @@ bindkey -e
 setopt INC_APPEND_HISTORY HIST_IGNORE_DUPS
 unsetopt FLOW_CONTROL
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
-autoload -U compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+autoload -Uz compinit && compinit
 
 WORDCHARS=${WORDCHARS//\/}
 
