@@ -1,13 +1,25 @@
 #!/bin/sh
 
-NAME=$(basename $0)
-case "${NAME}" in
-	npkg)
-		QUERY="{ name: .name, devDependencies: .devDependencies, dependencies: .dependencies }"
-		;;
-	nscr)
-		QUERY="{ name: .name, scripts: .scripts }"
-		;;
+# NAME
+#      npkg - summarise parts of a Node project
+#
+# SYNOPSIS
+#      npkg
+#      nscr
+#
+# DESCRIPTION
+#      npkg  show project's dependencies
+#
+#      npkg  show project's scripts
+
+PROG_NAME=$(basename "$0")
+case "${PROG_NAME}" in
+nscr)
+	QUERY="{ name: .name, scripts: .scripts }"
+	;;
+*)
+	QUERY="{ name: .name, devDependencies: .devDependencies, dependencies: .dependencies }"
+	;;
 esac
 
 if [ -e package.json ]; then
