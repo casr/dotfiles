@@ -46,14 +46,11 @@ endfunction
 nmap <silent> <leader>f :QFix<CR>
 " }}}
 
-" Folds and IDE mode {{{
-set foldlevelstart=99
+" IDE mode {{{
 if get(g:, '__ide_mode_enabled', 0)
-	set foldenable foldcolumn=4
 	set signcolumn=yes
-else
-	set nofoldenable
 endif
+set foldcolumn=4
 " }}}
 
 " Editing {{{
@@ -145,6 +142,13 @@ let g:ledger_commodity_sep = ' '
 " }}}
 
 if has('autocmd')
+	" Folds {{{
+	augroup folds
+		autocmd!
+		autocmd BufWinEnter *
+			\ let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
+	augroup END
+	" }}}
 	" Web {{{
 	augroup web
 		autocmd!
