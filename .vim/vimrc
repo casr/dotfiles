@@ -1,9 +1,4 @@
 " Prelude {{{
-runtime defaults.vim
-
-if !has('nvim')
-	packadd! matchit
-endif
 " Remove start up nag screen
 set shortmess+=I
 set updatetime=300
@@ -18,9 +13,6 @@ endif
 " Viewing {{{
 set background=light
 colorscheme chromatine
-set list listchars=tab:›\ ,trail:•,extends:#,nbsp:.
-" @@@ on last line
-set display=lastline
 if exists('+breakindent')
 	" Wrap and indent lines by the current line's plus shift
 	set breakindent breakindentopt=shift:2,sbr linebreak showbreak=… wrap
@@ -40,8 +32,6 @@ set ignorecase smartcase
 nnoremap / /\v
 vnoremap / /\v
 vnoremap // yh/\V<C-R>=escape(@",'/\')<CR><CR>
-" Use <C-L> to clear the highlighting of :set hlsearch.
-nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
 command! -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
