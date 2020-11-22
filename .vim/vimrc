@@ -15,7 +15,11 @@ set background=light
 colorscheme chromatine
 if exists('+breakindent')
 	" Wrap and indent lines by the current line's plus shift
-	set breakindent breakindentopt=shift:2,sbr linebreak showbreak=… wrap
+	set breakindent breakindentopt=shift:2,sbr linebreak wrap
+endif
+if &encoding ==# 'utf-8'
+	set showbreak=…
+	set list listchars=tab:›\ ,trail:•,extends:›,precedes:‹,nbsp:.
 endif
 set splitbelow splitright
 
