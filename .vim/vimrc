@@ -3,14 +3,16 @@ runtime defaults.vim
 
 if !has('nvim')
 	packadd! matchit
-
-	" Better mouse support for dragging
-	set ttymouse=sgr
 endif
 " Remove start up nag screen
 set shortmess+=I
 set updatetime=300
 set titlestring=%{getcwd()}
+set mouse=nvc
+if !has('nvim') && $TERM =~# '^nsterm\|^st\|^tmux'
+	" Better mouse support for dragging
+	set ttymouse=sgr
+endif
 " }}}
 
 " Viewing {{{
