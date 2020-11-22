@@ -117,4 +117,11 @@ sed -i '' '1i\\
 /opt/local/bin/port -cq install entr fzy git jq miller neovim openssh par pass \
                                 pinentry the_silver_searcher tig tmux \
                                 tmux-pasteboard vim zsh-completions
+
+rm -rf ~/.terminfo
+for f in nsterm tmux tmux-256color; do
+	/opt/local/bin/infocmp -x "$f" > "/tmp/$f"
+	/usr/bin/infocmp -x "/tmp/$f"
+	rm -f "/tmp/$f"
+done
 EOM
