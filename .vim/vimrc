@@ -4,10 +4,6 @@ runtime defaults.vim
 if !has('nvim')
 	packadd! matchit
 
-	" set Vim-specific sequences for RGB colors
-	let &t_8f = "\e[38;2;%lu;%lu;%lum"
-	let &t_8b = "\e[48;2;%lu;%lu;%lum"
-
 	" Better mouse support for dragging
 	set ttymouse=sgr
 endif
@@ -18,16 +14,8 @@ set titlestring=%{getcwd()}
 " }}}
 
 " Viewing {{{
-set termguicolors
-try
-	set background=dark
-	colorscheme cosmic_latte
-	highlight SpecialKey ctermfg=237 guifg=#2b3740
-catch /^Vim\%((\a\+)\)\=:E185:/
-	silent! colorscheme desert
-	highlight CursorLine term=NONE cterm=NONE guibg=Grey17
-	highlight ColorColumn guibg=Grey30
-endtry
+set background=light
+colorscheme chromatine
 set colorcolumn=+1
 set cursorline
 set list listchars=tab:›\ ,trail:•,extends:#,nbsp:.
@@ -261,7 +249,6 @@ if exists('*minpac#init')
 	call minpac#add('editorconfig/editorconfig-vim')
 	call minpac#add('ledger/vim-ledger')
 	call minpac#add('moll/vim-node')
-	call minpac#add('nightsense/cosmic_latte')
 	call minpac#add('reedes/vim-pencil')
 	call minpac#add('sheerun/vim-polyglot')
 	call minpac#add('srstevenson/vim-picker')
