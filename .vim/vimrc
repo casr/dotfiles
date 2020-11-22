@@ -245,6 +245,7 @@ endif
 " Plugins {{{
 if exists('*minpac#init')
 	call minpac#init()
+	" git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
 	call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 	call minpac#add('AndrewRadev/splitjoin.vim')
