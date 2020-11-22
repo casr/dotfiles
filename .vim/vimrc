@@ -148,6 +148,13 @@ if has('autocmd')
 			\ let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
 	augroup END
 	" }}}
+	" Shell {{{
+	augroup shell
+		autocmd!
+		" So syntax highlighting understands $(...)
+		autocmd FileType sh let g:is_posix = 1
+	augroup END
+	" }}}
 	" Web {{{
 	augroup web
 		autocmd!
