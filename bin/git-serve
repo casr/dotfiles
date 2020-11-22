@@ -1,14 +1,36 @@
 #!/bin/sh
 
-GIT_DIR="$(git rev-parse --show-toplevel)"
-if [ $? -eq 0 ]; then
-	project="$(basename $GIT_DIR)"
+# NAME
+#      git-serve - host a git repository
+#
+# SYNOPSIS
+#      git serve
+#
+# DESCRIPTION
+#      Serves the current git repository so that it can be cloned on another
+#      computer.
+#
+# EXAMPLE
+#      [computer 1]:
+#      git serve
+#
+#      [computer 2]:
+#      git clone git://192.168.0.100/ my-project
 
-	printf "%s\n\n" 'On the other machine do:'
-	for ip in $(ip -n); do
-		printf "    git clone git://%s/ %s\n" "${ip}" "${project}"
-	done
-	printf "\n%s\n\n" 'Note: slash is important!'
-
-	git daemon --reuseaddr --verbose --base-path=. --export-all --enable=receive-pack ./.git
+if ! GIT_DIR="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+	cat >&2 <<EOM
+$(basename "$0"): needs to be run inside of a Git repository
+EOM
+	exit 1
 fi
+
+project=$(basename "$GIT_DIR")
+
+printf '%s\n\n' 'On the other machine do:'
+for ip in $(ip -n); do
+	printf '    git clone git://%s/ %s\n' "${ip}" "${project}"
+done
+printf '\n%s\n\n' 'Note: slash is important!'
+
+exec git daemon --reuseaddr --verbose --base-path=. --export-all \
+	--enable=receive-pack --informative-errors
