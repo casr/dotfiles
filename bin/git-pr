@@ -12,16 +12,16 @@ if [ "${COMPARE}" = "HEAD" ]; then
 	COMPARE=$(git describe --contains --all HEAD 2>/dev/null || echo HEAD)
 fi
 
-ANCESTOR="$(git rev-parse --short $(git merge-base ${COMPARE} ${BASE}))"
-ANCESTOR_DATE="$(git log -1 --format=%cd "${ANCESTOR}")"
+ANCESTOR="$(git rev-parse --short "$(git merge-base "${COMPARE}" "${BASE}")")"
 
-if [ $? -eq 0 ]; then
+if ANCESTOR_DATE="$(git log -1 --format=%cD "${ANCESTOR}")"; then
+	DIFF_STATS="$(git diff --numstat "${BASE}...${COMPARE}" | awk '{ added += $1; deleted += $2 } END { print "+" added, "-" deleted }')"
 	FILES_CHANGED="$(git --no-pager diff --name-status "${BASE}...${COMPARE}")"
 	COMMITS="$(git --no-pager log --color --decorate=no --oneline --reverse "${BASE}..${COMPARE}")"
-	printf "base: %s\ncompare: %s\nancestor: %s (%s)\n\nfiles affected: %s, number of commits: %s\n\n%s\n\n%s\n" \
+	printf 'base: %s\ncompare: %s\nancestor: %s (%s)\n\nfiles affected: %s, number of commits: %s, diff stats: %s\n\n%s\n\n%s\n' \
 		"${BASE}" "${COMPARE}" "${ANCESTOR}" "${ANCESTOR_DATE}" \
-		"$(printf "%s\n" "${FILES_CHANGED}" | wc -l | tr -d ' ')" \
-		"$(printf "%s\n" "${COMMITS}" | wc -l | tr -d ' ')" \
-		"${FILES_CHANGED}" "${COMMITS}" \
-	| env LESS="${LESS} -e" ${PAGER:-less}
+		"$(printf '%s\n' "${FILES_CHANGED}" | wc -l | tr -d ' ')" \
+		"$(printf '%s\n' "${COMMITS}" | wc -l | tr -d ' ')" \
+		"${DIFF_STATS}" "${FILES_CHANGED}" "${COMMITS}" \
+	| env LESS="${LESS} -e" "${PAGER:-less}"
 fi
