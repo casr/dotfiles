@@ -28,6 +28,8 @@ if &t_Co > 2 || has('gui_running')
 	set hlsearch
 endif
 set ignorecase smartcase
+set foldcolumn=4
+let &signcolumn=(has('nvim') ? 'yes' : 'number')
 " Set up 'very magic' search mode. See :h \\v
 nnoremap / /\v
 vnoremap / /\v
@@ -44,13 +46,6 @@ function! QFixToggle(forced)
   endif
 endfunction
 nmap <silent> <leader>f :QFix<CR>
-" }}}
-
-" IDE mode {{{
-if get(g:, '__ide_mode_enabled', 0)
-	set signcolumn=yes
-endif
-set foldcolumn=4
 " }}}
 
 " Editing {{{
@@ -256,33 +251,18 @@ if exists('*minpac#init')
 	call minpac#add('tpope/vim-unimpaired')
 
 	" IDE stuff
-	call minpac#add('mhinz/vim-signify', {'type': 'opt'})
-	call minpac#add('tpope/vim-fugitive', {'type': 'opt'})
-	call minpac#add('tpope/vim-rhubarb', {'type': 'opt'})
-	call minpac#add('prabirshrestha/async.vim', {'type': 'opt'})
-	call minpac#add('prabirshrestha/vim-lsp', {'type': 'opt'})
-	call minpac#add('prabirshrestha/asyncomplete.vim', {'type': 'opt'})
-	call minpac#add('prabirshrestha/asyncomplete-lsp.vim', {'type': 'opt'})
-	call minpac#add('yami-beta/asyncomplete-omni.vim', {'type': 'opt'})
+	call minpac#add('mhinz/vim-signify')
+	call minpac#add('tpope/vim-fugitive')
+	call minpac#add('tpope/vim-rhubarb')
+	call minpac#add('prabirshrestha/async.vim')
+	call minpac#add('prabirshrestha/vim-lsp')
+	call minpac#add('prabirshrestha/asyncomplete.vim')
+	call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
+	call minpac#add('yami-beta/asyncomplete-omni.vim')
 endif
 
 command! PackUpdate packadd minpac | source $MYVIMRC |
 	\ call minpac#update('', {'do': 'call minpac#status()'})
 command! PackClean packadd minpac | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
-
-command! IDE
-	\   packadd vim-signify
-	\ | packadd vim-fugitive
-	\ | packadd vim-rhubarb
-	\ | packadd async.vim
-	\ | packadd vim-lsp
-	\ | packadd asyncomplete.vim
-	\ | packadd asyncomplete-lsp.vim
-	\ | packadd asyncomplete-omni.vim
-	\ | let g:__ide_mode_enabled = 1
-	\ | source $MYVIMRC
-	\ | call lsp#enable()
-	\ | call asyncomplete#enable_for_buffer()
-	\ | call FugitiveDetect(expand('<amatch>:p'))
 " }}}
