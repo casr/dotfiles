@@ -38,6 +38,7 @@ let &signcolumn=(has('nvim') ? 'yes' : 'number')
 nnoremap / /\v
 vnoremap / /\v
 vnoremap // yh/\V<C-R>=escape(@",'/\')<CR><CR>
+nnoremap <silent> <leader>q :tabclose<CR>
 
 function! GetBufferList()
 	redir =>buflist
