@@ -121,7 +121,7 @@ sed -i '' '1i\\
 rm -rf ~/.terminfo
 for f in nsterm tmux tmux-256color; do
 	/opt/local/bin/infocmp -x "$f" > "/tmp/$f"
-	/usr/bin/infocmp -x "/tmp/$f"
+	/usr/bin/tic -x "/tmp/$f"
 	rm -f "/tmp/$f"
 done
 EOM
