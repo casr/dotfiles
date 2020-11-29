@@ -146,6 +146,20 @@ imap <C-g> <Plug>(asyncomplete_force_refresh)
 
 " prabirshrestha/vim-lsp {{{
 let g:lsp_diagnostics_echo_cursor = 1
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+endfunction
 " }}}
 
 " ledger/vim-ledger {{{
@@ -212,34 +226,9 @@ if has('autocmd')
 	" LSP setup {{{
 	augroup lsp_setup
 		autocmd!
-		if executable('pyls')
-			autocmd User lsp_setup call lsp#register_server({
-				\ 'name': 'pyls',
-				\ 'cmd': {server_info->['pyls']},
-				\ 'whitelist': ['python'],
-			\ })
-		endif
-		if executable('typescript-language-server')
-			autocmd User lsp_setup call lsp#register_server({
-				\ 'name': 'typescript-language-server',
-				\ 'cmd': {server_info->[
-					\ &shell,
-					\ &shellcmdflag,
-					\ 'typescript-language-server --stdio',
-				\ ]},
-				\ 'root_uri':{server_info->lsp#utils#path_to_uri(
-					\ lsp#utils#find_nearest_parent_file_directory(
-						\ lsp#utils#get_buffer_path(),
-						\ ['tsconfig.json', 'package.json']
-					\ )
-				\ )},
-				\ 'whitelist': [
-					\ 'javascript',
-					\ 'typescript',
-					\ 'typescriptreact'
-				\ ],
-			\ })
-		endif
+		" call s:on_lsp_buffer_enabled only for languages that has the server
+		" registered.
+		autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 	augroup END
 	augroup asyncomplete_setup
 		autocmd!
@@ -284,6 +273,7 @@ function! PackInit() abort
 	call minpac#add('tpope/vim-unimpaired')
 
 	" IDE stuff
+	call minpac#add('mattn/vim-lsp-settings')
 	call minpac#add('mhinz/vim-signify')
 	call minpac#add('tpope/vim-fugitive')
 	call minpac#add('tpope/vim-rhubarb')
