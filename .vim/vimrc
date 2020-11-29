@@ -162,6 +162,10 @@ function! s:on_lsp_buffer_enabled() abort
 endfunction
 " }}}
 
+" mattn/vim-lsp-settings {{{
+let g:lsp_settings_enable_suggestions = 0
+" }}}
+
 " ledger/vim-ledger {{{
 let g:ledger_maxwidth = 61
 let g:ledger_fold_blanks = 1
