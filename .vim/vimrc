@@ -171,6 +171,10 @@ let g:ledger_commodity_before = 0
 let g:ledger_commodity_sep = ' '
 " }}}
 
+" ericpruitt/tmux.vim {{{
+let g:tmux_syntax_colors = 0
+" }}}
+
 " }}}
 
 if has('autocmd')
