@@ -33,4 +33,5 @@ if [ ! -d "${HOME}/.dotfiles/.vim/pack/minpac/opt/minpac" ]; then
 fi
 
 
-printf 'Finish Vim set up with:\n\n\t%s\n' 'vim -c PackUpdate -c qall'
+printf 'Finish Vim set up with:\n\n\t%s\n' \
+	"vim -c 'call PackInit()' -c \"call minpac#update('', {'do': 'qall'})\""
