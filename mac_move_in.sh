@@ -52,10 +52,10 @@ fi
 printf '%s' 'Downloading and building MacPorts'
 
 MACPORTS_DISTFILES=https://distfiles.macports.org/MacPorts
-MACPORTS_VERSION=2.6.3
+MACPORTS_VERSION=2.6.4
 MACPORTS_ARCHIVE="MacPorts-${MACPORTS_VERSION}.tar.bz2"
 MACPORTS_ARCHIVE_RIPEMD160=c4009fc935603377867af1ab09ad34f980695ca4
-MACPORTS_ARCHIVE_SHA256=c784f0556102bf7947b1cb8f4607bfa76351a4da8cbdab0dcc89c56f18834f01
+MACPORTS_ARCHIVE_SHA256=04e0dc4f44cbc6b59edb2873b3c73adf429e5053f20d2418387eeff776ec65d4
 
 if [ -d /opt/local ]; then
 	printf '%s\n' '... skipped.'
