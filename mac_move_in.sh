@@ -14,9 +14,10 @@ __dock_item() {
 }
 
 printf '%s' 'Setting up Dock...'
-defaults write com.apple.dock \
-               persistent-apps -array "$(__dock_item Terminal)" \
-                                      "$(__dock_item Safari)"
+defaults write com.apple.dock persistent-apps -array \
+	"$(__dock_item 'Activity Monitor')" \
+	"$(__dock_item Terminal)" \
+	"$(__dock_item Safari)"
 defaults write com.apple.dock show-recents -bool no
 defaults write com.apple.dock tilesize -int 40
 defaults write com.apple.dock size-immutable -bool yes
