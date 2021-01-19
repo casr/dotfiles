@@ -2,37 +2,7 @@
 
 set -e
 
-__dock_item() {
-	app_path="$(mdfind "kMDItemKind=Application \
-	                    && kMDItemDisplayName=\"$1\"")"
-	printf '%s%s%s%s%s' \
-	       '<dict><key>tile-data</key><dict><key>file-data</key><dict>' \
-	       '<key>_CFURLString</key><string>' \
-	       "${app_path}" \
-	       '</string><key>_CFURLStringType</key><integer>0</integer>' \
-	       '</dict></dict></dict>'
-}
-
-printf '%s' 'Setting up Dock...'
-defaults write com.apple.dock persistent-apps -array \
-	"$(__dock_item 'Activity Monitor')" \
-	"$(__dock_item Terminal)" \
-	"$(__dock_item Safari)"
-defaults write com.apple.dock show-recents -bool no
-defaults write com.apple.dock tilesize -int 40
-defaults write com.apple.dock size-immutable -bool yes
-defaults write com.apple.dock contents-immutable -bool yes
-killall Dock
-printf '%s\n' ' done.'
-
-printf '%s' 'Removing copy style from Terminal.app...'
-defaults write com.apple.Terminal \
-               CopyAttributesProfile com.apple.Terminal.no-attributes
-printf '%s\n' ' done.'
-
-printf '%s' 'Removing shadow from screenshots...'
-defaults write com.apple.screencapture disable-shadow -bool true
-printf '%s\n' ' done.'
+"${HOME}/.dotfiles/macos_defaults.sh"
 
 if ! command -v xcode-select >/dev/null; then
 	printf '%s\n%s\n' \
