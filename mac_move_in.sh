@@ -96,7 +96,7 @@ sed -i '' '1i\\
 /opt/local/bin/port -cq selfupdate
 /opt/local/bin/port -cq install entr fzy git jq miller neovim openssh par pass \
                                 pinentry the_silver_searcher tig tmux \
-                                tmux-pasteboard vim zsh-completions
+                                vim zsh-completions
 
 rm -rf ~/.terminfo
 for f in nsterm tmux tmux-256color; do
