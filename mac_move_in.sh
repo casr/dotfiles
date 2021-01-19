@@ -94,9 +94,10 @@ sed -i '' '1i\\
 /^\\/opt\\/local\\/share\\/man$/d' /etc/manpaths
 
 /opt/local/bin/port -cq selfupdate
-/opt/local/bin/port -cq install entr fzy git jq miller neovim openssh par pass \
-                                pinentry the_silver_searcher tig tmux \
-                                vim zsh-completions
+/opt/local/bin/port -cq install entr fzy git jq miller ncurses neovim openssh \
+                                par pass pinentry the_silver_searcher tig \
+                                tmux vim zsh-completions
+EOM
 
 rm -rf ~/.terminfo
 for f in nsterm tmux tmux-256color; do
@@ -104,4 +105,3 @@ for f in nsterm tmux tmux-256color; do
 	/usr/bin/tic -x "/tmp/$f"
 	rm -f "/tmp/$f"
 done
-EOM
