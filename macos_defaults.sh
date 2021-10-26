@@ -2,7 +2,7 @@
 
 set -e
 
-# Set most settings, if possible, unless they are too complicated or
+# Aim to set most settings, if possible, unless they are too complicated or
 # dependent on a particular hardware setup
 
 __p() {
@@ -133,6 +133,8 @@ defaults write com.apple.Safari AlwaysRestoreSessionAtLaunch -bool true
 __p yes 'Safari:Preferences:General:Homepage' 'about:blank'
 __p no 'Safari:Preferences:General:Open "safe" files after downloading' NO
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+__p no 'Safari:Preferences:Tabs:Show website icons in tabs' NO
+defaults write com.apple.Safari ShowIconsInTabs -bool false
 __p no 'Safari:Preferences:AutoFill:Using information from my contacts' NO
 defaults write com.apple.Safari AutoFillFromAddressBook -bool false
 __p no 'Safari:Preferences:AutoFill:Usernames and passwords' NO
@@ -145,6 +147,10 @@ __p no 'Safari:Preferences:Search:Search engine' Ecosia
 defaults write com.apple.Safari SearchProviderIdentifier -string org.ecosia.www
 __p no 'Safari:Preferences:Search:Include Safari Suggestions' NO
 defaults write com.apple.Safari UniversalSearchEnabled -bool false
+__p no 'Safari:Preferences:Search:Preload Top Hit in the background' NO
+defaults write com.apple.Safari PreloadTopHit -bool false
+__p no 'Safari:Preferences:Search:Show Favourites' NO
+defaults write com.apple.Safari ShowFavoritesUnderSmartSearchField -bool false
 __p no 'Safari:Preferences:Advanced:Show full website address' YES
 defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 __p yes 'Safari:Preferences:Advanced:Show Develop menu in menu bar' YES
