@@ -1,7 +1,8 @@
 [alias]
 	st = status --branch --short
-	bl = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=16,position=right)%(committerdate:relative)  %(end)%(refname:short)' --no-merged origin/master refs/heads
-	blr = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=16,position=right)%(committerdate:relative)  %(end)%(refname:short)' --no-merged origin/master refs/remotes/origin
+	branch-date-sorted = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=16,position=right)%(committerdate:relative)  %(end)%(refname:short)'
+	bl = "!f() { git branch-date-sorted --no-merged ${1-origin/master} refs/heads; }; f"
+	blr = "!f() { git branch-date-sorted --no-merged ${1-origin/master} refs/remotes/origin; }; f"
 	prlog = "!f() { git log --decorate=no --oneline --reverse ${1:-origin/master}..HEAD; }; f"
 	files = "!f() { git diff --diff-filter=d --name-only ${1:-origin/master}...HEAD; }; f"
 	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
