@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PATH=${HOME}/bin:${HOME}/.npm/packages/bin:${PATH}
+PATH=${HOME}/.dotfiles/bin:${HOME}/.npm/packages/bin:${PATH}
 export PATH
 
 EDITOR=vim

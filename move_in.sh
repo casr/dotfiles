@@ -21,7 +21,7 @@ mkdir -p "${HOME}/.config"
 for f in \
 .Xdefaults .compton.conf .config/git .config/nvim .exrc .fonts.conf .kshrc \
 .mailcap .npmrc .sqliterc .tmux.conf .vim .xmodmaprc .xsession .zprofile \
-.zshrc bin
+.zshrc
 do
 	rm -f "${HOME}/$f"
 	ln -s "${HOME}/.dotfiles/$f" "${HOME}/$f"
