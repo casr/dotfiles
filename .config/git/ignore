@@ -2,3 +2,4 @@
 .autoenv.zsh
 
 /.my-bin/
+/.vim-lsp-settings/

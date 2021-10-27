@@ -20,3 +20,5 @@
 [user]
 	name = Chris Rawnsley
 	email = chris@puny.agency
+[init]
+	defaultBranch = main
