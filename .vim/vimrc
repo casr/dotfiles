@@ -139,6 +139,7 @@ let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 " srstevenson/vim-picker {{{
 nmap <leader>t <Plug>(PickerEdit)
 nmap <leader>s <Plug>(PickerVsplit)
+nmap <leader>b <Plug>(PickerBuffer)
 " }}}
 
 " prabirshrestha/asyncomplete.vim {{{
