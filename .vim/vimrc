@@ -39,6 +39,7 @@ nnoremap / /\v
 vnoremap / /\v
 vnoremap // yh/\V<C-R>=escape(@",'/\')<CR><CR>
 nnoremap <silent> <leader>q :tabclose<CR>
+nnoremap <silent> <c-g><c-g> :let @+=@%<CR>
 
 function! GetBufferList()
 	redir =>buflist
