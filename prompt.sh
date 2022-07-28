@@ -1,4 +1,7 @@
 __subshell() {
+	if [ "${VIRTUAL_ENV+yes}" = yes ]; then
+		printf -- "$1" 'venv'
+	fi
 	if [ "z${PIPENV_ACTIVE}" = "z1" ]; then
 		# Set this so that the shell is not super slow...
 		if [ -z "${PIPENV_NAME}" ]; then

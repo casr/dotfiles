@@ -29,5 +29,6 @@ PS1+=%~
 # show branch info
 PS1+='${vcs_info_msg_0_}'
 PS1+=$'\n'
+PS1+="\$(__subshell '(%s) ')"
 # indicate if user is running with privileges. i.e. root
 PS1+=%(!.# .$ )
