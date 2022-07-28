@@ -11,4 +11,4 @@ alias ll='ls -lAh'
 
 alias mv='mv -i' rm='rm -i' cp='cp -i'
 alias c80='printf "%80s\n" |tr " " "#"' c84='printf "%84s\n" |tr " " "#"'
-alias gst='git st' gd='git diff' gdc='git diff --cached'
+alias gst='git st' gd='git diff' gdc='git diff --cached' glo='git log --oneline'
