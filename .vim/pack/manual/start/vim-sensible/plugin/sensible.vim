@@ -1,7 +1,6 @@
 " sensible.vim - Defaults everyone can agree on
 " Maintainer:   Tim Pope <http://tpo.pe/>
 " Version:      1.2
-" Git:          2d9f34c
 
 if exists('g:loaded_sensible') || &compatible
   finish

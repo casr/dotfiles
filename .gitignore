@@ -1,4 +1,7 @@
+/.config/nvim/pack/
+/.config/nvim/plugin/packer_compiled.lua
 /.config/nvim/undo/
 /.vim/info
-/.vim/pack/
+/.vim/pack/*
+!/.vim/pack/manual/
 /.vim/undo/

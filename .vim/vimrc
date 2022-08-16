@@ -1,78 +1,22 @@
-" Prelude {{{
 " Remove start up nag screen
 set shortmess+=I
-set updatetime=300
-set titlestring=%{getcwd()}
 set mouse=nvc
-if !has('nvim') && $TERM =~# '^nsterm\|^st\|^tmux'
+if $TERM =~# '^nsterm\|^st\|^tmux'
 	" Better mouse support for dragging
 	set ttymouse=sgr
 endif
-" }}}
 
-" Viewing {{{
-set background=light
 colorscheme chromatine
-if exists('+breakindent')
-	" Wrap and indent lines by the current line's plus shift
-	set breakindent breakindentopt=shift:2,sbr linebreak wrap
-endif
-if &encoding ==# 'utf-8'
-	set showbreak=…
-	set list listchars=tab:›\ ,trail:•,extends:›,precedes:‹,nbsp:.
-endif
 set splitbelow splitright
 
 if executable('ag')
 	set grepprg=ag\ --vimgrep\ $* grepformat=%f:%l:%c:%m
 endif
 if &t_Co > 2 || has('gui_running')
-	set colorcolumn=80,+1
-	set cursorline
 	set hlsearch
 endif
 set ignorecase smartcase
-set foldcolumn=4
-let &signcolumn=(has('nvim') ? 'yes' : 'number')
-" Set up 'very magic' search mode. See :h \\v
-nnoremap / /\v
-vnoremap / /\v
-vnoremap // yh/\V<C-R>=escape(@",'/\')<CR><CR>
-nnoremap <silent> <leader>q :tabclose<CR>
-nnoremap <silent> <c-g><c-g> :let @+=@%<CR>
 
-function! GetBufferList()
-	redir =>buflist
-	silent! ls!
-	redir END
-	return buflist
-endfunction
-
-function! ToggleList(bufname, pfx)
-	let buflist = GetBufferList()
-	for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
-		if bufwinnr(bufnum) != -1
-			exec(a:pfx.'close')
-			return
-		endif
-	endfor
-	if a:pfx == 'l' && len(getloclist(0)) == 0
-		echohl ErrorMsg
-		echo "Location List is Empty."
-		return
-	endif
-	let winnr = winnr()
-	exec(a:pfx.'open')
-	if winnr() != winnr
-		wincmd p
-	endif
-endfunction
-
-nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
-nmap <silent> <leader>f :call ToggleList("Quickfix List", 'c')<CR>
-" }}}
-
-" Editing {{{
 " Allow unsaved buffers
 set hidden
 " Do not let random files mess with the settings
@@ -80,54 +24,23 @@ set nomodeline
 " Copy the file then save it (useful for some filesystem watch mechanisms)
 set backupcopy=yes
 set autoread
-" }}}
 
-" Undo, swap and info {{{
 set noswapfile
-if has('persistent_undo')
-	let &undodir=simplify(fnamemodify($MYVIMRC, ':h') . '/undo')
-	set undofile
-	if exists('*mkdir')
-		if !isdirectory(&undodir)
-			call mkdir(&undodir, 'p', 0700)
-		endif
-	else
-		echom 'Unable to create undodir'
-	endif
-endif
-
-if has('viminfo')
-	let &viminfo=&viminfo . ',n' .
-		\ simplify(fnamemodify($MYVIMRC, ':h') . '/info')
-endif
-" }}}
+set viminfo=
 
 " Status line {{{
-augroup Get_Git_Status
-	autocmd!
-	if exists('*FugitiveStatusline')
-		let g:git_status = "[Git(...)]"
-		autocmd CursorHold * let g:git_status = FugitiveStatusline()
-	endif
-augroup END
-
 """ Sample status line:
-" [23] .dotfiles/.vim/vimrc [+] [dos]  [Git(master)]    10, 70/218
-" Always reset when re-sourced
+" [23] .dotfiles/.vim/vimrc [+]                   [dos] 10, 70/218
+" [23] options.txt [Help][-][RO]                        10, 70/218
 set statusline=
-" buffer number, full path, modified
-set statusline+=\ [%n]\ %<%f\ %m
-if exists('*FugitiveStatusline')
-	set statusline+=\ %{g:git_status}
-endif
-" file format
-set statusline+=\ %{&ff!='unix'?'['.&ff.']':''}
-" ruler
-set statusline+=%=\ %c,\ %-10(%l\/%L\ %)
-set laststatus=2
+set statusline+=\ [%n]
+set statusline+=\ %<%f
+set statusline+=\ %h%w%m%r
+set statusline+=%=
+set statusline+=%{&ff!='unix'?'['.&ff.']\ ':''}
+set statusline+=%-14.(%l,%c%V%)\ %(%L\ %)
+set showtabline=2
 " }}}
-
-" Plugin settings {{{
 
 " netrw {{{
 let g:netrw_dirhistmax=0
@@ -136,172 +49,33 @@ let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 " }}}
 
-" srstevenson/vim-picker {{{
-nmap <leader>t <Plug>(PickerEdit)
-nmap <leader>s <Plug>(PickerVsplit)
-nmap <leader>b <Plug>(PickerBuffer)
-" }}}
-
-" prabirshrestha/asyncomplete.vim {{{
-imap <C-g> <Plug>(asyncomplete_force_refresh)
-" }}}
-
-" prabirshrestha/vim-lsp {{{
-let g:lsp_diagnostics_echo_cursor = 1
-let g:lsp_diagnostics_echo_delay = 150
-let g:lsp_diagnostics_float_cursor = 1
-let g:lsp_diagnostics_virtual_text_enabled = 0
-let g:lsp_document_code_action_signs_enabled = 0
-let g:lsp_preview_max_width = 80
-
-function! s:on_lsp_buffer_enabled() abort
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gD <plug>(lsp-type-definition)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gA <plug>(lsp-code-action)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
-endfunction
-" }}}
-
-" mattn/vim-lsp-settings {{{
-let g:lsp_settings_enable_suggestions = 0
-let g:lsp_settings_filetype_javascript = ['typescript-language-server', 'eslint-language-server']
-let g:lsp_settings_filetype_javascriptreact = ['typescript-language-server', 'eslint-language-server']
-let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'eslint-language-server']
-let g:lsp_settings_filetype_typescriptreact = ['typescript-language-server', 'eslint-language-server']
-" }}}
-
-" ledger/vim-ledger {{{
-let g:ledger_maxwidth = 61
-let g:ledger_fold_blanks = 1
-let g:ledger_align_at = 58
-let g:ledger_default_commodity = 'GBP'
-let g:ledger_commodity_before = 0
-let g:ledger_commodity_sep = ' '
-" }}}
-
-" ericpruitt/tmux.vim {{{
+" So syntax highlighting understands $(...)
+let g:is_posix = 1
 let g:tmux_syntax_colors = 0
-" }}}
-
-" }}}
 
 if has('autocmd')
-	" Folds {{{
-	augroup folds
+	augroup vimrc_autocmd
 		autocmd!
-		autocmd BufWinEnter *
-			\ let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
-	augroup END
-	" }}}
-	" Shell {{{
-	augroup shell
-		autocmd!
-		" So syntax highlighting understands $(...)
-		autocmd FileType sh let g:is_posix = 1
-	augroup END
-	" }}}
-	" Web {{{
-	augroup web
-		autocmd!
-		autocmd FileType
-			\ css,javascript,javascriptreact,json,sass,scss,typescript,typescriptreact
-			\ setlocal expandtab shiftwidth=2 softtabstop=2
-				\ textwidth=80
-	augroup END
-	" }}}
-	" Ledger {{{
-	augroup ledger
-		autocmd!
-		autocmd FileType ledger
-			\ setlocal expandtab shiftwidth=4 softtabstop=4
-				\ textwidth=80 foldmethod=syntax foldenable
-				\ foldcolumn=2
-		autocmd FileType ledger nmap <leader>f :LedgerAlign<CR>
-	augroup END
-	" }}}
-	" Vim {{{
-	augroup ft_vim
-		autocmd!
-		autocmd FileType vim setlocal foldmethod=marker
-		autocmd FileType help setlocal colorcolumn=0
-	augroup END
-	" }}}
-	" Prose {{{
-	augroup prose
-		autocmd!
+
 		autocmd FileType gitcommit,gitsendmail,mail,markdown,text
-			\ setlocal spell spelllang=en_gb
-			\ | let &l:formatprg = 'par -w' .
-			\ (&textwidth > 0 ? &textwidth : 74)
+			\ setlocal spell spelllang=en_gb expandtab
+			         \ shiftwidth=2 softtabstop=2
+		if executable('par')
+			autocmd FileType gitcommit,gitsendmail,mail,markdown,text
+			      \ let &l:formatprg = 'par -w' .
+			      \ (&textwidth > 0 ? &textwidth : 74)
+		endif
+
+		autocmd FileType
+		      \ css,javascript,javascriptreact,json,sass,scss,typescript,typescriptreact
+		      \ setlocal expandtab shiftwidth=2 softtabstop=2
 	augroup END
-	" }}}
-	" LSP setup {{{
-	augroup lsp_setup
-		autocmd!
-		" call s:on_lsp_buffer_enabled only for languages that has the server
-		" registered.
-		autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-	augroup END
-	augroup asyncomplete_setup
-		autocmd!
-		autocmd User asyncomplete_setup call asyncomplete#register_source(
-			\ asyncomplete#sources#omni#get_source_options({
-				\ 'name': 'omni',
-				\ 'allowlist': ['*'],
-				\ 'blocklist': [
-					\ 'c',
-					\ 'cpp',
-					\ 'html',
-					\ 'javascript',
-					\ 'typescript',
-					\ 'typescriptreact',
-				\ ],
-				\ 'completor': function('asyncomplete#sources#omni#completor')
-			\ }))
-	augroup END
-	" }}}
 endif
 
-" Plugins {{{
-function! PackInit() abort
-	packadd minpac
-
-	call minpac#init()
-	" git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
-	call minpac#add('k-takata/minpac', {'type': 'opt'})
-
-	call minpac#add('AndrewRadev/splitjoin.vim')
-	call minpac#add('editorconfig/editorconfig-vim')
-	call minpac#add('ledger/vim-ledger')
-	call minpac#add('moll/vim-node')
-	call minpac#add('reedes/vim-pencil')
-	call minpac#add('sheerun/vim-polyglot')
-	call minpac#add('srstevenson/vim-picker')
-	call minpac#add('tmhedberg/SimpylFold')
-	call minpac#add('tpope/vim-commentary')
-	call minpac#add('tpope/vim-eunuch')
-	call minpac#add('tpope/vim-surround')
-	call minpac#add('tpope/vim-unimpaired')
-
-	" IDE stuff
-	call minpac#add('mattn/vim-lsp-settings')
-	call minpac#add('mhinz/vim-signify')
-	call minpac#add('tpope/vim-fugitive')
-	call minpac#add('tpope/vim-rhubarb')
-	call minpac#add('prabirshrestha/async.vim')
-	call minpac#add('prabirshrestha/vim-lsp')
-	call minpac#add('prabirshrestha/asyncomplete.vim')
-	call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
-	call minpac#add('yami-beta/asyncomplete-omni.vim')
-endfunction
-
-command! PackUpdate source $MYVIMRC | call PackInit() | call minpac#update()
-command! PackClean  source $MYVIMRC | call PackInit() | call minpac#clean()
-command! PackStatus source $MYVIMRC | call PackInit() | call minpac#status()
-" }}}
+" casr/vim-colors-chromatine
+" tpope/vim-apathy
+" tpope/vim-commentary
+" tpope/vim-eunuch
+" tpope/vim-rsi
+" tpope/vim-sensible
+" tpope/vim-unimpaired
