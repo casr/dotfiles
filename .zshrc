@@ -18,7 +18,10 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' formats "  %b"
 zstyle ':vcs_info:*' actionformats "  %b (%a)"
-precmd() { vcs_info }
+precmd() {
+	vcs_info
+	print -Pn "\e]2;%/\a"
+}
 
 # man zshmisc /EXPANSION OF PROMPT SEQUENCES
 PS1=
