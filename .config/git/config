@@ -1,14 +1,14 @@
 [alias]
 	st = status --branch --short
 	branch-date-sorted = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=16,position=right)%(committerdate:relative)  %(end)%(refname:short)'
-	bl = "!f() { git branch-date-sorted --no-merged ${1-origin/master} refs/heads; }; f"
-	blr = "!f() { git branch-date-sorted --no-merged ${1-origin/master} refs/remotes/origin; }; f"
-	prlog = "!f() { git log --decorate=no --oneline --reverse ${1:-origin/master}..HEAD; }; f"
-	files = "!f() { git diff --diff-filter=d --name-only ${1:-origin/master}...HEAD; }; f"
+	bl = "!f() { git branch-date-sorted --no-merged ${1-origin/main} refs/heads; }; f"
+	blr = "!f() { git branch-date-sorted --no-merged ${1-origin/main} refs/remotes/origin; }; f"
+	prlog = "!f() { git log --decorate=no --oneline --reverse ${1:-origin/main}..HEAD; }; f"
+	files = "!f() { git diff --diff-filter=d --name-only ${1:-origin/main}...HEAD; }; f"
 	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
 	alias = config --get-regexp ^alias\\.
 	plog = log --oneline --graph
-	rmerged = for-each-ref --format='%(refname:strip=3)' --merged origin/master refs/remotes/origin
+	rmerged = for-each-ref --format='%(refname:strip=3)' --merged origin/main refs/remotes/origin
 [push]
 	default = current
 [merge]
