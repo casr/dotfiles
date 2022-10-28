@@ -1,6 +1,8 @@
 -- Built-in {{{
 vim.o.shortmess = vim.o.shortmess .. "I"
 vim.o.mouse = "nvc"
+vim.o.updatetime = 400
+
 vim.o.background = "light"
 vim.cmd [[colorscheme chromatine]]
 -- Wrap and indent lines by the current line's plus shift
@@ -8,7 +10,7 @@ vim.o.breakindent = true
 vim.o.breakindentopt = "shift:2,sbr"
 vim.o.linebreak = true
 
-vim.o.fillchars = "vert:│,fold:═,foldopen:┌,foldclose:╓,foldsep:│"
+vim.o.fillchars = "vert:│,foldopen:┌,foldclose:╓,foldsep:│"
 vim.o.showbreak = "…"
 vim.o.list = true
 vim.o.listchars = "tab:› ,trail:•,extends:›,precedes:‹,nbsp:."
@@ -75,7 +77,7 @@ local augroup = vim.api.nvim_create_augroup("init_autocmd", {})
 -- Web {{{
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
-  pattern = { "css", "javascript", "javascriptreact", "json", "sass", "scss", "typescript", "typescriptreact" },
+  pattern = { "css", "html", "javascript", "javascriptreact", "json", "sass", "scss", "typescript", "typescriptreact" },
   callback = function()
     vim.bo.expandtab = true
     vim.bo.shiftwidth = 2
