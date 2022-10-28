@@ -1,9 +1,9 @@
 " Vim color file
 " Description: Low-colour theme with light and dark variants
 " Maintainer: Chris Rawnsley <chris@puny.agency>
-" Version: 0.5.0
+" Version: 0.6.3
 " Source: https://github.com/casr/vim-colors-chromatine
-" Last change: 2022 Aug 5
+" Modified: 2022 Oct 05
 
 hi clear
 if exists('syntax_on')
@@ -16,89 +16,118 @@ let g:colors_name = 'chromatine'
 " from which we can build upon.
 " Plain terminal {{{
 
-hi Normal ctermfg=NONE ctermbg=NONE
+hi chromatineSelection term=reverse cterm=reverse gui=reverse
+hi chromatineHighlight term=bold cterm=bold gui=bold
+hi chromatineUI term=reverse cterm=reverse gui=reverse
+hi chromatineUIActive NONE
 
-hi Directory term=NONE ctermfg=NONE guifg=NONE
-hi ErrorMsg term=reverse cterm=reverse ctermfg=NONE ctermbg=NONE gui=reverse guifg=NONE guibg=NONE
-hi LineNr term=NONE ctermfg=NONE guifg=NONE
-hi CursorLineNr cterm=bold ctermfg=NONE guifg=NONE
-hi MatchParen term=bold cterm=bold ctermbg=NONE guibg=NONE
-hi ModeMsg term=NONE cterm=NONE gui=NONE
-hi MoreMsg term=NONE ctermfg=NONE gui=NONE guifg=NONE
-hi NonText term=NONE ctermfg=NONE gui=NONE guifg=NONE
-hi Pmenu term=reverse cterm=reverse ctermfg=NONE ctermbg=NONE gui=reverse guibg=NONE
-hi PmenuSel ctermfg=NONE ctermbg=NONE guibg=NONE
-hi PmenuSbar ctermbg=NONE guibg=NONE
-hi PmenuThumb ctermbg=NONE guibg=NONE
-hi Question term=NONE ctermfg=NONE gui=NONE guifg=NONE
-hi Search cterm=reverse ctermfg=NONE ctermbg=NONE gui=reverse guifg=NONE guibg=NONE
-hi SpecialKey term=NONE ctermfg=NONE guifg=NONE
-hi StatusLine term=reverse cterm=reverse gui=reverse
-hi StatusLineNC term=NONE cterm=NONE gui=NONE
-hi TabLine term=reverse cterm=reverse ctermfg=NONE ctermbg=NONE gui=reverse guibg=NONE
-hi TabLineSel term=NONE cterm=NONE gui=NONE
-hi Title cterm=bold ctermfg=NONE gui=bold guifg=NONE
-hi Visual term=reverse cterm=reverse ctermbg=NONE gui=reverse guibg=NONE
-hi WarningMsg term=reverse cterm=reverse ctermfg=NONE gui=reverse guifg=NONE
+hi Visual NONE | hi link Visual chromatineSelection
+hi VertSplit NONE
+hi LineNr NONE | hi link LineNr chromatineUIMuted
+hi MatchParen NONE | hi link MatchParen chromatineHighlight
+
+hi NonText NONE | hi link NonText chromatineUIMuted
+hi SpecialKey NONE | hi link SpecialKey chromatineUIMuted
+
+hi Pmenu NONE | hi link Pmenu chromatineUI
+hi PmenuSel NONE term=nocombine cterm=nocombine gui=nocombine
+hi PmenuSbar NONE
+hi PmenuThumb NONE
+
+hi StatusLine NONE term=reverse cterm=reverse gui=reverse
+hi StatusLineNC NONE term=nocombine cterm=nocombine gui=nocombine
+
+hi Tabline NONE | hi link TabLine TabLineFill
+hi TabLineSel NONE | hi link TabLineSel chromatineUIActive
+hi TabLineFill NONE | hi link TabLineFill chromatineUI
+
+hi Title NONE cterm=bold gui=bold
+hi Directory NONE
+
+hi CursorLineNr NONE term=bold cterm=bold gui=bold
+
+hi Search NONE
+hi IncSearch NONE | hi link IncSearch chromatineSelection
+
+hi ErrorMsg NONE
+hi ModeMsg NONE
+hi MoreMsg NONE
+hi Question NONE
+hi WarningMsg NONE | hi link WarningMsg chromatineSelection
 
 if has('clipboard')
-	hi VisualNOS term=reverse cterm=reverse gui=reverse
+	hi VisualNOS NONE | hi link VisualNOS Visual
 endif
 
 if has('diff')
-	hi DiffAdd cterm=bold ctermbg=NONE gui=bold guibg=NONE
-	hi DiffChange cterm=bold ctermbg=NONE gui=bold guibg=NONE
-	hi DiffDelete cterm=bold ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
-	hi DiffText cterm=reverse ctermbg=NONE gui=reverse guibg=NONE
+	hi DiffAdd NONE
+	hi DiffChange NONE
+	hi DiffDelete NONE
+	hi DiffText NONE term=bold cterm=bold gui=bold
+endif
+
+if has('gui_running')
+	hi Cursor NONE | hi link Cursor chromatineUI
+	hi lCursor NONE | hi link lCursor Cursor
 endif
 
 if has('folding')
-	hi Folded term=reverse cterm=reverse ctermfg=NONE ctermbg=NONE gui=reverse guifg=NONE guibg=NONE
-	hi FoldColumn term=NONE ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
+	hi Folded NONE | hi link Folded chromatineUIMuted
+	hi FoldColumn NONE | hi link FoldColumn chromatineUIMuted
 endif
 
 if has('spell')
-	hi SpellBad term=underline cterm=underline ctermbg=NONE guisp=NONE
-	hi SpellCap term=underline cterm=underline ctermbg=NONE guisp=NONE
-	hi SpellLocal term=underline cterm=underline ctermbg=NONE guisp=NONE
-	hi SpellRare term=NONE ctermbg=NONE guisp=NONE
+	hi SpellBad NONE term=underline cterm=underline gui=undercurl
+	hi SpellCap NONE | hi link SpellCap SpellBad
+	hi SpellLocal NONE | hi link SpellLocal SpellBad
+	hi SpellRare NONE
 endif
 
 if has('syntax')
-	hi ColorColumn cterm=reverse ctermbg=NONE gui=reverse guibg=NONE
-	hi CursorColumn term=NONE ctermbg=NONE guibg=NONE
-	hi CursorLine term=NONE cterm=NONE guibg=NONE
+	hi ColorColumn NONE | hi link ColorColumn chromatineUI
+	hi CursorLine NONE
+	hi CursorColumn NONE | hi link CursorColumn CursorLine
 
-	hi Comment term=NONE ctermfg=NONE guifg=NONE
-	hi Constant term=NONE ctermfg=NONE guifg=NONE
-	hi Special term=NONE ctermfg=NONE guifg=NONE
-	hi Identifier term=NONE cterm=NONE ctermfg=NONE guifg=NONE
-	hi Statement term=NONE ctermfg=NONE gui=NONE guifg=NONE
-	hi PreProc term=NONE ctermfg=NONE guifg=NONE
-	hi Type term=NONE ctermfg=NONE gui=NONE guifg=NONE
-	hi Underlined ctermfg=NONE guifg=NONE
-	hi Ignore ctermfg=NONE guifg=NONE
-	hi Error cterm=reverse ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
-	hi Todo term=NONE ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
+	hi Comment NONE
+	hi Constant NONE
+	hi Special NONE
+	hi Identifier NONE
+	hi Statement NONE
+	hi PreProc NONE
+	hi Type NONE
+	hi Underlined NONE term=underline cterm=underline gui=underline
+	hi Ignore NONE
+	hi Error NONE term=underline cterm=underline gui=underline
+	hi Todo NONE
 endif
 
 if has('wildmenu')
-	hi WildMenu term=NONE ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
+	hi WildMenu NONE
 endif
 
 if has('conceal')
-	hi Conceal ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+	hi Conceal NONE
 endif
 
 if has('signs')
-	hi SignColumn term=NONE ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
+	hi SignColumn NONE
 endif
 
 if has('terminal')
-	hi StatusLineTerm term=reverse cterm=reverse ctermfg=NONE ctermbg=NONE gui=reverse guifg=NONE guibg=NONE
-	hi StatusLineTermNC term=NONE ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
+	hi StatusLineTerm NONE | hi link StatusLineTerm StatusLine
+	hi StatusLineTermNC NONE | hi link StatusLineTermNC StatusLineNC
 endif
 
+if has('nvim')
+	hi DiagnosticError NONE
+	hi DiagnosticWarn NONE
+	hi DiagnosticInfo NONE
+	hi DiagnosticHint NONE
+	hi DiagnosticUnderlineError NONE term=underline cterm=underline gui=underline
+	hi DiagnosticUnderlineWarn NONE term=underline cterm=underline gui=underline
+	hi DiagnosticUnderlineInfo NONE term=underline cterm=underline gui=underline
+	hi DiagnosticUnderlineHint NONE term=underline cterm=underline gui=underline
+endif
 " }}}
 
 " 256 color terminal / GUI {{{
@@ -164,143 +193,184 @@ function! s:hi(...)
 endfunction
 " }}}
 
+hi chromatineSelection NONE
+hi chromatineUI NONE
+
+hi PmenuSel NONE | hi link PmenuSel chromatineSelection
+
+hi StatusLine NONE | hi link StatusLine chromatineUIActive
+hi StatusLineNC NONE | hi link StatusLineNC chromatineUI
+
+hi CursorLineNr NONE
+
+hi QuickFixLine NONE | hi link QuickFixLine chromatineHighlight
+
+if has('syntax')
+	hi Todo cterm=bold,underline gui=bold,underline
+endif
+
+if has('wildmenu')
+	hi link WildMenu chromatineSelection
+endif
+
 if &background ==# 'light'
 	Hi Normal ctermfg=235 ctermbg=231
-	Hi VertSplit ctermfg=250 ctermbg=254
-	Hi IncSearch ctermfg=bg ctermbg=light
-	Hi MatchParen ctermfg=light
-	Hi Pmenu ctermfg=255 ctermbg=241
-	Hi PmenuSel ctermbg=light
+
+	Hi chromatineSelection ctermfg=bg ctermbg=light
+	Hi chromatineHighlight ctermfg=light
+	Hi chromatineUI ctermbg=253
+	Hi chromatineUIActive ctermfg=light ctermbg=255
+	Hi chromatineUIMuted ctermfg=246
+
+	Hi VertSplit ctermfg=253
+
+	Hi CursorLineNr ctermfg=235
+
 	Hi Search ctermfg=fg ctermbg=222
-	Hi StatusLine ctermfg=bg ctermbg=240
-	Hi StatusLineNC ctermbg=254
-	Hi TabLine ctermfg=240 ctermbg=254
-	Hi TabLineFill ctermbg=240
-	Hi Visual ctermfg=bg ctermbg=light
-	Hi WarningMsg ctermfg=bg ctermbg=light
+
+	hi ErrorMsg ctermbg=217
 
 	if has('diff')
-		Hi DiffAdd ctermfg=fg ctermbg=194
-		Hi DiffChange ctermbg=255
-		Hi DiffDelete ctermfg=fg ctermbg=224
-		Hi DiffText ctermbg=228
+		Hi DiffAdd ctermbg=194
+		Hi DiffChange ctermbg=254
+		Hi DiffDelete ctermbg=224
+		Hi DiffText ctermbg=230
 	endif
 
 	if has('folding')
-		Hi Folded ctermfg=light
+		Hi FoldColumn ctermfg=246
 	endif
 
 	if has('syntax')
-		Hi ColorColumn ctermfg=fg ctermbg=254
-		Hi CursorColumn ctermbg=254
-		Hi CursorLine ctermbg=254
+		Hi CursorLine ctermbg=255
 
-		Hi Comment ctermfg=243
-		Hi Statement ctermfg=242
+		Hi Comment ctermfg=240
 		Hi Error ctermbg=224
-		Hi Todo ctermfg=light
 	endif
 
-	if has('terminal')
-		Hi StatusLineTerm ctermfg=bg ctermbg=240
-		Hi StatusLineTermNC ctermbg=254
+	Hi chromatineDiffAdd ctermfg=28
+	Hi chromatineDiffChange ctermfg=100
+	Hi chromatineDiffDelete ctermfg=131
+
+	if has('nvim')
+		Hi DiagnosticError ctermfg=131
+		Hi DiagnosticUnderlineError ctermfg=131
+		Hi DiagnosticWarn ctermfg=172
+		Hi DiagnosticHint ctermfg=243
 	endif
 else
 	Hi Normal ctermfg=253 ctermbg=234
-	Hi VertSplit ctermfg=240 ctermbg=237
-	Hi IncSearch ctermfg=bg ctermbg=dark
-	Hi MatchParen ctermfg=dark
-	Hi Pmenu ctermfg=255 ctermbg=244
-	Hi PmenuSel ctermbg=dark
-	Hi Search ctermfg=bg ctermbg=222
-	Hi StatusLine ctermfg=bg ctermbg=250
-	Hi StatusLineNC ctermbg=237
-	Hi TabLine ctermfg=250 ctermbg=237
-	Hi TabLineFill ctermbg=250
-	Hi Visual ctermfg=bg ctermbg=dark
-	Hi WarningMsg ctermfg=bg ctermbg=dark
+
+	Hi chromatineSelection ctermfg=bg ctermbg=dark
+	Hi chromatineHighlight ctermfg=dark
+	Hi chromatineUI ctermbg=238
+	Hi chromatineUIActive ctermfg=dark ctermbg=236
+	Hi chromatineUIMuted ctermfg=245
+
+	Hi VertSplit ctermfg=238
+
+	Hi CursorLineNr ctermfg=250
+
+	Hi Search ctermfg=fg ctermbg=94
+
+	hi ErrorMsg ctermbg=131
 
 	if has('diff')
-		Hi DiffAdd ctermfg=fg ctermbg=65
-		Hi DiffChange ctermbg=236
-		Hi DiffDelete ctermfg=fg ctermbg=95
+		Hi DiffAdd ctermbg=22
+		Hi DiffChange ctermbg=235
+		Hi DiffDelete ctermbg=52
 		Hi DiffText ctermbg=58
 	endif
 
 	if has('folding')
-		Hi Folded ctermfg=dark
+		Hi FoldColumn ctermfg=242
 	endif
 
 	if has('syntax')
-		Hi ColorColumn ctermfg=fg ctermbg=237
-		Hi CursorColumn ctermbg=237
-		Hi CursorLine ctermbg=237
+		Hi CursorLine ctermbg=236
 
-		Hi Comment ctermfg=246
-		Hi Error ctermbg=95
-		Hi Todo ctermfg=dark
+		Hi Comment ctermfg=248
+		Hi Error ctermbg=52
 	endif
 
-	if has('terminal')
-		Hi StatusLineTerm ctermfg=bg ctermbg=250
-		Hi StatusLineTermNC ctermbg=237
+	Hi chromatineDiffAdd ctermfg=65
+	Hi chromatineDiffChange ctermfg=142
+	Hi chromatineDiffDelete ctermfg=130
+
+	if has('nvim')
+		Hi DiagnosticError ctermfg=131
+		Hi DiagnosticUnderlineError ctermfg=131
+		Hi DiagnosticWarn ctermfg=222
+		Hi DiagnosticHint ctermfg=245
 	endif
-endif
-
-Hi VertSplit cterm=NONE gui=NONE
-Hi IncSearch cterm=NONE gui=NONE
-Hi ErrorMsg cterm=NONE ctermfg=231 ctermbg=160 gui=NONE
-Hi LineNr ctermfg=246
-Hi MatchParen cterm=bold gui=bold
-Hi NonText cterm=NONE ctermfg=246 gui=NONE
-Hi Pmenu cterm=NONE gui=NONE
-Hi PmenuSel ctermfg=231
-Hi PmenuSbar ctermbg=fg
-Hi PmenuThumb ctermbg=240
-Hi Search cterm=NONE gui=NONE
-Hi SpecialKey cterm=NONE ctermfg=246 gui=NONE
-Hi StatusLine cterm=NONE gui=NONE
-Hi TabLine cterm=NONE gui=NONE
-Hi TabLineFill cterm=NONE gui=NONE
-Hi Visual cterm=NONE gui=NONE
-Hi WarningMsg cterm=NONE gui=NONE
-
-if has('diff')
-	Hi DiffAdd cterm=NONE gui=NONE
-	Hi DiffChange cterm=NONE gui=NONE
-	Hi DiffDelete cterm=NONE gui=NONE
-	Hi DiffText cterm=bold gui=bold
-endif
-
-if has('folding')
-	Hi Folded cterm=NONE gui=NONE
-endif
-
-if has('syntax')
-	Hi ColorColumn cterm=NONE gui=NONE
-	Hi Todo cterm=bold gui=bold
-	Hi Error cterm=NONE gui=NONE
-
-	" ft:diff {{{
-	hi! link diffAdded DiffAdd
-	hi! link diffChanged DiffChange
-	hi! link diffRemoved DiffDelete
-	hi! link diffSubname Comment
-	hi! link diffLine Comment
-	hi! link diffFile Comment
-	hi! link diffOldFile Comment
-	hi! link diffNewFile Comment
-	hi! link diffIndexLine Comment
-	" }}}
 endif
 
 if has('clipboard')
-	Hi VisualNOS cterm=NONE ctermfg=bg ctermbg=fg gui=NONE
+	Hi VisualNOS ctermfg=bg ctermbg=fg
 endif
 
-if has('terminal')
-	Hi StatusLineTerm cterm=NONE gui=NONE
+let s:term_theme = &background ==# 'light'
+	\ ? ['#1c1c1c', '#af5f5f', '#008700', '#d78700', '#00005f', '#875f87', '#5f8787', '#dadada',
+           \ '#767676', '#af5f5f', '#008700', '#d78700', '#00005f', '#875f87', '#5f8787', '#ffffff']
+	\ : ['#303030', '#af5f5f', '#87af87', '#ffd787', '#5f5faf', '#af87af', '#87afaf', '#dadada',
+           \ '#767676', '#af5f5f', '#87af87', '#ffd787', '#5f5faf', '#af87af', '#87afaf', '#e4e4e4']
+
+if (has('termguicolors') && &termguicolors) || has('gui_running')
+	if has('nvim')
+		let s:i = 0
+		for c in s:term_theme
+			execute 'let g:terminal_color_' . s:i . ' = "' . c . '"'
+			let s:i += 1
+		endfor
+	else
+		let g:terminal_ansi_colors = s:term_theme
+	endif
 endif
+
+" Syntax tweaks {{{
+if has('syntax')
+	" ft:css {{{
+	hi link cssMediaComma NONE
+	" }}}
+
+	" ft:diff {{{
+	hi link diffAdded DiffAdd
+	hi link diffChanged DiffChange
+	hi link diffRemoved DiffDelete
+	hi link diffSubname Comment
+	hi link diffLine Comment
+	hi link diffFile Comment
+	hi link diffOldFile Comment
+	hi link diffNewFile Comment
+	hi link diffIndexLine Comment
+	" }}}
+
+	" ft:help {{{
+	hi link helpHyperTextJump chromatineHighlight
+	" }}}
+
+	" ft:typescript {{{
+	hi link typescriptSymbols NONE
+	hi link typescriptParens NONE
+	" }}}
+
+	" ft:vim {{{
+	hi link vimEmbedError NONE
+	hi link vimCommentTitle Comment
+	hi link vimUserFunc NONE
+	" }}}
+endif
+" }}}
+
+" Plugin tweaks {{{
+
+" Signify {{{
+hi link SignifySignAdd chromatineDiffAdd
+hi link SignifySignChange chromatineDiffChange
+hi link SignifySignDelete chromatineDiffDelete
+" }}}
+
+" }}}
 
 delcommand Hi
 " }}}
