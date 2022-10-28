@@ -57,6 +57,15 @@ defaults write com.apple.dock contents-immutable -bool yes
 
 __p no 'System Preferences:Mission Control:Automatically rearrange Spaces based on most recent use' NO
 defaults write com.apple.dock mru-spaces -bool false
+__p no 'System Preferences:Mission Control:Hot Corners...' NO
+defaults delete com.apple.dock wvous-tr-corner
+defaults delete com.apple.dock wvous-tr-modifier
+defaults delete com.apple.dock wvous-br-corner
+defaults delete com.apple.dock wvous-br-modifier
+defaults delete com.apple.dock wvous-bl-corner
+defaults delete com.apple.dock wvous-bl-modifier
+defaults delete com.apple.dock wvous-tl-corner
+defaults delete com.apple.dock wvous-tl-modifier
 
 __p yes 'System Preferences:Siri:Enable Ask Siri' NO
 
@@ -80,7 +89,7 @@ defaults write -g KeyRepeat -int 2
 __p no 'System Preferences:Keyboard:Keyboard:Delay Until Repeat' Shortest-1
 defaults write -g InitialKeyRepeat -int 25
 __p yes 'System Preferences:Keyboard:Keyboard:Adjust keyboard brightness in low light' NO
-__p yes 'System Preferences:Keyboard:Keyboard:Press Fn key to' 'Do Nothing'
+__p yes 'System Preferences:Keyboard:Keyboard:Press Fn key to' 'Show Emoji & Symbols/Do Nothing'
 __p yes 'System Preferences:Keyboard:Keyboard:Modifier Keys...:Caps Lock' Control
 __p no 'System Preferences:Keyboard:Text:Correct spelling automatically' NO
 defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
@@ -96,6 +105,8 @@ __p yes 'System Preferences:Keyboard:Dictation:Shortcut' Off
 
 __p yes 'System Preferences:Trackpad:Point & Click:Look up & data detectors' NO
 __p yes 'System Preferences:Trackpad:Point & Click:Tap to click' NO
+__p yes 'System Preferences:Trackpad:More Gestures:Mission Control' NO
+__p yes 'System Preferences:Trackpad:More Gestures:App Exposé' YES
 __p yes 'System Preferences:Trackpad:More Gestures:Launchpad' NO
 
 __p yes 'System Preferences:Mouse:Tracking speed' 90%
@@ -133,8 +144,9 @@ defaults write com.apple.Safari AlwaysRestoreSessionAtLaunch -bool true
 __p yes 'Safari:Preferences:General:Homepage' 'about:blank'
 __p no 'Safari:Preferences:General:Open "safe" files after downloading' NO
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
-__p no 'Safari:Preferences:Tabs:Show website icons in tabs' NO
-defaults write com.apple.Safari ShowIconsInTabs -bool false
+__p yes 'Safari:Preferences:Tabs:Separate' YES
+__p yes 'Safari:Preferences:Tabs:Automatically collapse tab titles into icons' NO
+__p yes 'Safari:Preferences:Tabs:Show colour in tab bar' NO
 __p no 'Safari:Preferences:AutoFill:Using information from my contacts' NO
 defaults write com.apple.Safari AutoFillFromAddressBook -bool false
 __p no 'Safari:Preferences:AutoFill:Usernames and passwords' NO
@@ -154,6 +166,7 @@ defaults write com.apple.Safari ShowFavoritesUnderSmartSearchField -bool false
 __p no 'Safari:Preferences:Advanced:Show full website address' YES
 defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 __p yes 'Safari:Preferences:Advanced:Show Develop menu in menu bar' YES
+__p yes 'Safari:View' 'Always Show Tab Bar'
 __p no 'Safari:View' 'Show Status Bar'
 defaults write com.apple.Safari ShowOverlayStatusBar -bool true
 
@@ -163,6 +176,7 @@ defaults write com.apple.screencapture disable-shadow -bool true
 __p no 'Screenshot:Options' 'Show Floating Thumbnail'
 defaults write com.apple.screencapture show-thumbnail -bool false
 
+__p yes 'Terminal:Preferences:Profiles:Shell:When the shell exits' 'Close if the shell exited cleanly'
 __p no 'Hidden:Terminal' 'Remove copy style'
 defaults write com.apple.Terminal \
                CopyAttributesProfile com.apple.Terminal.no-attributes
