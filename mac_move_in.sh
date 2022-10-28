@@ -30,17 +30,17 @@ fi
 
 printf '%s' 'Downloading and building MacPorts'
 
-MACPORTS_DISTFILES=https://distfiles.macports.org/MacPorts
-MACPORTS_VERSION=2.6.4
+MACPORTS_DISTFILES=https://github.com/macports/macports-base/releases/download/
+MACPORTS_VERSION=2.8.0
 MACPORTS_ARCHIVE="MacPorts-${MACPORTS_VERSION}.tar.bz2"
-MACPORTS_ARCHIVE_RIPEMD160=7dd671d2fd6a5aa5a22e3c47d16160ffa2efad8f
-MACPORTS_ARCHIVE_SHA256=04e0dc4f44cbc6b59edb2873b3c73adf429e5053f20d2418387eeff776ec65d4
+MACPORTS_ARCHIVE_RIPEMD160=9e19c206cfb43b9f3368696297f969e0415b5c4b
+MACPORTS_ARCHIVE_SHA256=9988f093007fc12e5b7059144706cbb509e4e8d0277b2c27213c1f5340cd2cef
 
 if [ -d /opt/local ]; then
 	printf '%s\n' '... skipped.'
 else
 	cd "$(mktemp -d)"
-	curl -sLo "${MACPORTS_ARCHIVE}" "${MACPORTS_DISTFILES}/${MACPORTS_ARCHIVE}"
+	curl -sLo "${MACPORTS_ARCHIVE}" "${MACPORTS_DISTFILES}/v${MACPORTS_VERSION}/${MACPORTS_ARCHIVE}"
 	if [ "z${MACPORTS_ARCHIVE_RIPEMD160}" != "z$(cat "${MACPORTS_ARCHIVE}" | openssl dgst -ripemd160)" ]; then
 		printf '%s\n' 'RIPEMD160 digest does not match record'
 		exit 1
