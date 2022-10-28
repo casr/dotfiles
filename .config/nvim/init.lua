@@ -159,17 +159,24 @@ vim.keymap.set("n", "<leader>di", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, opts)
-vim.keymap.set("n", "<leader>z", function()
-  if not vim.fn.exists("*synstack") then
-    return
+
+local function get_syntax_stack(col_offset)
+  local function id_to_name(id)
+    return vim.fn.synIDattr(id, "name")
   end
-  local groupIds = vim.fn.synstack(vim.fn.line('.'), vim.fn.col('.'))
-  local groupNames = {}
-  for i, id in ipairs(groupIds) do
-    groupNames[i] = vim.fn.synIDattr(id, "name")
+  return function()
+    if not vim.fn.exists("*synstack") then
+      return
+    end
+    local groupNames = vim.tbl_map(
+      id_to_name,
+      vim.fn.synstack(vim.fn.line('.'), vim.fn.col('.') + col_offset)
+    )
+    print(vim.inspect(groupNames))
   end
-  print(vim.inspect(groupNames))
-end, opts)
+end
+vim.keymap.set("n", "<leader>zi", get_syntax_stack(0))
+vim.keymap.set("n", "<leader>zn", get_syntax_stack(1))
 -- }}}
 
 require "plugins"
