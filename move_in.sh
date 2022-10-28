@@ -26,12 +26,3 @@ do
 	rm -f "${HOME}/$f"
 	ln -s "${HOME}/.dotfiles/$f" "${HOME}/$f"
 done
-
-if [ ! -d "${HOME}/.dotfiles/.vim/pack/minpac/opt/minpac" ]; then
-	git clone https://github.com/k-takata/minpac.git \
-		"${HOME}/.dotfiles/.vim/pack/minpac/opt/minpac"
-fi
-
-
-printf 'Finish Vim set up with:\n\n\t%s\n' \
-	"vim -c 'call PackInit()' -c \"call minpac#update('', {'do': 'qall'})\""
