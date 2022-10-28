@@ -37,7 +37,16 @@ return require('packer').startup(function(use)
       })
     end,
   }
-  use "mhinz/vim-signify"
+  use {
+    "mhinz/vim-signify",
+    config = function()
+      vim.g.signify_sign_add = "＋"
+      vim.g.signify_sign_delete = "－"
+      vim.g.signify_sign_delete_first_line = "－"
+      vim.g.signify_sign_change = "～"
+      vim.g.signify_sign_change_delete = "～"
+    end
+  }
   use "reedes/vim-pencil"
   use {
     "srstevenson/vim-picker",
