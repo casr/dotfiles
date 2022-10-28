@@ -94,9 +94,9 @@ sed -i '' '1i\\
 /^\\/opt\\/local\\/share\\/man$/d' /etc/manpaths
 
 /opt/local/bin/port -cq selfupdate
-/opt/local/bin/port -cq install entr fzy git jq miller ncurses neovim openssh \
-                                par pass pinentry the_silver_searcher tig \
-                                tmux vim zsh-completions
+/opt/local/bin/port -cq install 7zip entr fzy git jq miller neovim \
+                                par pass pinentry the_silver_searcher \
+                                tmux unrar vim zsh-completions
 EOM
 
 rm -rf ~/.terminfo
