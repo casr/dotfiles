@@ -1,7 +1,4 @@
 -- Built-in {{{
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
-
 vim.o.shortmess = vim.o.shortmess .. "I"
 vim.o.mouse = "nvc"
 vim.o.background = "light"
