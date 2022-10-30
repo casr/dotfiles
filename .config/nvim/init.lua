@@ -4,7 +4,7 @@ vim.o.mouse = "nvc"
 vim.o.updatetime = 400
 
 vim.o.background = "light"
-vim.cmd [[colorscheme chromatine]]
+vim.cmd [[silent! colorscheme chromatine]]
 -- Wrap and indent lines by the current line's plus shift
 vim.o.breakindent = true
 vim.o.breakindentopt = "shift:2,sbr"
