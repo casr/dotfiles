@@ -144,7 +144,7 @@ return require('packer').startup(function(use)
     "neovim/nvim-lspconfig",
     requires = "hrsh7th/cmp-nvim-lsp",
     config = function()
-      local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       local lsp_attach = function(args)
         vim.api.nvim_buf_set_option(args.buf, "omnifunc", "v:lua.vim.lsp.omnifunc")
