@@ -7,7 +7,7 @@ if ! ls ~/Library/Messages >/dev/null 2>&1; then
 		"$(basename "$0")" \
 		'You must enable Full Disk Access for Terminal.app before running this ' \
 		'script. See:' \
-		'System Preferences > Security & Privacy > Full Disk Access' >&2
+		'System Settings > Privacy & Security > Full Disk Access' >&2
 	exit 1
 fi
 
