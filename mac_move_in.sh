@@ -98,10 +98,3 @@ sed -i '' '1i\\
                                 par pass pinentry the_silver_searcher \
                                 tmux unrar vim zsh-completions
 EOM
-
-rm -rf ~/.terminfo
-for f in nsterm tmux tmux-256color; do
-	/opt/local/bin/infocmp -x "$f" > "/tmp/$f"
-	/usr/bin/tic -x "/tmp/$f"
-	rm -f "/tmp/$f"
-done
