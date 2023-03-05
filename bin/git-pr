@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASE="${1:-origin/master}"
+BASE="${1:-origin/main}"
 COMPARE="${2:-HEAD}"
 
 # prettier name
