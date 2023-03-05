@@ -35,3 +35,6 @@ PS1+=$'\n'
 PS1+="\$(__subshell '(%s) ')"
 # indicate if user is running with privileges. i.e. root
 PS1+=%(!.# .$ )
+
+local_zshrc="${HOME}/.dotfiles/.zshrc.local"
+test -f "${local_zshrc}" && . "${local_zshrc}"

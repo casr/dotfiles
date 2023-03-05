@@ -22,3 +22,6 @@
 	email = chris@puny.agency
 [init]
 	defaultBranch = main
+
+[include]
+	path = config.local

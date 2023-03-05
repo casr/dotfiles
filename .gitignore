@@ -1,7 +1,10 @@
+/.config/git/config.local
 /.config/nvim/pack/
 /.config/nvim/plugin/packer_compiled.lua
 /.config/nvim/undo/
+/.profile.local
 /.vim/info
 /.vim/pack/*
 !/.vim/pack/manual/
 /.vim/undo/
+/.zshrc.local
