@@ -22,6 +22,8 @@
 	email = chris@puny.agency
 [init]
 	defaultBranch = main
+[commit]
+	template = ~/.dotfiles/.config/git/template.txt
 
 [include]
 	path = config.local

@@ -1,0 +1,14 @@
+
+# If applied, this commit will...                ^                     ^
+# -----------------------------------------------+                     |
+#                                                                      |
+# Explain why this change is being made. Add ticket, docs, etc.        |
+# ---------------------------------------------------------------------+
+#
+# type[(scope)][!]: change
+# build chore ci docs feat fix perf refactor style test
+# BREAKING CHANGE: reason
+#
+# GitHub: Co-authored-by, Fixes, On-behalf-of
+# Kernel: Acked-by, Co-developed-by, Fixes, Reported-by, Reviewed-by,
+#         Signed-off-by, Suggested-by, Tested-by
