@@ -7,7 +7,6 @@ setopt INC_APPEND_HISTORY HIST_IGNORE_DUPS
 unsetopt FLOW_CONTROL
 
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
-autoload -Uz compinit && compinit
 
 WORDCHARS=${WORDCHARS//\/}
 
@@ -38,3 +37,5 @@ PS1+=%(!.# .$ )
 
 local_zshrc="${HOME}/.dotfiles/.zshrc.local"
 test -f "${local_zshrc}" && . "${local_zshrc}"
+
+autoload -Uz compinit && compinit
