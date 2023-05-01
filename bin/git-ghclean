@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# NAME
+#      git-ghclean - clean up after a pull request review
+#
+# SYNOPSIS
+#      git ghclean <pull>
+#
+# DESCRIPTION
+#      After a round of reviews is complete, clean up the locally created
+#      review branches. Running:
+#
+#          git ghclean 123
+#
+#      will remove all branches under `pull/123*`
+#
+# SEE ALSO
+#      git-ghreview
+
+usage() {
+	printf -- 'usage: %s <pull>\n' "${0##*/}"
+}
+
+if [ $# -lt 1 ]; then
+	usage
+	exit 1
+fi
+
+pull="$1"
+
+git for-each-ref --format='%(refname:short)' "refs/heads/pull/${pull}" \
+	| xargs git branch -D

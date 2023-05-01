@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# NAME
+#      git-ghreview - fetch a pull request from GitHub
+#
+# SYNOPSIS
+#      git ghreview <pull> [<base>]
+#
+# DESCRIPTION
+#      This will pull down the latest changes for the base branch and the given
+#      pull request. By default, base is assumed to be `main`. Each time the
+#      command is invoked for a pull request, a new review round is added to the
+#      end of the branch name starting with 0. For example, running:
+#
+#          git ghreview 123
+#
+#      will fetch `origin/main` and `origin/pull/123/merge` from GitHub and
+#      create a locally named branch:
+#
+#          pull/123/r1
+#
+#      some time later, after your review feedback is incorporated, you do
+#      another round of review by running:
+#
+#          git ghreview 123
+#
+#      and like before it will fetch `origin/main` and `origin/pull/123/merge`
+#      but this time will check out:
+#
+#          pull/123/r1
+#
+# SEE ALSO
+#      git-ghclean
+
+usage() {
+	printf -- 'usage: %s <pull> [<base>]\n' "${0##*/}"
+}
+
+if [ $# -lt 1 ]; then
+	usage
+	exit 1
+fi
+
+pull="$1"
+base="${2:-main}"
+
+last_review=$(git for-each-ref --count=1 --sort=-refname --format='%(refname:short)' "refs/heads/pull/${pull}")
+review_count=$(( $(printf -- '%s\n' "${last_review}" | sed 's_.*pull/[0-9]*/r\([0-9]*\)$_\1_') + 1 ))
+
+pull_branch="pull/${pull}/r${review_count}"
+temp_branch="ghreview_temp/${pull_branch}"
+
+if ! git fetch origin "${base}" "pull/${pull}/merge:${temp_branch}"; then
+	printf -- 'if the fetch failed, then likely cause is the pull was merged or has a merge conflict\n'
+	exit 1
+fi
+
+printf -- '\n'
+
+prior_review=$(git for-each-ref --sort=-refname --count=1 --format='%(refname:short)' --points-at "${temp_branch}" "refs/heads/pull/${pull}")
+if [ "${prior_review:-no}" != no ]; then
+	printf -- 'no changes since last review: %s\n' "${prior_review}"
+	git branch -D "${temp_branch}"
+	exit 1
+fi
+
+git branch -m "${temp_branch}" "${pull_branch}"
+printf -- '%s:\n\n\t%s\n' 'ready to checkout' "git checkout ${pull_branch}"
