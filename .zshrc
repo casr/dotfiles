@@ -1,4 +1,5 @@
 . ${HOME}/.dotfiles/aliases.sh
+. ${HOME}/.dotfiles/fzy.zsh
 . ${HOME}/.dotfiles/prompt.sh
 
 bindkey -e
@@ -10,30 +11,13 @@ zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
 WORDCHARS=${WORDCHARS//\/}
 
-setopt PROMPT_SUBST
-
-# man zshcontrib /GATHERING INFORMATION FROM VERSION CONTROL SYSTEMS
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' formats "  %b"
-zstyle ':vcs_info:*' actionformats "  %b (%a)"
 precmd() {
-	vcs_info
 	print -Pn "\e]2;%/\a"
 }
 
-# man zshmisc /EXPANSION OF PROMPT SEQUENCES
-PS1=
-# a gap between the last command's output is nice
-PS1+=$'\n'
-# the current path
-PS1+=%~
-# show branch info
-PS1+='${vcs_info_msg_0_}'
-PS1+=$'\n'
-PS1+="\$(__subshell '(%s) ')"
-# indicate if user is running with privileges. i.e. root
-PS1+=%(!.# .$ )
+fpath=(~/.dotfiles/zsh/functions $fpath)
+autoload -Uz promptinit && promptinit
+prompt corrupt
 
 local_zshrc="${HOME}/.dotfiles/.zshrc.local"
 test -f "${local_zshrc}" && . "${local_zshrc}"

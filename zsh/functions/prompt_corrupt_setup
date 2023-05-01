@@ -1,0 +1,99 @@
+#!/usr/bin/env zsh
+
+prompt_corrupt_human_time() {
+	if [ "${1:-0}" -lt 5 ]; then
+		return
+	fi
+
+	local human total_seconds=$1
+	local days=$(( total_seconds / 60 / 60 / 24 ))
+	local hours=$(( total_seconds / 60 / 60 % 24 ))
+	local minutes=$(( total_seconds / 60 % 60 ))
+	local seconds=$(( total_seconds % 60 ))
+
+	(( days > 0 )) && human+="${days}d "
+	(( hours > 0 )) && human+="${hours}h "
+	(( minutes > 0 )) && human+="${minutes}m "
+	human+="${seconds}s"
+
+	print -n -- $human
+}
+
+prompt_corrupt_preexec() {
+	timer=${timer:-$SECONDS}
+}
+
+prompt_corrupt_precmd() {
+	local git_action git_branch git_dirty runtime
+	local -at ps1 rps1 top_line
+
+	if [ $timer ]; then
+		psvar[1]=$(($SECONDS - $timer))
+		unset timer
+	fi
+
+	vcs_info
+
+	if [ -n "${vcs_info_msg_0_}" ]; then
+		git_branch="%8F⺦%f${vcs_info_msg_0_}"
+	fi
+
+	if [ -n "${vcs_info_msg_1_}" ]; then
+		git_dirty="%8F${vcs_info_msg_1_}%f"
+	fi
+
+	if [ -n "${vcs_info_msg_2_}" ]; then
+		git_action="%8F${vcs_info_msg_1_}%f"
+	fi
+
+	top_line=(
+		# the current path
+		'%~'
+		"${git_branch}${git_dirty}"
+		"${git_action}"
+	)
+
+	ps1=(
+		"${(@j.  .)top_line:#}"
+		$prompt_newline
+		# Indicate if user is running with privileges. i.e. root. If
+		# there is a job running in the background, show an _
+		'%(!.#.$)%(1j._. )'
+	)
+
+	rps1=(
+		"$(prompt_corrupt_human_time "${psvar[1]}")"
+		'%8F%*%f'
+	)
+
+	# a gap between the last command's output is nice
+	print
+
+	# man zshmisc /EXPANSION OF PROMPT SEQUENCES
+	PS1="${(j..)ps1}"
+	RPS1="${(j. .)rps1}"
+}
+
+prompt_corrupt_setup() {
+	add-zsh-hook precmd prompt_corrupt_precmd
+	add-zsh-hook preexec prompt_corrupt_preexec
+
+	# man zshcontrib /GATHERING INFORMATION FROM VERSION CONTROL SYSTEMS
+	autoload -Uz vcs_info
+	zstyle ':vcs_info:*' enable git
+	zstyle ':vcs_info:*' max-exports 3
+	zstyle ':vcs_info:*' formats '%b' '%m'
+	zstyle ':vcs_info:*' actionformats '%b' '%m' '%a'
+	zstyle ':vcs_info:git+set-message:*' hooks git-dirty
+
+	prompt_opts=(cr sp percent subst)
+}
+
++vi-git-dirty() {
+	if [ "$(git status --porcelain 2>/dev/null | wc -l)" -gt 0 ]; then
+		hook_com[misc]=*
+	fi
+}
+
+
+prompt_corrupt_setup "$@"
