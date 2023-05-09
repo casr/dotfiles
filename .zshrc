@@ -8,10 +8,12 @@ setopt INC_APPEND_HISTORY HIST_IGNORE_DUPS
 unsetopt FLOW_CONTROL
 
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+zstyle ':completion:*:git-*:heads-local' matcher 'r:|?=**'
 
-WORDCHARS=${WORDCHARS//\/}
+WORDCHARS=${WORDCHARS//\//}
 
 precmd() {
+	# set OSC7 for current working directory
 	print -Pn "\e]2;%/\a"
 }
 
