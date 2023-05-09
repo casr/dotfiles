@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# NAME
+#      tmux-urls - find urls in the current window
+#
+# SYNOPSIS
+#      tmux-urls
+#
+# DESCRIPTION
+#      Attempts to search all panes for any strings beginning with http or
+#      https and presents a picker.
+#
+# BUGS
+#      tmux-urls will not be able to wrap up URLs that span multiple lines
+
+url=$(for pane in $(tmux list-pane -F '#I.#P'); do
+	tmux capture-pane -Jpt "${pane}"
+done | grep -Eo 'https?://[^ ]+' | fzy --line 15 --prompt 'open url ❯ ')
+
+if [ -n "${url}" ]; then
+	open "${url}"
+fi

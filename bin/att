@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# NAME
+#      att - attach to tmux
+#
+# SYNOPSIS
+#      att
+#
+# DESCRIPTION
+#      Present a list of projects found under `~/Projects`. A project is
+#      determined to be something that has a `.git` directory at its top-level.
+#
+#      The session name is derived from everything between the `.git` directory
+#      and `~/Projects`.
+
+
+# We fix `project_root` to this directory as session names are derived from the
+# file system hierarchy and allowing this to be configurable would open us up
+# to session name clashes.
+project_root="${HOME}/Projects"
+session_name=$(
+	( cd "${project_root}" || exit 1; find -sL . -mindepth 1 -maxdepth 4 -path '*/node_modules/*' -prune -o -type d -exec test -d '{}/.git' \; -prune -print ) | \
+		cut -c3- | \
+		fzy --line 15 --prompt "Choose a project ❯ "
+)
+start_directory="${project_root}/${session_name}"
+
+# Likely outcomes are that the user aborted the input with C-d or that input
+# was added but it did not result in a match in which case we filter out
+# non-existing project directories.
+if [ -z "${session_name}" ] || [ ! -d "${start_directory}" ]; then
+	exit 1
+fi
+
+if ! tmux has-session -t "=${session_name}" 2>/dev/null; then
+	tmux new-session -dc "${start_directory}" -s "${session_name}"
+fi
+
+if [ "${TMUX:+is_set}" = is_set ]; then
+	tmux switch-client -t "=${session_name}"
+else
+	tmux attach-session -t "=${session_name}"
+fi

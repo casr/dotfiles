@@ -3,6 +3,7 @@
 /.config/nvim/plugin/packer_compiled.lua
 /.config/nvim/undo/
 /.profile.local
+/.tmux.local.conf
 /.vim/info
 /.vim/pack/*
 !/.vim/pack/manual/
