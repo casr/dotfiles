@@ -37,7 +37,7 @@ if ! tmux has-session -t "=${session_name}" 2>/dev/null; then
 fi
 
 if [ "${TMUX:+is_set}" = is_set ]; then
-	tmux switch-client -t "=${session_name}"
+	exec tmux switch-client -t "=${session_name}"
 else
-	tmux attach-session -t "=${session_name}"
+	exec tmux attach-session -t "=${session_name}"
 fi
