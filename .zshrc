@@ -1,6 +1,5 @@
 . ${HOME}/.dotfiles/aliases.sh
 . ${HOME}/.dotfiles/fzy.zsh
-. ${HOME}/.dotfiles/prompt.sh
 
 bindkey -e
 

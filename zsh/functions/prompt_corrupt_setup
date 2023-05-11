@@ -43,7 +43,7 @@ prompt_corrupt_precmd() {
 	fi
 
 	if [ -n "${vcs_info_msg_2_}" ]; then
-		git_action="%8F${vcs_info_msg_1_}%f"
+		git_action="%8F${vcs_info_msg_2_}%f"
 	fi
 
 	top_line=(
