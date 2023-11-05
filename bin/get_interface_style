@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# NAME
+#      get_interface_style - get current interface style
+#
+# SYNOPSIS
+#      get_interface_style
+#
+# DESCRIPTION
+#      Return 'light' or 'dark' depending on the current interface style
+#      (falling back on time if it's not available on the platform)
+
+appearance=light
+
+if [ "$(uname -s)" = Darwin ]; then
+	if [ "$(defaults read -g AppleInterfaceStyle 2> /dev/null)" = Dark ]; then
+		appearance=dark
+	fi
+else
+	hour=$(date +%H)
+	if [ $hour -ge 22 ] && [ $hour -lt 7 ]; then
+		appearance=dark
+	fi
+fi
+
+printf '%s\n' "${appearance}"
