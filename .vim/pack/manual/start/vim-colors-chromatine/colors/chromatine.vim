@@ -1,9 +1,9 @@
 " Vim color file
 " Description: Low-colour theme with light and dark variants
 " Maintainer: Chris Rawnsley <chris@puny.agency>
-" Version: 0.6.3
+" Version: 0.7.0
 " Source: https://github.com/casr/vim-colors-chromatine
-" Modified: 2022 Oct 05
+" Modified: 2023 Nov 05
 
 hi clear
 if exists('syntax_on')
@@ -31,8 +31,8 @@ hi SpecialKey NONE | hi link SpecialKey chromatineUIMuted
 
 hi Pmenu NONE | hi link Pmenu chromatineUI
 hi PmenuSel NONE term=nocombine cterm=nocombine gui=nocombine
-hi PmenuSbar NONE
-hi PmenuThumb NONE
+hi PmenuSbar NONE | hi link PmenuSbar chromatineUIActive
+hi PmenuThumb NONE | hi link PmenuThumb chromatineSelection
 
 hi StatusLine NONE term=reverse cterm=reverse gui=reverse
 hi StatusLineNC NONE term=nocombine cterm=nocombine gui=nocombine
@@ -127,6 +127,10 @@ if has('nvim')
 	hi DiagnosticUnderlineWarn NONE term=underline cterm=underline gui=underline
 	hi DiagnosticUnderlineInfo NONE term=underline cterm=underline gui=underline
 	hi DiagnosticUnderlineHint NONE term=underline cterm=underline gui=underline
+
+	hi LspReferenceText NONE | hi link LspReferenceText chromatineUI
+	hi LspReferenceRead NONE | hi link LspReferenceRead LspReferenceText
+	hi LspReferenceWrite NONE | hi link LspReferenceWrite LspReferenceText
 endif
 " }}}
 

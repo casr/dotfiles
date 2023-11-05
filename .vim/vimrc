@@ -1,74 +1,58 @@
-" Remove start up nag screen
+set backupcopy=yes
+set breakindent
+set breakindentopt=list:-1,sbr
+set completeopt=menu,menuone,noselect
+set cpoptions+=n
+set formatoptions+=nor
+set hidden
+set hlsearch
+set ignorecase
+set linebreak
+set list
+set nomodeline
+set mouse=cnv
+set pumheight=10
 set shortmess+=I
-set mouse=nvc
-if $TERM =~# '^nsterm\|^st\|^tmux'
-	" Better mouse support for dragging
-	set ttymouse=sgr
-endif
+set showbreak=+++\ 
+set showtabline=2
+set noswapfile
+set smartcase
+set splitbelow
+set splitright
+set statusline=\ [%n]\ %<%f\ %h%w%m%r%=%{&ff!='unix'?'['.&ff.']\ ':''}%-14.(%l,%c%V%)\ %(%L\ %)
+set viminfo=
+set wildmode=longest:full,full
 
 colorscheme chromatine
-set splitbelow splitright
 
 if executable('ag')
-	set grepprg=ag\ --vimgrep\ $* grepformat=%f:%l:%c:%m
+	set grepformat=%f:%l:%c:%m
+	set grepprg=ag\ --hidden\ --vimgrep\ $*
 endif
-if &t_Co > 2 || has('gui_running')
-	set hlsearch
+
+if $TERM =~# '^nsterm\|^st\|^tmux'
+	set ttymouse=sgr
 endif
-set ignorecase smartcase
-
-" Allow unsaved buffers
-set hidden
-" Do not let random files mess with the settings
-set nomodeline
-" Copy the file then save it (useful for some filesystem watch mechanisms)
-set backupcopy=yes
-set autoread
-
-set noswapfile
-set viminfo=
-
-" Status line {{{
-""" Sample status line:
-" [23] .dotfiles/.vim/vimrc [+]                   [dos] 10, 70/218
-" [23] options.txt [Help][-][RO]                        10, 70/218
-set statusline=
-set statusline+=\ [%n]
-set statusline+=\ %<%f
-set statusline+=\ %h%w%m%r
-set statusline+=%=
-set statusline+=%{&ff!='unix'?'['.&ff.']\ ':''}
-set statusline+=%-14.(%l,%c%V%)\ %(%L\ %)
-set showtabline=2
-" }}}
-
-" netrw {{{
-let g:netrw_dirhistmax=0
-let g:netrw_banner=0
-let g:netrw_list_hide=netrw_gitignore#Hide()
-let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
-" }}}
-
-" So syntax highlighting understands $(...)
-let g:is_posix = 1
-let g:tmux_syntax_colors = 0
 
 if has('autocmd')
 	augroup vimrc_autocmd
 		autocmd!
 
-		autocmd FileType gitcommit,gitsendmail,mail,markdown,text
-			\ setlocal spell spelllang=en_gb expandtab
-			         \ shiftwidth=2 softtabstop=2
-		if executable('par')
-			autocmd FileType gitcommit,gitsendmail,mail,markdown,text
-			      \ let &l:formatprg = 'par -w' .
-			      \ (&textwidth > 0 ? &textwidth : 74)
-		endif
+		autocmd FileType
+		      \ gitcommit,gitsendmail,mail,markdown,text
+		      \ setlocal expandtab shiftwidth=2 softtabstop=2
+		               \ spelllang=en_gb
 
 		autocmd FileType
-		      \ css,javascript,javascriptreact,json,sass,scss,typescript,typescriptreact
+		      \ css,javascript,javascriptreact,json,jsonc,sass,scss,typescript,typescriptreact
 		      \ setlocal expandtab shiftwidth=2 softtabstop=2
+
+		autocmd FileType netrw
+		      \ let g:netrw_banner=0
+		      \ | let g:netrw_dirhistmax=0
+		      \ | let g:netrw_list_hide=',\(^\|\s\s\)\zs\.\S\+'
+
+		autocmd FileType tmux let g:tmux_syntax_colors=0
 	augroup END
 endif
 
@@ -78,4 +62,5 @@ endif
 " tpope/vim-eunuch
 " tpope/vim-rsi
 " tpope/vim-sensible
+" tpope/vim-surround
 " tpope/vim-unimpaired

@@ -94,9 +94,28 @@ else
   noremap!        <F33> <Up>
   noremap!        <F34> <C-W>
   noremap!        <F35> <C-W>
-  augroup rsi_gui
-    autocmd GUIEnter * call s:MapMeta()
-  augroup END
+  if has('terminal')
+    tnoremap      <F29> <Esc>b
+    tnoremap      <F30> <Esc>f
+    tnoremap      <F31> <Esc>d
+    tnoremap      <F32> <Esc>n
+    tnoremap      <F33> <Esc>p
+    tnoremap      <F34> <Esc><C-?>
+    tnoremap      <F35> <Esc><C-H>
+  endif
+  if &encoding ==# 'utf-8' && (has('unix') || has('win32'))
+    try
+      set encoding=cp949
+      call s:MapMeta()
+    finally
+      set encoding=utf-8
+    endtry
+  else
+    augroup rsi_gui
+      autocmd!
+      autocmd GUIEnter * call s:MapMeta()
+    augroup END
+  endif
 endif
 
 " vim:set et sw=2:
