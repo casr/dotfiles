@@ -1,5 +1,3 @@
-local M = {}
-
 --- return info about the window
 --- @param winid number
 --- @return { winid: number, type: string, filewinid: number }
@@ -30,8 +28,10 @@ local function toggle_list(list_kind)
     for _, winid in pairs(wins) do
       local other_win = get_win_info(winid)
       if other_win.type == list_kind then
-        if list_kind == "loclist" and other_win.filewinid == cur_win.winid
-          or list_kind == "quickfix" then
+        if
+          list_kind == "loclist" and other_win.filewinid == cur_win.winid
+          or list_kind == "quickfix"
+        then
           list_winid = winid
           break
         end
@@ -47,24 +47,22 @@ local function toggle_list(list_kind)
           length = length + 1
         end
         if length > 0 then
-          vim.cmd [[ lopen ]]
+          vim.cmd([[ lopen ]])
         else
           print("Location list is empty")
         end
       else
-        vim.cmd [[ copen ]]
+        vim.cmd([[ copen ]])
       end
     end
   end
 end
 
---- return a closure for toggling the requested list_kind
---- @param list_kind "loclist"|"quickfix"
---- @return function
-M.toggle_list_fn = function (list_kind)
-  return function ()
-    toggle_list(list_kind)
-  end
-end
+local opts = { silent = true }
 
-return M
+vim.keymap.set("n", "<leader>q", function()
+  toggle_list("quickfix")
+end, opts)
+vim.keymap.set("n", "<leader>l", function()
+  toggle_list("loclist")
+end, opts)
