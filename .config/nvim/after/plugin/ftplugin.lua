@@ -1,13 +1,5 @@
 local augroup = vim.api.nvim_create_augroup("after_plugin_ftplugin", {})
 
-vim.api.nvim_create_autocmd("BufEnter", {
-  group = augroup,
-  pattern = "*/nvim/init.lua",
-  callback = function()
-    vim.wo.foldmethod = "marker"
-  end
-})
-
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
   pattern = {
@@ -33,7 +25,6 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
   pattern = { "gitcommit", "gitsendmail", "mail", "markdown", "text" },
   callback = function()
-    vim.wo.spell = true
     vim.bo.spelllang = "en_gb"
     if vim.fn.executable("par") then
       vim.bo.formatprg = "par -w" .. (vim.bo.textwidth > 0 and vim.bo.textwidth or 74)
