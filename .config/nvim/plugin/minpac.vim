@@ -26,7 +26,7 @@ function! PackInit() abort
 	call minpac#add('ledger/vim-ledger')
 	call minpac#add('mhinz/vim-signify')
 	call minpac#add('neovim/nvim-lspconfig')
-	call minpac#add('nvim-treesitter/nvim-treesitter')
+	call minpac#add('nvim-treesitter/nvim-treesitter', {'do': 'TSUpdate'})
 	call minpac#add('reedes/vim-pencil')
 	call minpac#add('srstevenson/vim-picker')
 	call minpac#add('tpope/vim-apathy')
