@@ -1,13 +1,15 @@
 local r_cmp, cmp = pcall(require, "cmp")
-local r_luasnip, luasnip = pcall(require, "luasnip")
-local r_loaders, loaders = pcall(require, "luasnip.loaders.from_vscode")
+local r_snippy, snippy = pcall(require, "snippy")
 
-if not (r_cmp and r_luasnip) then
+if not (r_cmp and r_snippy) then
   return
 end
 
-if (r_loaders) then
-  loaders.lazy_load()
+-- @return boolean
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  -- stylua: ignore
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
 cmp.setup({
@@ -15,8 +17,10 @@ cmp.setup({
     ["<C-n>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.jumpable(1) then
-        luasnip.jump(1)
+      elseif snippy.can_expand_or_advance() then
+        snippy.expand_or_advance()
+      elseif has_words_before() then
+        cmp.complete()
       else
         fallback()
       end
@@ -24,8 +28,8 @@ cmp.setup({
     ["<C-p>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      elseif snippy.can_jump(-1) then
+        snippy.previous()
       else
         fallback()
       end
@@ -33,15 +37,16 @@ cmp.setup({
   }),
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end
+      snippy.expand_snippet(args.body)
+    end,
   },
   sources = cmp.config.sources({
-    { name = "luasnip" },
     { name = "nvim_lsp" },
+    { name = "snippy" },
+  }, {
     { name = "buffer" },
     { name = "emoji" },
-  })
+  }),
 })
 
 cmp.setup.cmdline("/", {
@@ -61,7 +66,6 @@ cmp.setup.cmdline(":", {
 
 cmp.setup.filetype("gitcommit", {
   sources = cmp.config.sources({
-    { name = "luasnip" },
     { name = "emoji" },
-  })
+  }),
 })
