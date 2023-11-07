@@ -12,7 +12,7 @@ zstyle ':completion:*:git-*:heads-local' matcher 'r:|?=**'
 WORDCHARS=${WORDCHARS//\//}
 
 precmd() {
-	# set OSC7 for current working directory
+	# Set terminal title to current directory
 	print -Pn "\e]2;%/\a"
 }
 
