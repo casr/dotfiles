@@ -1,5 +1,8 @@
 #!/bin/sh
 
+TERMINFO_DIRS=":~/.terminfo"
+export TERMINFO_DIRS
+
 PATH=${HOME}/.dotfiles/bin:${PATH}
 export PATH
 
