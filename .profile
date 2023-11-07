@@ -6,6 +6,9 @@ local_profile="${HOME}/.dotfiles/.profile.local"
 
 test -f "${sys_profile}" && . "${sys_profile}"
 
+LSCOLORS=exfxcxdxbxGxDxBxGxCxDx
+export LSCOLORS
+
 EDITOR=vim
 FCEDIT=${EDITOR}
 export EDITOR FCEDIT
