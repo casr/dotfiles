@@ -5,6 +5,7 @@ if not r_cmp_nvim_lsp then
 end
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
+local augroup = vim.api.nvim_create_augroup("after_plugin_lsp", {})
 
 local float_config = { width = 60, border = "rounded" }
 
@@ -18,24 +19,22 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
   float_config
 )
 
-local lsp_attach = function(args)
-  local mapopts = { silent = true, buffer = args.buf }
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = augroup,
+  callback = function(args)
+    local mapopts = { silent = true, buffer = args.buf }
 
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, mapopts)
-  vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, mapopts)
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, mapopts)
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, mapopts)
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, mapopts)
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, mapopts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, mapopts)
-  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, mapopts)
-  vim.keymap.set("n", "<leader>f", vim.lsp.buf.formatting, mapopts)
-end
-
--- wrap around on_attach as this is changing in a later version of Neovim
-local on_attach = function(_, buf)
-  lsp_attach({ buf = buf })
-end
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, mapopts)
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, mapopts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, mapopts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, mapopts)
+    vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, mapopts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, mapopts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, mapopts)
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, mapopts)
+    vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, mapopts)
+  end,
+})
 
 local r_lspconfig, lspconfig = pcall(require, "lspconfig")
 
