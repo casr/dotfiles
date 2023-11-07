@@ -26,9 +26,6 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "gitcommit", "gitsendmail", "mail", "markdown", "text" },
   callback = function()
     vim.bo.spelllang = "en_gb"
-    if vim.fn.executable("par") then
-      vim.bo.formatprg = "par -w" .. (vim.bo.textwidth > 0 and vim.bo.textwidth or 74)
-    end
   end,
 })
 
