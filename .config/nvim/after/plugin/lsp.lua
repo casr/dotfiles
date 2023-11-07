@@ -6,6 +6,18 @@ end
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
+local float_config = { width = 60, border = "rounded" }
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover,
+  float_config
+)
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  float_config
+)
+
 local lsp_attach = function(args)
   vim.api.nvim_buf_set_option(args.buf, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
