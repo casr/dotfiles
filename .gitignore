@@ -1,4 +1,5 @@
 /.config/git/config.local
+/.config/nvim/after/plugin/local.lua
 /.config/nvim/pack/
 /.config/nvim/undo/
 /.profile.local

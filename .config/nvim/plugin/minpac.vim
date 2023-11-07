@@ -15,6 +15,7 @@ function! PackInit() abort
 
 	call minpac#add('AndrewRadev/splitjoin.vim')
 	call minpac#add('JoosepAlviste/nvim-ts-context-commentstring')
+	call minpac#add('b0o/schemastore.nvim')
 	call minpac#add('casr/vim-colors-chromatine')
 	call minpac#add('dcampos/cmp-snippy')
 	call minpac#add('dcampos/nvim-snippy')
