@@ -19,8 +19,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 )
 
 local lsp_attach = function(args)
-  vim.api.nvim_buf_set_option(args.buf, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
   local mapopts = { silent = true, buffer = args.buf }
 
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, mapopts)
