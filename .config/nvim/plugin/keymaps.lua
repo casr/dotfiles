@@ -7,9 +7,9 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, opts)
 
-vim.keymap.set("n", "<leader>t", "<Plug>(PickerEdit)")
-vim.keymap.set("n", "<leader>b", "<Plug>(PickerBuffer)")
-vim.keymap.set("n", "<leader>s", "<Plug>(PickerVsplit)")
+vim.keymap.set("n", "<leader>ff", "<Plug>(PickerEdit)", { unique = true })
+vim.keymap.set("n", "<leader>fb", "<Plug>(PickerBuffer)", { unique = true })
+vim.keymap.set("n", "<leader>sh", "<Plug>(PickerHelp)", { unique = true })
 
 if r_cmp then
   -- regular omnicompletion will fail with the extra capabilities from nvim-cmp
