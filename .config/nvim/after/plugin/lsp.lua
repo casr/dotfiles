@@ -2,15 +2,11 @@ local augroup = vim.api.nvim_create_augroup("after_plugin_lsp", {})
 
 local float_config = { width = 60, border = "rounded" }
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover,
-  float_config
-)
+vim.lsp.handlers["textDocument/hover"] =
+  vim.lsp.with(vim.lsp.handlers.hover, float_config)
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  float_config
-)
+vim.lsp.handlers["textDocument/signatureHelp"] =
+  vim.lsp.with(vim.lsp.handlers.signature_help, float_config)
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = augroup,
