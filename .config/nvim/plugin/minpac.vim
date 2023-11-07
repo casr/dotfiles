@@ -14,6 +14,7 @@ function! PackInit() abort
 	call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 	call minpac#add('AndrewRadev/splitjoin.vim')
+	call minpac#add('JoosepAlviste/nvim-ts-context-commentstring')
 	call minpac#add('casr/vim-colors-chromatine')
 	call minpac#add('dcampos/cmp-snippy')
 	call minpac#add('dcampos/nvim-snippy')
@@ -25,9 +26,9 @@ function! PackInit() abort
 	call minpac#add('ledger/vim-ledger')
 	call minpac#add('mhinz/vim-signify')
 	call minpac#add('neovim/nvim-lspconfig')
+	call minpac#add('nvim-treesitter/nvim-treesitter')
 	call minpac#add('reedes/vim-pencil')
 	call minpac#add('srstevenson/vim-picker')
-	call minpac#add('tmhedberg/SimpylFold')
 	call minpac#add('tpope/vim-apathy')
 	call minpac#add('tpope/vim-commentary')
 	call minpac#add('tpope/vim-eunuch')
