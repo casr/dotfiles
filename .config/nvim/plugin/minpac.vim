@@ -18,7 +18,6 @@ function! PackInit() abort
 	call minpac#add('casr/vim-colors-chromatine')
 	call minpac#add('dcampos/cmp-snippy')
 	call minpac#add('dcampos/nvim-snippy')
-	call minpac#add('editorconfig/editorconfig-vim')
 	call minpac#add('hrsh7th/cmp-buffer')
 	call minpac#add('hrsh7th/cmp-emoji')
 	call minpac#add('hrsh7th/cmp-nvim-lsp')
