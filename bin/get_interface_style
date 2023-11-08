@@ -18,7 +18,7 @@ if [ "$(uname -s)" = Darwin ]; then
 	fi
 else
 	hour=$(date +%H)
-	if [ $hour -ge 22 ] && [ $hour -lt 7 ]; then
+	if [ $hour -ge 22 ] || [ $hour -lt 7 ]; then
 		appearance=dark
 	fi
 fi
