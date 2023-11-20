@@ -7,7 +7,6 @@ end
 treesitter.setup({
   highlight = { enable = true },
   indent = { enable = true },
-  context_commentstring = { enable = true },
   sync_install = true,
   parser_install_dir = vim.fn.stdpath("data") .. "/site",
   ensure_installed = {
