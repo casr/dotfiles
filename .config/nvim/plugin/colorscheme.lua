@@ -8,6 +8,11 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
     vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
     vim.api.nvim_set_hl(0, "CmpItemAbbr", { link = "Comment" })
     vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { link = "Normal" })
+
+    vim.api.nvim_set_hl(0, "TelescopeSelection", { link = "chromatineUI" })
+    vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { link = "Comment" })
+    vim.api.nvim_set_hl(0, "TelescopeMatching", { link = "TelescopeNormal" })
+    vim.api.nvim_set_hl(0, "TelescopePreviewLine", { link = "chromatineUI" })
   end,
 })
 
