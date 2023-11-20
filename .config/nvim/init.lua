@@ -1,5 +1,5 @@
 vim.opt.breakindent = true
-vim.opt.breakindentopt = { "list:-1", "sbr" }
+vim.opt.breakindentopt = { "list:-1", "sbr", "shift:2" }
 vim.opt.colorcolumn = "+1"
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.cpoptions:append({ n = true })

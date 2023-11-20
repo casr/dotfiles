@@ -1,6 +1,6 @@
 set backupcopy=yes
 set breakindent
-set breakindentopt=list:-1,sbr
+set breakindentopt=list:-1,sbr,shift:2
 set completeopt=menu,menuone,noselect
 set cpoptions+=n
 set formatoptions+=nor
