@@ -12,11 +12,11 @@ conform.setup({
     return { timeout_ms = 500, lsp_fallback = true }
   end,
   formatters_by_ft = {
-    javascript = { "prettier" },
-    javascriptreact = { "prettier" },
+    javascript = { { "prettierd", "prettier" } },
+    javascriptreact = { { "prettierd", "prettier" } },
     lua = { "stylua" },
-    typescript = { "prettier" },
-    typescriptreact = { "prettier" },
+    typescript = { { "prettierd", "prettier" } },
+    typescriptreact = { { "prettierd", "prettier" } },
   },
 })
 
