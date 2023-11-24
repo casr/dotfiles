@@ -27,7 +27,7 @@ colorscheme chromatine
 
 if executable('ag')
 	set grepformat=%f:%l:%c:%m
-	set grepprg=ag\ --hidden\ --vimgrep\ $*
+	set grepprg=ag\ --hidden\ --silent\ --vimgrep\ $*
 endif
 
 if $TERM =~# '^nsterm\|^st\|^tmux'
