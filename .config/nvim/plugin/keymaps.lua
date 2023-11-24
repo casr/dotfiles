@@ -11,6 +11,8 @@ vim.keymap.set("n", "<leader>ff", "<Plug>(PickerEdit)", { unique = true })
 vim.keymap.set("n", "<leader>fb", "<Plug>(PickerBuffer)", { unique = true })
 vim.keymap.set("n", "<leader>sh", "<Plug>(PickerHelp)", { unique = true })
 
+vim.keymap.set("n", "gs", "<Cmd>G<CR>", opts) -- toggle fugitive's status view
+
 if r_cmp then
   -- regular omnicompletion will fail with the extra capabilities from nvim-cmp
   -- so force the use of nvim-cmp
