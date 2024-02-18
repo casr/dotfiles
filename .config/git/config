@@ -5,7 +5,7 @@
 	branch-date-sorted = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=16,position=right)%(committerdate:relative)  %(end)%(refname:short)'
 	diff-base = "!f() { git diff -w \"${2-origin/main}...${1-HEAD}\"; }; f"
 	files = "!f() { git diff --diff-filter=d --name-only \"${2-origin/main}...${1-HEAD}\"; }; f"
-	plog = log --oneline --graph
+	plog = log --all --format=\"format:%C(auto)%h%d%C(reset) %s%n- %C(magenta)%cr by %an%C(reset)%n\" --graph
 	prlog = "!f() { git log --decorate=no --oneline --reverse \"${2-origin/main}..${1-HEAD}\"; }; f"
 	st = status --branch --short
 [commit]
