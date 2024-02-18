@@ -1,29 +1,30 @@
 [alias]
-	st = status --branch --short
-	branch-date-sorted = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=16,position=right)%(committerdate:relative)  %(end)%(refname:short)'
+	alias = config --get-regexp ^alias\\.
 	bl = "!f() { git branch-date-sorted --no-merged ${1-origin/main} refs/heads; }; f"
 	blr = "!f() { git branch-date-sorted --no-merged ${1-origin/main} refs/remotes/origin; }; f"
-	prlog = "!f() { git log --decorate=no --oneline --reverse ${1:-origin/main}..HEAD; }; f"
-	files = "!f() { git diff --diff-filter=d --name-only ${1:-origin/main}...HEAD; }; f"
+	branch-date-sorted = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=16,position=right)%(committerdate:relative)  %(end)%(refname:short)'
 	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
-	alias = config --get-regexp ^alias\\.
+	files = "!f() { git diff --diff-filter=d --name-only ${1:-origin/main}...HEAD; }; f"
 	plog = log --oneline --graph
+	prlog = "!f() { git log --decorate=no --oneline --reverse ${1:-origin/main}..HEAD; }; f"
 	rmerged = for-each-ref --format='%(refname:strip=3)' --merged origin/main refs/remotes/origin
-[push]
-	default = current
-[merge]
-	tool = vimdiff
-	conflictstyle = diff3
-[mergetool]
-	prompt = true
-	keepBackup = false
-[user]
-	name = Chris Rawnsley
-	email = chris@puny.agency
-[init]
-	defaultBranch = main
+	st = status --branch --short
 [commit]
 	template = ~/.dotfiles/.config/git/template.txt
+[init]
+	defaultBranch = main
+[merge]
+	conflictstyle = diff3
+	tool = vimdiff
+[mergetool]
+	keepBackup = false
+	prompt = true
+[push]
+	default = current
+[user]
+	email = chris@puny.agency
+	name = Chris Rawnsley
 
+# keep at end so it overwrites other settings
 [include]
 	path = config.local
