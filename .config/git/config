@@ -7,7 +7,6 @@
 	files = "!f() { git diff --diff-filter=d --name-only ${1:-origin/main}...HEAD; }; f"
 	plog = log --oneline --graph
 	prlog = "!f() { git log --decorate=no --oneline --reverse ${1:-origin/main}..HEAD; }; f"
-	rmerged = for-each-ref --format='%(refname:strip=3)' --merged origin/main refs/remotes/origin
 	st = status --branch --short
 [commit]
 	template = ~/.dotfiles/.config/git/template.txt
@@ -15,14 +14,11 @@
 	defaultBranch = main
 [merge]
 	conflictstyle = diff3
-	tool = vimdiff
 [mergetool]
 	keepBackup = false
-	prompt = true
 [push]
 	default = current
 [user]
-	email = chris@puny.agency
 	name = Chris Rawnsley
 
 # keep at end so it overwrites other settings
