@@ -1,12 +1,12 @@
 [alias]
 	alias = config --get-regexp ^alias\\.
-	bl = "!f() { git branch-date-sorted --no-merged ${1-origin/main} refs/heads; }; f"
-	blr = "!f() { git branch-date-sorted --no-merged ${1-origin/main} refs/remotes/origin; }; f"
+	bl = "!f() { git branch-date-sorted --no-merged \"${1-origin/main}\" refs/heads; }; f"
+	blr = "!f() { git branch-date-sorted --no-merged \"${1-origin/main}\" refs/remotes/origin; }; f"
 	branch-date-sorted = for-each-ref --sort='committerdate:iso8601' --format='%(align:width=16,position=right)%(committerdate:relative)  %(end)%(refname:short)'
 	diff-base = "!f() { git diff -w $(git merge-base HEAD $1) HEAD; }; f"
-	files = "!f() { git diff --diff-filter=d --name-only ${1:-origin/main}...HEAD; }; f"
+	files = "!f() { git diff --diff-filter=d --name-only \"${1-origin/main}\"...HEAD; }; f"
 	plog = log --oneline --graph
-	prlog = "!f() { git log --decorate=no --oneline --reverse ${1:-origin/main}..HEAD; }; f"
+	prlog = "!f() { git log --decorate=no --oneline --reverse \"${1-origin/main}\"..HEAD; }; f"
 	st = status --branch --short
 [commit]
 	template = ~/.dotfiles/.config/git/template.txt
