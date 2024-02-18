@@ -10,10 +10,12 @@
 	st = status --branch --short
 [commit]
 	template = ~/.dotfiles/.config/git/template.txt
+[diff]
+	algorithm = histogram
 [init]
 	defaultBranch = main
 [merge]
-	conflictstyle = diff3
+	conflictstyle = zdiff3
 [mergetool]
 	keepBackup = false
 [push]
