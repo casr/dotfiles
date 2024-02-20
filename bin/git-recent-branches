@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# NAME
+#      git-recent-branches - list the most recently checked out branches
+#
+# SYNOPSIS
+#      git recent-branches [amount]
+#
+# DESCRIPTION
+#      List the most recently checked out branches by scanning the reflog. It
+#      defaults to up to 10 results although it can be configured by passing an
+#      amount in.
+
+# Assign Perl script to variable like this to make it easier to read than a one
+# liner. $ must be escaped \$.
+recent_branches=$(cat <<EOF
+my \$matched_lines = 0;
+my %seen;
+while (<>) {
+	# take only the first X results (defaults to 10)
+	if ( scalar %seen >= ${1-10} ) { last }
+	print "\$1\n"
+		# find all times a checkout occurred in reflog
+		if /checkout: moving from \S+ to (\S+)/
+		# skip the first matched line as this is the current branch
+		and \$matched_lines++ > 0
+		# if we have already 'seen' this branch then skip printing
+		and !\$seen{\$1}++;
+}
+EOF
+)
+
+git reflog | perl -e "${recent_branches}"
