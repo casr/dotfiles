@@ -1,0 +1,32 @@
+[colors.selection]
+text = "CellForeground"
+background = "#afd7ff"
+
+[colors.primary]
+foreground = "#262626"
+background = "#ffffff"
+
+[colors.normal]
+black = "#1c1c1c"
+red = "#af5f5f"
+green = "#008700"
+yellow = "#d78700"
+blue = "#00005f"
+magenta = "#875f87"
+cyan = "#5f8787"
+white = "#dadada"
+
+[colors.bright]
+black = "#767676"
+red = "#af5f5f"
+green = "#008700"
+yellow = "#d78700"
+blue = "#00005f"
+magenta = "#875f87"
+cyan = "#5f8787"
+white = "#ffffff"
+
+[bell]
+animation = "EaseOutQuad"
+duration = 200
+color = "#f0f0f0"

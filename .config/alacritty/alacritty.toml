@@ -1,0 +1,25 @@
+# defaults write org.alacritty AppleFontSmoothing -int 0
+
+import = [
+	"~/.config/alacritty/local.toml",
+	"~/.config/alacritty/theme.toml",
+]
+
+[env]
+LANG = "en_GB.UTF-8"
+
+[window]
+dimensions = { columns = 108, lines = 30 }
+dynamic_padding = true
+dynamic_title = true
+padding = { x = 4, y = 4 }
+
+[font]
+builtin_box_drawing = true
+size = 13
+
+[terminal]
+osc52 = "Disabled"
+
+[mouse]
+hide_when_typing = true

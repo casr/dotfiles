@@ -1,3 +1,5 @@
+/.config/alacritty/local.toml
+/.config/alacritty/theme.toml
 /.config/git/config.local
 /.config/nvim/after/plugin/local.lua
 /.config/nvim/pack/

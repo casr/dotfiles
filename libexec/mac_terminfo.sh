@@ -27,7 +27,7 @@
 macports_infocmp=/opt/local/bin/infocmp
 system_tic=/usr/bin/tic
 
-terms="tmux tmux-256color tmux-direct"
+terms="alacritty alacritty-direct tmux tmux-256color tmux-direct"
 terminfo_src="$(mktemp)"
 
 # Explicitly setting `TERMINFO` will force this directory to be preferred over
@@ -38,8 +38,8 @@ export TERMINFO=/opt/local/share/terminfo
 
 for term in ${terms}; do
 	# Later versions of terminfo can define `pairs` to a higher value than
-	# ncurses 5.7 supported but we have to remain compatible with ncurses
-	# 5.7 because that is what macOS ships with.
+	# ncurses <6.1 supported but we have to remain compatible with ncurses
+	# 6.0 because that is what macOS ships with.
 	"${macports_infocmp}" -x "${term}" | sed -e 's/pairs#0x10000/pairs#32767/'
 done > "${terminfo_src}"
 
