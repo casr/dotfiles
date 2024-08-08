@@ -14,18 +14,30 @@
 # Assign Perl script to variable like this to make it easier to read than a one
 # liner. $ must be escaped \$.
 recent_branches=$(cat <<EOF
+use strict;
+use warnings;
+
 my \$matched_lines = 0;
+my \$matches = 0;
 my %seen;
-while (<>) {
+while (my \$line = <>) {
 	# take only the first X results (defaults to 10)
-	if ( scalar %seen >= ${1-10} ) { last }
-	print "\$1\n"
-		# find all times a checkout occurred in reflog
-		if /checkout: moving from \S+ to (\S+)/
-		# skip the first matched line as this is the current branch
-		and \$matched_lines++ > 0
-		# if we have already 'seen' this branch then skip printing
-		and !\$seen{\$1}++;
+	if ( \$matches >= ${1-10} ) { last }
+	
+	if ( \$line =~ /checkout: moving from \S+ to (\S+)/ ) {
+		my \$branch = \$1;
+		# process next line in reflog if it's a pull branch (via `git
+		# ghreview`) or if we've already printed this branch
+		next if \$branch =~ /^pull\// or \$seen{\$branch}++ > 0;
+		# check branch still exists
+		\`git show-ref --verify --quiet refs/heads/\$branch\`;
+		print "\$branch\n"
+			# if branch does exist...
+			if \$? >> 8 == 0
+			# and it's not the last branch switched to (i.e. the
+			# current branch)
+			and ++\$matches;
+	}
 }
 EOF
 )
