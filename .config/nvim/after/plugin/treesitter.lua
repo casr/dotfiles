@@ -5,15 +5,18 @@ if not r_treesitter then
 end
 
 treesitter.setup({
+  parser_install_dir = vim.fn.stdpath("data") .. "/site",
   highlight = { enable = true },
   indent = { enable = true },
+  modules = {},
   sync_install = true,
-  parser_install_dir = vim.fn.stdpath("data") .. "/site",
+  auto_install = false,
   ensure_installed = {
     "bash",
     "css",
     "diff",
     "dockerfile",
+    "editorconfig",
     "git_rebase",
     "gitattributes",
     "gitcommit",
@@ -26,14 +29,10 @@ treesitter.setup({
     "jq",
     "jsdoc",
     "json",
-    "json5",
     "jsonc",
     "ledger",
     "make",
-    "markdown",
-    "markdown_inline",
     "python",
-    "query",
     "rust",
     "scss",
     "toml",
@@ -41,4 +40,5 @@ treesitter.setup({
     "typescript",
     "yaml",
   },
+  ignore_install = {},
 })
