@@ -9,22 +9,16 @@ conform.setup({
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
       return
     end
-    return { timeout_ms = 500, lsp_fallback = true }
+    return {}
   end,
   formatters_by_ft = {
-    javascript = { { "prettierd", "prettier" } },
-    javascriptreact = { { "prettierd", "prettier" } },
+    css = { "prettier" },
+    javascript = { "prettier" },
+    javascriptreact = { "prettier" },
     lua = { "stylua" },
-    typescript = { { "prettierd", "prettier" } },
-    typescriptreact = { { "prettierd", "prettier" } },
+    typescript = { "prettier" },
+    typescriptreact = { "prettier" },
   },
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    conform.format({ bufnr = args.buf })
-  end,
 })
 
 vim.api.nvim_create_user_command("FormatDisable", function(args)
