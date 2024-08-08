@@ -41,6 +41,7 @@ function! PackInit() abort
 	call minpac#add('tpope/vim-surround')
 	call minpac#add('tpope/vim-unimpaired')
 	call minpac#add('tpope/vim-vinegar')
+	call minpac#add('yioneko/nvim-vtsls')
 endfunction
 
 let s:minpac_manifest = stdpath('config') .. '/plugin/minpac.vim'
