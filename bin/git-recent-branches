@@ -26,8 +26,8 @@ while (my \$line = <>) {
 	
 	if ( \$line =~ /checkout: moving from \S+ to (\S+)/ ) {
 		my \$branch = \$1;
-		# process next line in reflog if it's a pull branch (via `git
-		# ghreview`) or if we've already printed this branch
+		# process next line in reflog if it's a pull branch (via \`git
+		# ghreview\`) or if we've already printed this branch
 		next if \$branch =~ /^pull\// or \$seen{\$branch}++ > 0;
 		# check branch still exists
 		\`git show-ref --verify --quiet refs/heads/\$branch\`;
