@@ -20,4 +20,4 @@ do
 done
 
 # Sync interface changes (also creates Alacritty's theme.toml as a side-effect)
-"${HOME}/.dotfiles/bin/set_appearance.sh"
+PATH="${HOME}/.dotfiles/bin:${PATH}" "${HOME}/.dotfiles/bin/set_appearance.sh"

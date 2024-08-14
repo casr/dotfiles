@@ -26,40 +26,64 @@ __p no 'System Settings:Appearance:Allow wallpaper tinting in windows' NO
 defaults write -g AppleReduceDesktopTinting -bool true
 __p no 'System Settings:Desktop & Dock:Ask to keep changes when closing documents' YES
 defaults write -g NSCloseAlwaysConfirmsChanges -bool true
-__p yes 'System Settings:AirDrop & Handoff:Allow Handoff between this Mac and your iCloud devices' NO
+__p yes 'System Settings:General:AirDrop & Handoff:Allow Handoff between this Mac and your iCloud devices' NO
 
-__p yes 'System Settings:Lock Screen:Start Screen Save when inactive' Never
+__p yes 'System Settings:General:AirDrop & Handoff:AirPlay Receiver' NO
 
-__dock_item() {
-	app_path="$(mdfind "kMDItemKind==Application \
-	                    && kMDItemDisplayName==\"$1*\"")"
-	printf '%s%s%s%s%s' \
-	       '<dict><key>tile-data</key><dict><key>file-data</key><dict>' \
-	       '<key>_CFURLString</key><string>' \
-	       "${app_path}" \
-	       '</string><key>_CFURLStringType</key><integer>0</integer>' \
-	       '</dict></dict></dict>'
+__p yes 'System Settings:Lock Screen:Start Screen Saver when inactive' Never
+
+__dock_app_item() {
+	app_path="$(readlink -f "$(mdfind "kMDItemKind==Application \
+	                    && kMDItemDisplayName==\"$1*\"")")"
+	printf '%s' \
+	       '<dict>' \
+	         '<key>tile-data</key><dict>' \
+	           '<key>file-data</key><dict>' \
+	             "<key>_CFURLString</key><string>${app_path}</string>" \
+	             '<key>_CFURLStringType</key><integer>0</integer>' \
+	           '</dict>' \
+	         '</dict>' \
+	       '</dict>'
 }
 
-__p no 'Hidden:Arrange dock items' 'Activity Monitor, Terminal, Safari'
+__dock_directory_item() {
+	file_path="$1"
+	printf '%s' \
+	       '<dict>' \
+	         '<key>tile-data</key><dict>' \
+	           '<key>file-data</key><dict>' \
+	             "<key>_CFURLString</key><string>file://${file_path}</string>" \
+	             '<key>_CFURLStringType</key><integer>15</integer>' \
+	           '</dict>' \
+	         '</dict>' \
+	         '<key>tile-type</key><string>directory-tile</string>' \
+	       '</dict>'
+}
+
+__p no 'Hidden:Arrange dock items' 'Activity Monitor, Terminal, Safari, System Settings'
 defaults write com.apple.dock persistent-apps -array \
-	"$(__dock_item 'Activity Monitor')" \
-	"$(__dock_item Terminal)" \
-	"$(__dock_item Safari)"
+	"$(__dock_app_item 'Activity Monitor')" \
+	"$(__dock_app_item 'System Settings')" \
+	"$(__dock_app_item Terminal)" \
+	"$(__dock_app_item Safari)"
+__p no 'Hidden:Arrange dock items (other)' 'Downloads, Screenshots'
+defaults write com.apple.dock persistent-others -array \
+	"$(__dock_directory_item "${HOME}/Downloads")" \
+	"$(__dock_directory_item "${HOME}/Pictures/Screenshots")"
 __p no 'System Settings:Desktop & Dock:Size' 40
 defaults write com.apple.dock tilesize -int 40
-__p no 'System Settings:Desktop & Dock:Show recent applications in Dock' NO
+__p no 'System Settings:Desktop & Dock:Show suggested and recent applications in Dock' NO
 defaults write com.apple.dock show-recents -bool no
 __p no 'Hidden:Fix Dock size' YES
 defaults write com.apple.dock size-immutable -bool yes
-__p no 'Hidden:Fix Dock contents' YES
-defaults write com.apple.dock contents-immutable -bool yes
+# __p no 'Hidden:Fix Dock contents' YES
+# defaults write com.apple.dock contents-immutable -bool yes
 
 __p no 'System Settings:Desktop & Dock:Automatically rearrange Spaces based on most recent use' NO
 defaults write com.apple.dock mru-spaces -bool false
 __p yes 'System Settings:Desktop & Dock:Hot Corners...' NO
 
-__p yes 'System Settings:Siri & Spotlight:Enable Ask Siri' NO
+__p yes 'System Settings:Siri & Spotlight:Ask Siri' NO
 
 __p yes 'System Settings:Siri & Spotlight:Search Results' 'Applications, Calculator, Contacts, Conversion, Definition and System Preferences'
 __p yes 'System Settings:Siri & Spotlight:Privacy' '~/Projects'
@@ -86,6 +110,8 @@ __p no 'System Settings:Keyboard:Input Sources | Edit...:Correct spelling automa
 defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 __p no 'System Settings:Keyboard:Input Sources | Edit...:Capitalise words automatically' NO
 defaults write -g NSAutomaticCapitalizationEnabled -bool false
+__p no 'System Settings:Keyboard:Input Sources | Edit...:Show inline predictive text' NO
+defaults write -g NSAutomaticInlinePredictionEnabled -bool false
 __p no 'System Settings:Keyboard:Input Sources | Edit...:Add full stop with double-space' NO
 defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
 __p no 'System Settings:Keyboard:Input Sources | Edit...:Use smart quotes and dashes' NO
@@ -164,6 +190,9 @@ __p no 'Hidden:Screenshot' 'Disable shadow'
 defaults write com.apple.screencapture disable-shadow -bool true
 __p no 'Screenshot:Options' 'Show Floating Thumbnail'
 defaults write com.apple.screencapture show-thumbnail -bool false
+__p no 'Screenshot:Options:Other location...' '~/Pictures/Screenshots'
+mkdir -p ~/Pictures/Screenshots
+defaults write com.apple.screencapture location -string '~/Pictures/Screenshots'
 
 __p yes 'Terminal:Preferences:Profiles:Shell:When the shell exits' 'Close if the shell exited cleanly'
 __p no 'Hidden:Terminal' 'Remove copy style'
