@@ -11,7 +11,7 @@ if ! ls ~/Library/Messages >/dev/null 2>&1; then
 	exit 1
 fi
 
-"${HOME}/.dotfiles/macos_defaults.sh"
+"${HOME}/.dotfiles/libexec/macos_defaults.sh"
 
 if ! command -v xcode-select >/dev/null; then
 	printf '%s\n%s\n' \
@@ -28,4 +28,4 @@ else
 	read
 fi
 
-"${HOME}/.dotfiles/macports.sh"
+"${HOME}/.dotfiles/libexec/macports.sh"
