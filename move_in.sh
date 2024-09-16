@@ -43,6 +43,13 @@ __link_x11() {
 	__link .xsession "${HOME}/.xsession"
 }
 
+__link_darwin_vscode() {
+	mkdir -p "${HOME}/Library/Application Support/Code/User"
+	__link .config/vscode/keybindings.json "${HOME}/Library/Application Support/Code/User/keybindings.json"
+	__link .config/vscode/settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
+	__link .config/vscode/snippets "${HOME}/Library/Application Support/Code/User/snippets"
+}
+
 __link_config_dir() {
 	mkdir -p "${HOME}/.config"
 	__link .config/alacritty "${HOME}/.config/alacritty"
@@ -68,6 +75,7 @@ __link_config_dir
 
 case "$(uname -s)" in
 	Darwin)
+		__link_darwin_vscode
 		;;
 	*)
 		__link_x11
