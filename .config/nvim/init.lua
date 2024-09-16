@@ -44,11 +44,6 @@ vim.opt.undofile = true
 vim.opt.updatetime = 400
 vim.opt.wildmode = { "longest:full", "full" }
 
-if vim.fn.executable("ag") then
-  vim.opt.grepformat = "%f:%l:%c:%m"
-  vim.opt.grepprg = "ag --hidden --silent --vimgrep $*"
-end
-
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0

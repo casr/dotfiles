@@ -25,9 +25,9 @@ set wildmode=longest:full,full
 
 colorscheme chromatine
 
-if executable('ag')
+if executable('rg')
 	set grepformat=%f:%l:%c:%m
-	set grepprg=ag\ --hidden\ --silent\ --vimgrep\ $*
+	set grepprg=rg\ --vimgrep\ -uu
 endif
 
 if $TERM =~# '^nsterm\|^st\|^tmux'
