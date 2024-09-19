@@ -11,6 +11,8 @@
     "editor.autoClosingDelete": "never",
     "editor.autoClosingOvertype": "never",
     "editor.autoClosingQuotes": "never",
+    "editor.formatOnSave": true,
+    "editor.renderFinalNewLine": "off",
     "editor.wordWrap": "on",
     "files.insertFinalNewline": true,
 
