@@ -12,7 +12,7 @@
     "editor.autoClosingOvertype": "never",
     "editor.autoClosingQuotes": "never",
     "editor.formatOnSave": true,
-    "editor.renderFinalNewLine": "off",
+    "editor.renderFinalNewline": "off"
     "editor.wordWrap": "on",
     "files.insertFinalNewline": true,
 
