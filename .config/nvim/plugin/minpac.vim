@@ -31,6 +31,7 @@ function! PackInit() abort
 	call minpac#add('reedes/vim-pencil')
 	call minpac#add('srstevenson/vim-picker')
 	call minpac#add('stevearc/conform.nvim')
+	call minpac#add('tpope/vim-abolish')
 	call minpac#add('tpope/vim-apathy')
 	call minpac#add('tpope/vim-commentary')
 	call minpac#add('tpope/vim-eunuch')
