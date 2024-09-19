@@ -25,6 +25,10 @@ session_name=$(
 )
 start_directory="${project_root}/${session_name}"
 
+# tmux will normalise the session name from the one given. Align `session_name`
+# to match tmux's so that we can switch to the session later
+session_name=$(printf '%s\n' "${session_name}" | sed 's/\./_/g')
+
 # Likely outcomes are that the user aborted the input with C-d or that input
 # was added but it did not result in a match in which case we filter out
 # non-existing project directories.
