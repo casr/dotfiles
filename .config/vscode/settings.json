@@ -6,6 +6,7 @@
   "workbench.preferredDarkColorTheme": "GitHub Dark Default",
   "workbench.preferredLightColorTheme": "GitHub Light Default",
   "workbench.iconTheme": "vs-minimal",
+  "workbench.startupEditor": "none",
 
   "editor.autoClosingBrackets": "never",
   "editor.autoClosingDelete": "never",
