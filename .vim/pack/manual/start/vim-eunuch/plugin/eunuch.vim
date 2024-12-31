@@ -163,8 +163,8 @@ endfunction
 
 command! -bar -nargs=1 -bang -complete=file Move exe s:Move(<bang>0, <q-args>)
 
-" ~/f, $VAR/f, /f, C:/f, url://f, ./f, ../f
-let s:absolute_pat = '^[~$]\|^' . s:slash_pat . '\|^\a\+:\|^\.\.\=\%(' . s:slash_pat . '\|$\)'
+" ~/f, $VAR/f, %:h/f, #1:h/f, /f, C:/f, url://f
+let s:absolute_pat = '^[~$#%]\|^' . s:slash_pat . '\|^\a\+:'
 
 function! s:RenameComplete(A, L, P) abort
   let sep = s:separator()
@@ -219,9 +219,25 @@ endfunction
 command! -bar -bang -nargs=+ Chmod
       \ exe s:Chmod(<bang>0, <f-args>)
 
-command! -bang -complete=file -nargs=+ Cfind   exe s:Grep(<q-bang>, <q-args>, 'find', '')
+function! s:FindPath() abort
+  if !has('win32')
+    return 'find'
+  elseif !exists('s:find_path')
+    let s:find_path = 'find'
+    for p in split($PATH, ';')
+      let prg_path = p ..'/find'
+      if p !~? '\<System32\>' && executable(prg_path)
+        let s:find_path = prg_path
+        break
+      endif
+    endfor
+  endif
+  return s:find_path
+endf
+
+command! -bang -complete=file -nargs=+ Cfind   exe s:Grep(<q-bang>, <q-args>, s:FindPath(), '')
 command! -bang -complete=file -nargs=+ Clocate exe s:Grep(<q-bang>, <q-args>, 'locate', '')
-command! -bang -complete=file -nargs=+ Lfind   exe s:Grep(<q-bang>, <q-args>, 'find', 'l')
+command! -bang -complete=file -nargs=+ Lfind   exe s:Grep(<q-bang>, <q-args>, s:FindPath(), 'l')
 command! -bang -complete=file -nargs=+ Llocate exe s:Grep(<q-bang>, <q-args>, 'locate', 'l')
 function! s:Grep(bang, args, prg, type) abort
   let grepprg = &l:grepprg
@@ -346,12 +362,7 @@ command! -bar -bang SudoWrite
       \ write!
 endif
 
-command! -bar -nargs=? Wall
-      \ if empty(<q-args>) |
-      \   call s:Wall() |
-      \ else |
-      \   call system('wall', <q-args>) |
-      \ endif
+command! -bar Wall call s:Wall()
 if exists(':W') !=# 2
   command! -bar W Wall
 endif
@@ -471,17 +482,18 @@ function! s:MapCR() abort
   imap <silent><script> <SID>EunuchNewLine <C-R>=EunuchNewLine()<CR>
   let map = maparg('<CR>', 'i', 0, 1)
   let rhs = substitute(get(map, 'rhs', ''), '\c<sid>', '<SNR>' . get(map, 'sid') . '_', 'g')
-  if get(g:, 'eunuch_no_maps') || rhs =~# 'Eunuch' || get(map, 'buffer')
+  if get(g:, 'eunuch_no_maps') || rhs =~# 'Eunuch' || get(map, 'desc') =~# 'Eunuch' || get(map, 'buffer')
     return
   endif
-  if get(map, 'expr')
-    exe 'imap <script><silent><expr> <CR> EunuchNewLine(' . rhs . ')'
-  elseif rhs =~? '^<cr>' && rhs !~? '<plug>'
-    exe 'imap <silent><script> <CR>' rhs . '<SID>EunuchNewLine'
-  elseif rhs =~? '^<cr>'
-    exe 'imap <silent> <CR>' rhs . '<SID>EunuchNewLine'
+  let imap = get(map, 'script', rhs !~? '<plug>') || get(map, 'noremap') ? 'imap <script>' : 'imap'
+  if get(map, 'expr') && type(get(map, 'callback')) == type(function('tr'))
+    lua local m = vim.fn.maparg('<CR>', 'i', 0, 1); vim.api.nvim_set_keymap('i', '<CR>', m.rhs or '', { expr = true, silent = true, callback = function() return vim.fn.EunuchNewLine(vim.api.nvim_replace_termcodes(m.callback(), true, true, m.replace_keycodes)) end, desc = "EunuchNewLine() wrapped around " .. (m.desc or "Lua function") })
+  elseif get(map, 'expr') && !empty(rhs)
+    exe imap '<silent><expr> <CR> EunuchNewLine(' . rhs . ')'
+  elseif rhs =~? '^\%(<c-\]>\)\=<cr>' || rhs =~# '<[Pp]lug>\w\+CR'
+    exe imap '<silent> <CR>' rhs . '<SID>EunuchNewLine'
   elseif empty(rhs)
-    imap <script><silent><expr> <CR> EunuchNewLine("<Bslash>r")
+    imap <script><silent><expr> <CR> EunuchNewLine("<Bslash>035<Bslash>r")
   endif
 endfunction
 call s:MapCR()
