@@ -1,5 +1,5 @@
 # defaults write org.alacritty AppleFontSmoothing -int 0
-
+[general]
 import = [
 	"~/.config/alacritty/local.toml",
 	"~/.config/alacritty/theme.toml",
