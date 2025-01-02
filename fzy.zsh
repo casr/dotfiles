@@ -1,5 +1,19 @@
 #!/usr/bin/env zsh
 
+__fzy-missing() {
+	printf 'fzy: command not found'
+	sleep 1
+	zle reset-prompt
+}
+
+if ! command -v fzy >/dev/null; then
+	zle -N __fzy-missing
+	bindkey -M emacs '^T' __fzy-missing
+	bindkey -M emacs '^G' __fzy-missing
+	bindkey -M emacs '^O' __fzy-missing
+	return
+fi
+
 __fzy-find-files() {
 	setopt localoptions pipefail no_aliases 2>/dev/null
 
