@@ -6,6 +6,8 @@
 /.config/nvim/undo/
 /.profile.local
 /.tmux.local.conf
+/.vim/.netrwhist
+/.vim/.selectprojects
 /.vim/info
 /.vim/pack/*
 !/.vim/pack/manual/

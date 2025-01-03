@@ -21,6 +21,7 @@ set smartcase
 set splitbelow
 set splitright
 set statusline=\ [%n]\ %<%f\ %h%w%m%r%=%{&ff!='unix'?'['.&ff.']\ ':''}%-14.(%l,%c%V%)\ %(%L\ %)
+set updatetime=400
 set viminfo=
 set wildmode=longest:full,full
 
@@ -69,3 +70,16 @@ endif
 " tpope/vim-surround
 " tpope/vim-unimpaired
 " tpope/vim-vinegar
+
+" Optional:
+"
+" AndrewRadev/splitjoin.vim
+" habamax/vim-select
+" mhinz/vim-signify
+" prabirshrestha/asyncomplete-buffer.vim
+" prabirshrestha/asyncomplete-lsp.vim
+" prabirshrestha/asyncomplete.vim
+" prabirshrestha/vim-lsp
+" romainl/vim-qf
+" tpope/vim-fugitive
+" tpope/vim-rhubarb
