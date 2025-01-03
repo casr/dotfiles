@@ -12,6 +12,7 @@ set list
 set nomodeline
 set mouse=cnv
 set pumheight=10
+set regexpengine=0
 set shortmess+=I
 set showbreak=+++\ 
 set showtabline=2
