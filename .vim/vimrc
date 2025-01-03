@@ -29,6 +29,9 @@ colorscheme chromatine
 if executable('rg')
 	set grepformat=%f:%l:%c:%m
 	set grepprg=rg\ --vimgrep\ -uu
+elseif executable('grep')
+	set grepformat=%f:%l:%m
+	set grepprg=grep\ -InHR\ --exclude-dir=.git
 endif
 
 if $TERM =~# '^nsterm\|^st\|^tmux'
