@@ -11,11 +11,13 @@ set linebreak
 set list
 set nomodeline
 set mouse=cnv
+set number
 set pumheight=10
 set regexpengine=0
 set shortmess+=I
 set showbreak=+++\ 
 set showtabline=2
+set signcolumn=yes
 set noswapfile
 set smartcase
 set splitbelow
@@ -25,6 +27,18 @@ set updatetime=400
 set wildmode=longest:full,full
 
 colorscheme chromatine
+
+if has('persistent_undo')
+	let &undodir=simplify(fnamemodify($MYVIMRC, ':h') . '/undo')
+	set undofile
+	if exists('*mkdir')
+		if !isdirectory(&undodir)
+			call mkdir(&undodir, 'p', 0700)
+		endif
+	else
+		echom 'Unable to create undodir'
+	endif
+endif
 
 if has('viminfo')
 	let &viminfo=&viminfo . ',n' .
