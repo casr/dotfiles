@@ -56,11 +56,6 @@ if has('autocmd')
 		      \ css,javascript,javascriptreact,json,jsonc,sass,scss,typescript,typescriptreact
 		      \ setlocal expandtab shiftwidth=2 softtabstop=2
 
-		autocmd FileType netrw
-		      \ let g:netrw_banner=0
-		      \ | let g:netrw_dirhistmax=0
-		      \ | let g:netrw_list_hide=',\(^\|\s\s\)\zs\.\S\+'
-
 		autocmd FileType tmux let g:tmux_syntax_colors=0
 
 		autocmd BufReadPost *
