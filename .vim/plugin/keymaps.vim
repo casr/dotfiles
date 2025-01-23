@@ -18,9 +18,16 @@ nmap gO <Plug>(lsp-document-symbol)
 nmap ]d <Cmd>LspNextDiagnostic<CR>
 nmap [d <Cmd>LspPreviousDiagnostic<CR>
 
+function! s:git_merge_base() abort
+	return trim(system('git merge-base origin HEAD'))
+endfunction
+
 nmap <leader>gs <Cmd>Git<CR>
 nmap <leader>gb <Cmd>Git blame<CR>
-nmap <leader>gd :<C-u>Gvdiffsplit
+nmap <leader>gd :<C-u>Gvdiffsplit!<Space>
+nmap <leader>gD :<C-u>Gvdiffsplit! <C-r>=<SID>git_merge_base()<CR><CR>
+nmap <leader>gr :<C-u>Git difftool -y <C-r>=<SID>git_merge_base()<CR><CR>
+nmap <leader>gf :<C-u>Git difftool --name-only <C-r>=<SID>git_merge_base()<CR><CR>
 
 nmap <leader>fg :<C-u>silent grep -iF '<C-r>=expand('<cWORD>')<CR>' \| redraw!<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 nmap <leader>ff <Plug>(SelectProjectFile)
