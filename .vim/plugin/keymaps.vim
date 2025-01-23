@@ -30,8 +30,8 @@ nmap <leader>gr :<C-u>Git difftool -y <C-r>=<SID>git_merge_base()<CR><CR>
 nmap <leader>gf :<C-u>Git difftool --name-only <C-r>=<SID>git_merge_base()<CR><CR>
 
 nmap <leader>fg :<C-u>silent grep -iF '<C-r>=expand('<cWORD>')<CR>' \| redraw!<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-nmap <leader>ff <Plug>(SelectProjectFile)
-nmap <leader>fb <Plug>(SelectBuffer)
+nmap <leader>ff <Cmd>Select casr_file<CR>
+nmap <leader>fb <Cmd>Select buffer<CR>
 
 nmap <leader>q <Plug>(qf_qf_switch)
 
