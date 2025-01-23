@@ -22,10 +22,14 @@ set splitbelow
 set splitright
 set statusline=\ [%n]\ %<%f\ %h%w%m%r%=%{&ff!='unix'?'['.&ff.']\ ':''}%-14.(%l,%c%V%)\ %(%L\ %)
 set updatetime=400
-set viminfo=
 set wildmode=longest:full,full
 
 colorscheme chromatine
+
+if has('viminfo')
+	let &viminfo=&viminfo . ',n' .
+		\ simplify(fnamemodify($MYVIMRC, ':h') . '/info')
+endif
 
 if executable('rg')
 	set grepformat=%f:%l:%c:%m
@@ -58,6 +62,13 @@ if has('autocmd')
 		      \ | let g:netrw_list_hide=',\(^\|\s\s\)\zs\.\S\+'
 
 		autocmd FileType tmux let g:tmux_syntax_colors=0
+
+		autocmd BufReadPost *
+		      \ let line = line("'\"")
+		      \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
+		      \      && index(['xxd', 'gitrebase'], &filetype) == -1
+		      \ |   execute "normal! g`\""
+		      \ | endif
 	augroup END
 endif
 
