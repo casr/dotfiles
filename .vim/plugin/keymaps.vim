@@ -15,6 +15,9 @@ nmap grr <Plug>(lsp-references)
 nmap gri <Plug>(lsp-implementation)
 nmap gO <Plug>(lsp-document-symbol)
 
+nmap ]d <Cmd>LspNextDiagnostic<CR>
+nmap [d <Cmd>LspPreviousDiagnostic<CR>
+
 nmap <leader>gs <Cmd>Git<CR>
 nmap <leader>gb <Cmd>Git blame<CR>
 nmap <leader>gd :<C-u>Gvdiffsplit

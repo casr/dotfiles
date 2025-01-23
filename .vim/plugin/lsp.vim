@@ -1,3 +1,12 @@
+let g:lsp_diagnostics_float_cursor = v:true
 let g:lsp_diagnostics_float_insert_mode_enabled = v:false
 let g:lsp_diagnostics_highlights_insert_mode_enabled = v:false
+let g:lsp_diagnostics_signs_error = {'text': '✖︎'}
+let g:lsp_diagnostics_signs_hint = {'text': '•'}
+let g:lsp_diagnostics_signs_information = {'text': '⊙'}
 let g:lsp_diagnostics_signs_insert_mode_enabled = v:false
+let g:lsp_diagnostics_signs_warning = {'text': '▲'}
+let g:lsp_diagnostics_virtual_text_align = 'after'
+let g:lsp_diagnostics_virtual_text_padding_left = 5
+let g:lsp_diagnostics_virtual_text_wrap = 'truncate'
+let g:lsp_experimental_workspace_folders = v:true
