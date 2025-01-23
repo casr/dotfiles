@@ -41,6 +41,8 @@ nmap <leader>yy mm0"+y$`m
 xmap <leader>yy "+ygv
 nmap <leader>yG mmgg"+yG`m
 
+nmap <leader>F mmgggqG`m
+
 nmap <leader>tt <Cmd>TestNearest<CR>
 nmap <leader>tT <Cmd>TestFile<CR>
 nmap <leader>ta <Cmd>TestSuite<CR>
