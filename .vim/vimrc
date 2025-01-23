@@ -83,3 +83,4 @@ endif
 " romainl/vim-qf
 " tpope/vim-fugitive
 " tpope/vim-rhubarb
+" vim-test/vim-test
