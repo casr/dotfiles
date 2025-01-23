@@ -34,3 +34,9 @@ nmap <leader>ff <Plug>(SelectProjectFile)
 nmap <leader>fb <Plug>(SelectBuffer)
 
 nmap <leader>q <Plug>(qf_qf_switch)
+
+nmap <leader>yf <Cmd>let @+=fnamemodify(resolve(expand('%:p')), ':.')<CR>
+nmap <leader>yF <Cmd>let @+=resolve(expand('%:p'))<CR>
+nmap <leader>yy mm0"+y$`m
+xmap <leader>yy "+ygv
+nmap <leader>yG mmgg"+yG`m
