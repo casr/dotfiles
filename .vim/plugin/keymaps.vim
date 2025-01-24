@@ -19,7 +19,7 @@ nmap ]d <Cmd>LspNextDiagnostic<CR>
 nmap [d <Cmd>LspPreviousDiagnostic<CR>
 
 function! s:git_merge_base() abort
-	return trim(system('git merge-base origin HEAD'))
+	return FugitiveExecute(['merge-base', 'origin', 'HEAD']).stdout[0]
 endfunction
 
 nmap <leader>gs <Cmd>Git<CR>
