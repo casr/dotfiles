@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# NAME
+#      git-web - open current git repo's pull requests in browser
+
+set -eu
+
+prog_name="${0##*/}"
+
+if ! original_url=$(git remote get-url origin 2>/dev/null); then
+	printf '%s: no origin present\n' "${prog_name}"
+	exit 1
+fi
+
+url="${original_url}"
+
+# remove prefixes
+url="${url#http*://}"
+url="${url#*@}"
+
+# remove suffixes
+url="${url%.git}"
+
+if printf '%s\n' "${url}" | grep -qE '^github.com/'; then
+	open -u "https://${url}/pulls"
+	exit
+fi
+
+printf '%s: unable to process url: %s\n' "${prog_name}" "${original_url}"
+exit 1
