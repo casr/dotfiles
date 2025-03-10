@@ -1,0 +1,102 @@
+#!/bin/sh
+
+# NAME
+#      notify - display a notification in MacOS' Notification Centre
+#
+# DESCRIPTION
+#      notify can be used to within scripts to inform the user of various
+#      events or could be used as part of a pipeline to inform how long a task
+#      took to complete.
+#
+# NOTES
+#      In order for this to function, ScriptEditor must have previously been
+#      set up with Notification Centre. Launch ScriptEditor.app and run:
+#
+#          display notification "Hello, world!"
+#
+#      And provide permission for ScriptEditor to use Notification Centre.
+#
+# EXAMPLES
+#      sleep 6 | notify -t "Task is finished"
+#      # Notification has title of "Task is finished" and body of "Task completed in 6s"
+#
+#      notify -t "Hello, world!" "What a fine morning it is!"
+#      # Notification has title of "Hello, world!" and body of "What a fine morning it is!"
+
+set -eu
+
+prog_name="${0##*/}"
+
+usage() {
+	cat <<EOF
+usage: ${prog_name} -t title_msg [body_msg]
+EOF
+}
+
+if [ $# -eq 0 ]; then
+	usage
+	exit 1
+fi
+
+while getopts ":t:" opt; do
+	case ${opt} in
+	t)
+		title_msg="${OPTARG}"
+		;;
+	\?)
+		printf '%s: illegal option -- %s\n' "${prog_name}" "${OPTARG}"
+		usage
+		exit 1
+		;;
+	esac
+done
+shift $((OPTIND-1))
+
+if [ "${title_msg-no}" = no ]; then
+	printf '%s: missing title_msg\n' "${prog_name}"
+	usage
+	exit 1
+fi
+
+convert_seconds() {
+	total_seconds=$1
+	days=$(( total_seconds / 86400 ))
+	hours=$(( (total_seconds % 86400) / 3600 ))
+	minutes=$(( (total_seconds % 3600) / 60 ))
+	seconds=$(( total_seconds % 60 ))
+
+	result=""
+	if [ $days -gt 0 ]; then
+		result="${days}d"
+	fi
+	if [ $hours -gt 0 ]; then
+		result="${result}${hours}h"
+	fi
+	if [ $minutes -gt 0 ]; then
+		result="${result}${minutes}m"
+	fi
+	if [ $seconds -gt 0 ]; then
+		result="${result}${seconds}s"
+	fi
+
+	printf '%s\n' "${result:-instantly}"
+}
+
+if [ -t 0 ]; then
+	if [ "${1-no}" = no ]; then
+		printf '%s: when not run in a pipeline, body_msg is required\n' "${prog_name}"
+		usage
+		exit 1
+	fi
+	body_msg="$1"
+else
+	start_time=$(date +%s)
+	while IFS= read -r line; do
+		printf '%s\n' "${line}"
+	done
+	end_time=$(date +%s)
+	completion_time=$(convert_seconds $(( end_time - start_time )))
+	body_msg="${body_msg-Task completed in ${completion_time}}"
+fi
+
+osascript -e "display notification \"${body_msg}\" with title \"${title_msg}\""
