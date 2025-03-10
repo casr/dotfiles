@@ -13,15 +13,44 @@
 #      The session name is derived from everything between the `.git` directory
 #      and `~/Projects`.
 
+set -eu
+
+prog_name="${0##*/}"
+
+usage() {
+	cat <<EOF
+usage: ${prog_name} [-f]
+EOF
+}
+
+lines=15
+while getopts ":f" opt; do
+	case ${opt} in
+	f)
+		lines=999
+		;;
+	\?)
+		printf '%s: illegal option -- %s\n' "${prog_name}" "${OPTARG}"
+		usage
+		exit 1
+		;;
+	esac
+done
+shift $((OPTIND-1))
 
 # We fix `project_root` to this directory as session names are derived from the
 # file system hierarchy and allowing this to be configurable would open us up
 # to session name clashes.
 project_root="${HOME}/Projects"
+
+projects="$(cd "${project_root}" || exit 1; find -sL . -mindepth 1 -maxdepth 4 -path '*/node_modules/*' -prune -o -name .git -exec /bin/sh -c "printf '%s\n' \"\$@\" | sed -e 's_^\./__' -e 's_/\.git\$__'" "find-exec" {} +)"
+projects_with_session="$(tmux list-sessions -F "#{?#{m:${project_root}/*,#{session_path}},#{s|^${project_root}/||:#{session_path}},}" | sed '/^$/d')"
+projects_without_session="$(printf '%s\n' "${projects_with_session}" "${projects}" | sort | uniq -u)"
+all_sessions="$(tmux list-sessions -F "#{?#{m:${project_root}/*,#{session_path}},#{s|^${project_root}/||:#{session_path}},#{session_name}}")"
+
 session_name=$(
-	( cd "${project_root}" || exit 1; find -sL . -mindepth 1 -maxdepth 4 -path '*/node_modules/*' -prune -o -type d -exec test -d '{}/.git' \; -prune -print ) | \
-		cut -c3- | \
-		fzy --line 15 --prompt "Choose a project ❯ "
+	printf '%s\n' "${all_sessions}" "--" "${projects_without_session}" | \
+		fzy --lines "${lines}" --prompt "Choose a project ❯ "
 )
 start_directory="${project_root}/${session_name}"
 
@@ -32,12 +61,16 @@ session_name=$(printf '%s\n' "${session_name}" | sed 's/\./_/g')
 # Likely outcomes are that the user aborted the input with C-d or that input
 # was added but it did not result in a match in which case we filter out
 # non-existing project directories.
-if [ -z "${session_name}" ] || [ ! -d "${start_directory}" ]; then
+if [ -z "${session_name}" ]; then
 	exit 1
 fi
 
 if ! tmux has-session -t "=${session_name}" 2>/dev/null; then
-	tmux new-session -dc "${start_directory}" -s "${session_name}"
+	if [ -d "${start_directory}" ]; then
+		tmux new-session -dc "${start_directory}" -s "${session_name}"
+	else
+		exit 1
+	fi
 fi
 
 if [ "${TMUX:+is_set}" = is_set ]; then
