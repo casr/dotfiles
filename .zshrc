@@ -4,6 +4,9 @@
 bindkey -e
 
 setopt INC_APPEND_HISTORY HIST_IGNORE_DUPS
+HISTFILE=${ZDOTDIR:-$HOME}/.sh_history
+HISTSIZE=100000
+SAVEHIST=100000
 unsetopt FLOW_CONTROL
 
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
