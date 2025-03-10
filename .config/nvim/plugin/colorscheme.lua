@@ -5,9 +5,8 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   group = augroup,
   callback = function()
     vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
-    vim.api.nvim_set_hl(0, "CmpItemAbbr", { link = "Comment" })
-    vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "CmpItemAbbr", { link = "chromatineComment" })
+    vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { link = "chromatineBold" })
   end,
 })
 

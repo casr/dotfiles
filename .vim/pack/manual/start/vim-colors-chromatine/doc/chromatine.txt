@@ -12,21 +12,4 @@ A low-colour theme with light and dark variants.
     that are stable across terminals.
 
 
-==============================================================================
- 2. Configuration                                       *chromatine-config*
-
-  *g:chromatine_accent*           Set the accent colour using the XTerm 256
-                                palette. Accepts light and dark variants.
-
-                                Examples: >
-                                " red tint
-                                let g:chromatine_accent = { 'light': 160, 'dark': 203 }
-
-                                " green tint
-                                let g:chromatine_accent = { 'light': 29, 'dark': 71 }
-
-                                " blue tint (default)
-                                let g:chromatine_accent = { 'light': 32, 'dark': 75 }
-<
-
  vim:tw=78:ts=8:noet:ft=help:norl:
