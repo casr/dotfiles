@@ -48,7 +48,16 @@ prompt_corrupt_precmd() {
 
 	top_line=(
 		# the current path
-		'%~'
+		' %~'
+	)
+
+	if [ "${VIRTUAL_ENV+yes}" = yes ]; then
+		top_line+=(
+			'${VIRTUAL_ENV+%8F●%f${VIRTUAL_ENV##*/}}'
+		)
+	fi
+
+	top_line+=(
 		"${git_branch}${git_dirty}"
 		"${git_action}"
 	)
@@ -57,8 +66,8 @@ prompt_corrupt_precmd() {
 		"${(@j.  .)top_line:#}"
 		$prompt_newline
 		# Indicate if user is running with privileges. i.e. root. If
-		# there is a job running in the background, show an _
-		'%(!.#.$)%(1j._. )'
+		# there is a job running in the background, prefix an asterisk
+		'%(1j.*. )%(!.#.$) '
 	)
 
 	rps1=(
