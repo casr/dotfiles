@@ -41,7 +41,6 @@ set splitbelow
 set splitkeep=screen
 set splitright
 set nostartofline
-set statusline=\ [%n]\ %<%f\ %h%w%m%r%=%{&ff!='unix'?'['.&ff.']\ ':''}%-14.(%l,%c%V%)\ %(%L\ %)
 set noswapfile
 set switchbuf=uselast
 set undofile
