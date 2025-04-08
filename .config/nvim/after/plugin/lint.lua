@@ -19,7 +19,6 @@ lint.linters_by_ft = {
   typescript = { "eslint" },
   typescriptreact = { "eslint" },
   yaml = { "actionlint" },
-  zsh = { "shellcheck" },
 }
 
 vim.api.nvim_create_autocmd(
