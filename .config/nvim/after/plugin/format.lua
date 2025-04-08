@@ -4,6 +4,8 @@ if not r_conform then
   return
 end
 
+local augroup = vim.api.nvim_create_augroup("after_plugin_format", {})
+
 conform.setup({
   format_on_save = function(bufnr)
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
@@ -19,6 +21,14 @@ conform.setup({
     typescript = { "prettier" },
     typescriptreact = { "prettier" },
   },
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
+  pattern = vim.tbl_keys(conform.formatters_by_ft),
+  callback = function()
+    vim.opt_local.formatexpr = "v:lua.require'conform'.formatexpr()"
+  end,
 })
 
 vim.api.nvim_create_user_command("FormatDisable", function(args)

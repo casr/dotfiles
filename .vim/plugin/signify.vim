@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 let g:signify_priority = 1
 let g:signify_sign_add = '⎬'
 let g:signify_sign_change = '│'

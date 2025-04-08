@@ -1,43 +1,92 @@
+set encoding=utf-8
+scriptencoding utf-8
+
+set autoindent
+set background=light
 set backupcopy=yes
+set belloff=all
 set breakindent
 set breakindentopt=list:-1,sbr,shift:2
+set colorcolumn=+1
+set comments+=fb:•
+set commentstring=
 set completeopt=menu,menuone,noselect
 set cpoptions+=n
+set expandtab
+set fillchars=fold:·,foldopen:┌,foldclose:╓,foldsep:│,vert:│
+set foldcolumn=1
 set formatoptions+=nor
 set hidden
+set history=10000
 set hlsearch
 set ignorecase
+set incsearch
+set nojoinspaces
 set linebreak
 set list
+set listchars=tab:›\ ,trail:•,extends:›,precedes:‹,nbsp:.
 set nomodeline
 set mouse=cnv
 set number
 set pumheight=10
-set regexpengine=0
-set shortmess+=I
+set shiftwidth=2
+set shortmess+=CFI shortmess-=S
 set showbreak=+++\ 
+set showcmd
 set showtabline=2
+set softtabstop=-1
 set signcolumn=yes
-set noswapfile
 set smartcase
 set splitbelow
 set splitright
+set nostartofline
 set statusline=\ [%n]\ %<%f\ %h%w%m%r%=%{&ff!='unix'?'['.&ff.']\ ':''}%-14.(%l,%c%V%)\ %(%L\ %)
+set noswapfile
+set switchbuf=uselast
+set undofile
 set updatetime=400
 set wildmode=longest:full,full
+set wildoptions=pum,tagfile
 
-colorscheme chromatine
+" The Vim that ships with MacOS only supports external diff. Therefore only
+" set improved options when internal is present.
+if &diffopt =~# 'internal'
+	set diffopt+=algorithm:histogram,indent-heuristic,linematch:60
+endif
 
-if has('persistent_undo')
-	let &undodir=simplify(fnamemodify($MYVIMRC, ':h') . '/undo')
-	set undofile
+" MacOS' Vim defaults regexpengine to the old engine in contrast to stock Vim
+if &regexpengine ==# 1
+	set regexpengine=0
+endif
+
+if has('nvim')
+	set foldcolumn=auto:4
+	set signcolumn=auto:2-4
+else
 	if exists('*mkdir')
+		let &backupdir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/backup')
+		let &undodir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/undo')
+
 		if !isdirectory(&undodir)
 			call mkdir(&undodir, 'p', 0700)
 		endif
-	else
-		echom 'Unable to create undodir'
+
+		if !isdirectory(&backupdir)
+			call mkdir(&backupdir, 'p', 0700)
+		endif
 	endif
+
+	" :help tmux-integration
+	if !has('gui_running') && &term =~# '^\%(screen\|tmux\)'
+		set ttymouse=sgr
+
+		let &t_fe = "\<Esc>[?1004h"
+		let &t_fd = "\<Esc>[?1004l"
+		execute "set <FocusGained>=\<Esc>[I"
+		execute "set <FocusLost>=\<Esc>[O"
+	endif
+
+	packadd! editorconfig
 endif
 
 if has('viminfo')
@@ -48,30 +97,16 @@ endif
 if executable('rg')
 	set grepformat=%f:%l:%c:%m
 	set grepprg=rg\ --vimgrep\ -uu
-elseif executable('grep')
+else
 	set grepformat=%f:%l:%m
 	set grepprg=grep\ -InHR\ --exclude-dir=.git
-endif
-
-if $TERM =~# '^nsterm\|^st\|^tmux'
-	set ttymouse=sgr
 endif
 
 if has('autocmd')
 	augroup vimrc_autocmd
 		autocmd!
 
-		autocmd FileType
-		      \ gitcommit,gitsendmail,mail,markdown,text
-		      \ setlocal expandtab shiftwidth=2 softtabstop=2
-		               \ spelllang=en_gb
-
-		autocmd FileType
-		      \ css,javascript,javascriptreact,json,jsonc,sass,scss,typescript,typescriptreact
-		      \ setlocal expandtab shiftwidth=2 softtabstop=2
-
-		autocmd FileType tmux let g:tmux_syntax_colors=0
-
+		" :help restore-cursor
 		autocmd BufReadPost *
 		      \ let line = line("'\"")
 		      \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
@@ -80,27 +115,3 @@ if has('autocmd')
 		      \ | endif
 	augroup END
 endif
-
-" casr/vim-colors-chromatine
-" tpope/vim-apathy
-" tpope/vim-commentary
-" tpope/vim-eunuch
-" tpope/vim-rsi
-" tpope/vim-sensible
-" tpope/vim-surround
-" tpope/vim-unimpaired
-" tpope/vim-vinegar
-
-" Optional:
-"
-" AndrewRadev/splitjoin.vim
-" habamax/vim-select
-" mhinz/vim-signify
-" prabirshrestha/asyncomplete-buffer.vim
-" prabirshrestha/asyncomplete-lsp.vim
-" prabirshrestha/asyncomplete.vim
-" prabirshrestha/vim-lsp
-" romainl/vim-qf
-" tpope/vim-fugitive
-" tpope/vim-rhubarb
-" vim-test/vim-test

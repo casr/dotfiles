@@ -2,12 +2,11 @@
 /.config/alacritty/theme.toml
 /.config/git/config.local
 /.config/nvim/after/plugin/local.lua
-/.config/nvim/pack/
-/.config/nvim/undo/
 /.profile.local
 /.tmux.local.conf
 /.vim/.netrwhist
 /.vim/.selectprojects
+/.vim/backup/
 /.vim/info
 /.vim/pack/*
 !/.vim/pack/manual/

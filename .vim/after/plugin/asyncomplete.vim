@@ -1,3 +1,5 @@
+if has('nvim') | finish | endif
+
 if !exists('g:asyncomplete_loaded')
 	finish
 endif

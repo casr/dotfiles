@@ -1,3 +1,5 @@
+if has('nvim') | finish | endif
+
 if executable('pyright-langserver')
 	autocmd User lsp_setup call lsp#register_server({
 		\ 'name': 'pyright-langserver',
