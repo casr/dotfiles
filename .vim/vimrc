@@ -10,7 +10,7 @@ set breakindentopt=list:-1,sbr,shift:2
 set colorcolumn=+1
 set comments+=fb:•
 set commentstring=
-set completeopt=menu,menuone,noselect
+set completeopt=menuone,popup,noselect
 set cpoptions+=n
 set expandtab
 set fillchars=fold:·,foldopen:┌,foldclose:╓,foldsep:│,vert:│
@@ -38,6 +38,7 @@ set softtabstop=-1
 set signcolumn=yes
 set smartcase
 set splitbelow
+set splitkeep=screen
 set splitright
 set nostartofline
 set statusline=\ [%n]\ %<%f\ %h%w%m%r%=%{&ff!='unix'?'['.&ff.']\ ':''}%-14.(%l,%c%V%)\ %(%L\ %)
@@ -62,6 +63,7 @@ endif
 if has('nvim')
   set foldcolumn=auto:4
   set signcolumn=auto:2-4
+  set winborder=rounded
 else
   if exists('*mkdir')
     let &backupdir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/backup')
