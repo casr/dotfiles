@@ -17,9 +17,9 @@ let g:tmux_syntax_colors = 0
 
 " terminal {{{
 if !has('nvim')
-	augroup plugin_filetype
-		autocmd!
-		autocmd TerminalOpen * setlocal nolist nonumber signcolumn=no
-	augroup END
+  augroup plugin_filetype
+    autocmd!
+    autocmd TerminalOpen * setlocal nolist nonumber signcolumn=no
+  augroup END
 endif
 " }}}

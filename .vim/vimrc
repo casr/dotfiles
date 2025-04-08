@@ -51,67 +51,67 @@ set wildoptions=pum,tagfile
 " The Vim that ships with MacOS only supports external diff. Therefore only
 " set improved options when internal is present.
 if &diffopt =~# 'internal'
-	set diffopt+=algorithm:histogram,indent-heuristic,linematch:60
+  set diffopt+=algorithm:histogram,indent-heuristic,linematch:60
 endif
 
 " MacOS' Vim defaults regexpengine to the old engine in contrast to stock Vim
 if &regexpengine ==# 1
-	set regexpengine=0
+  set regexpengine=0
 endif
 
 if has('nvim')
-	set foldcolumn=auto:4
-	set signcolumn=auto:2-4
+  set foldcolumn=auto:4
+  set signcolumn=auto:2-4
 else
-	if exists('*mkdir')
-		let &backupdir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/backup')
-		let &undodir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/undo')
+  if exists('*mkdir')
+    let &backupdir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/backup')
+    let &undodir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/undo')
 
-		if !isdirectory(&undodir)
-			call mkdir(&undodir, 'p', 0700)
-		endif
+    if !isdirectory(&undodir)
+      call mkdir(&undodir, 'p', 0700)
+    endif
 
-		if !isdirectory(&backupdir)
-			call mkdir(&backupdir, 'p', 0700)
-		endif
-	endif
+    if !isdirectory(&backupdir)
+      call mkdir(&backupdir, 'p', 0700)
+    endif
+  endif
 
-	" :help tmux-integration
-	if !has('gui_running') && &term =~# '^\%(screen\|tmux\)'
-		set ttymouse=sgr
+  " :help tmux-integration
+  if !has('gui_running') && &term =~# '^\%(screen\|tmux\)'
+    set ttymouse=sgr
 
-		let &t_fe = "\<Esc>[?1004h"
-		let &t_fd = "\<Esc>[?1004l"
-		execute "set <FocusGained>=\<Esc>[I"
-		execute "set <FocusLost>=\<Esc>[O"
-	endif
+    let &t_fe = "\<Esc>[?1004h"
+    let &t_fd = "\<Esc>[?1004l"
+    execute "set <FocusGained>=\<Esc>[I"
+    execute "set <FocusLost>=\<Esc>[O"
+  endif
 
-	packadd! editorconfig
+  packadd! editorconfig
 endif
 
 if has('viminfo')
-	let &viminfo=&viminfo . ',n' .
-		\ simplify(fnamemodify($MYVIMRC, ':h') . '/info')
+  let &viminfo=&viminfo . ',n' .
+        \ simplify(fnamemodify($MYVIMRC, ':h') . '/info')
 endif
 
 if executable('rg')
-	set grepformat=%f:%l:%c:%m
-	set grepprg=rg\ --vimgrep\ -uu
+  set grepformat=%f:%l:%c:%m
+  set grepprg=rg\ --vimgrep\ -uu
 else
-	set grepformat=%f:%l:%m
-	set grepprg=grep\ -InHR\ --exclude-dir=.git
+  set grepformat=%f:%l:%m
+  set grepprg=grep\ -InHR\ --exclude-dir=.git
 endif
 
 if has('autocmd')
-	augroup vimrc_autocmd
-		autocmd!
+  augroup vimrc_autocmd
+    autocmd!
 
-		" :help restore-cursor
-		autocmd BufReadPost *
-		      \ let line = line("'\"")
-		      \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
-		      \      && index(['xxd', 'gitrebase'], &filetype) == -1
-		      \ |   execute "normal! g`\""
-		      \ | endif
-	augroup END
+    " :help restore-cursor
+    autocmd BufReadPost *
+          \ let line = line("'\"")
+          \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
+          \      && index(['xxd', 'gitrebase'], &filetype) == -1
+          \ |   execute "normal! g`\""
+          \ | endif
+  augroup END
 endif

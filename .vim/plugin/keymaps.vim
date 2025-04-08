@@ -1,5 +1,5 @@
 function! s:git_merge_base() abort
-	return FugitiveExecute(['merge-base', 'origin', 'HEAD']).stdout[0]
+  return FugitiveExecute(['merge-base', 'origin', 'HEAD']).stdout[0]
 endfunction
 
 nmap <leader>gs <Cmd>Git<CR>
@@ -25,18 +25,18 @@ nmap <leader>F mmgggqG`m
 " continue for vim-specific shortcuts
 " nvim-specific shortcuts in keymap.lua
 if has('nvim')
-	finish
+  finish
 endif
 
 function! s:on_lsp_buffer_enabled() abort
-	setlocal omnifunc=lsp#complete
-	if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-	nmap <buffer> K <Plug>(lsp-hover)
+  setlocal omnifunc=lsp#complete
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+  nmap <buffer> K <Plug>(lsp-hover)
 endfunction
 
 augroup lsp_install
-	autocmd!
-	autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+  autocmd!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 
 nmap grn <Plug>(lsp-rename)
