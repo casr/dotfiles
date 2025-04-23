@@ -1,10 +1,14 @@
+[colors.cursor]
+text = "CellForeground"
+cursor = "#005f5f"
+
 [colors.selection]
 text = "CellForeground"
-background = "#005F87"
+background = "#005f87"
 
 [colors.primary]
-foreground = "#dadada"
-background = "#1c1c1c"
+foreground = "#e4e4e4"
+background = "#3a3a3a"
 
 [colors.normal]
 black = "#303030"
