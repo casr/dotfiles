@@ -22,8 +22,8 @@ nmap <leader>yG mmgg"+yG`m
 
 nmap <leader>F mmgggqG`m
 
-" continue for vim-specific shortcuts
-" nvim-specific shortcuts in keymap.lua
+" continue for vim-specific keymaps
+" nvim-specific ones in keymap.lua
 if has('nvim')
   finish
 endif
