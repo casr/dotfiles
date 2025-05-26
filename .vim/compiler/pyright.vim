@@ -10,10 +10,13 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
+let &l:errorformat =
+      \ '  %f:%l:%c - %trror: %m,' .
+      \ '  %f:%l:%c - %tarning: %m,' .
+      \ '%-G%.%#'
+
 CompilerSet makeprg=pyright
 silent CompilerSet errorformat
-      \ '  %f:%l:%c - %trror: %m,' .
-      \ '  %f:%l:%c - %tarning: %m,'
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
