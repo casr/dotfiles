@@ -18,6 +18,7 @@ conform.setup({
     javascript = { "prettier" },
     javascriptreact = { "prettier" },
     lua = { "stylua" },
+    python = { "ruff_organize_imports", "ruff_format" },
     typescript = { "prettier" },
     typescriptreact = { "prettier" },
   },
