@@ -27,16 +27,25 @@ vim.api.nvim_create_autocmd(
     group = augroup,
     callback = function(args)
       local opts = { ignore_errors = args.event ~= "BufWritePost" }
-      local client = vim.lsp.get_clients({ bufnr = 0 })[1] or {}
-      if client.workspace_folders then
-        for _, dir in pairs(client.workspace_folders) do
-          if vim.fs.relpath(dir.name, vim.api.nvim_buf_get_name(0)) then
-            opts.cwd = dir.name
+
+      local clients = vim.lsp.get_clients({ bufnr = 0 })
+      local key, client = next(clients)
+      while key do
+        if client.workspace_folders then
+          for _, dir in pairs(client.workspace_folders) do
+            if vim.fs.relpath(dir.name, vim.api.nvim_buf_get_name(0)) then
+              opts.cwd = dir.name
+            end
           end
+        elseif client.root_dir then
+          opts.cwd = client.root_dir
         end
-      elseif client.root_dir then
-        opts.cwd = client.root_dir
+        if opts.cwd then
+          break
+        end
+        key, client = next(clients, key)
       end
+
       lint.try_lint(nil, opts)
     end,
   }
