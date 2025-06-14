@@ -25,8 +25,19 @@ vim.api.nvim_create_autocmd(
   { "BufReadPost", "BufWritePost", "InsertLeave", "TextChanged" },
   {
     group = augroup,
-    callback = function()
-      lint.try_lint(nil, { ignore_errors = true })
+    callback = function(args)
+      local opts = { ignore_errors = args.event ~= "BufWritePost" }
+      local client = vim.lsp.get_clients({ bufnr = 0 })[1] or {}
+      if client.workspace_folders then
+        for _, dir in pairs(client.workspace_folders) do
+          if vim.fs.relpath(dir.name, vim.api.nvim_buf_get_name(0)) then
+            opts.cwd = dir.name
+          end
+        end
+      elseif client.root_dir then
+        opts.cwd = client.root_dir
+      end
+      lint.try_lint(nil, opts)
     end,
   }
 )
