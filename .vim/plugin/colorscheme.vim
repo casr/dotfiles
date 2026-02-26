@@ -18,6 +18,7 @@ function! s:chromatine_additions()
   " hrsh7th/nvim-cmp
   hi! link CmpItemAbbr chromatineComment
   hi! link CmpItemAbbrMatch chromatineBold
+  hi! link CmpItemKind chromatineNone
 
   " prabirshrestha/vim-lsp
   hi! link LspInformationText chromatineComment

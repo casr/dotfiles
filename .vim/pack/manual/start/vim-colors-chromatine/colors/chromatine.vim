@@ -1,9 +1,9 @@
 " Vim color file
 " Description: Low-colour theme with light and dark variants
 " Maintainer: Chris Rawnsley <chris@puny.agency>
-" Version: 0.8.0
+" Version: 0.8.1
 " Source: https://github.com/casr/vim-colors-chromatine
-" Modified: 2025 Mar 10
+" Modified: 2026 Feb 26
 
 hi clear
 if exists('syntax_on')
@@ -45,6 +45,11 @@ hi! link CursorLineFold chromatineCursorLine
 hi! link CursorLineNr chromatineCursorLine
 hi! link CursorLineSign chromatineCursorLine
 hi! link DiagnosticError chromatineErrorMsg
+hi! link DiagnosticFloatingError chromatineNone
+hi! link DiagnosticFloatingHint chromatineNone
+hi! link DiagnosticFloatingInfo chromatineNone
+hi! link DiagnosticFloatingOk chromatineNone
+hi! link DiagnosticFloatingWarn chromatineNone
 hi! link DiagnosticHint chromatineLineNC
 hi! link DiagnosticInfo chromatineNone
 hi! link DiagnosticOk chromatineNone
@@ -139,6 +144,10 @@ hi! link Todo chromatineNone
 hi! link Type chromatineNone
 hi! link Typedef chromatineNone
 hi! link Underlined chromatineUnderlined
+
+if has('nvim')
+  hi! link @string.documentation chromatineComment
+endif
 
 " ft:css {{{
 hi! link cssMediaComma chromatineNone
