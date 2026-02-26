@@ -16,6 +16,7 @@
   "editor.renderFinalNewline": "off",
   "editor.wordWrap": "on",
   "files.insertFinalNewline": true,
+  "git.openRepositoryInParentFolders": "never",
 
   "javascript.referencesCodeLens.showOnAllFunctions": true,
   "javascript.referencesCodeLens.enabled": true,
