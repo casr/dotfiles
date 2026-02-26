@@ -3,10 +3,7 @@
 TERMINFO_DIRS=":${HOME}/.terminfo"
 export TERMINFO_DIRS
 
-eval `unset PATH; /usr/libexec/path_helper -s`
-
-PATH="${HOME}/.dotfiles/bin:${PATH}"
-export PATH
+eval `unset MANPATH PATH; /usr/libexec/path_helper -s`
 
 # Disable macOS' shell session state managment
 SHELL_SESSIONS_DISABLE=1

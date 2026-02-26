@@ -1,15 +1,15 @@
 #!/bin/sh
 
-ENV=${HOME}/.kshrc
-PATH=${HOME}/.dotfiles/bin:${HOME}/.local/bin:${HOME}/.npm/packages/bin
-PATH=${PATH}:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin
-PATH=${PATH}:/usr/local/bin:/usr/local/sbin:/usr/games
+ENV="${HOME}/.kshrc"
+PATH="${HOME}/.local/bin:${HOME}/.npm/packages/bin"
+PATH="${PATH}:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin"
+PATH="${PATH}:/usr/local/bin:/usr/local/sbin:/usr/games"
 export ENV PATH
 
 WORKON_HOME=/usr/local/virtualenvs
 export WORKON_HOME
 
-if [ ! "${TERM}" = "vt220" ]; then
+if [ ! "${TERM}" = vt220 ]; then
 	LANG=en_US.UTF-8
 	LC_CTYPE=en_US.UTF-8
 	export LANG LC_CTYPE

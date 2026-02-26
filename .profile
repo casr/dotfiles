@@ -6,6 +6,9 @@ local_profile="${HOME}/.dotfiles/.profile.local"
 
 test -f "${sys_profile}" && . "${sys_profile}"
 
+PATH="${HOME}/.dotfiles/bin:${PATH}"
+export PATH
+
 LSCOLORS=exfxcxdxbxGxDxBxGxCxDx
 export LSCOLORS
 
