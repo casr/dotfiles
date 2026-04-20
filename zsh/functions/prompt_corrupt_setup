@@ -1,36 +1,34 @@
 #!/usr/bin/env zsh
 
+# psvar[5]: human readable elapsed command time
+
 prompt_corrupt_human_time() {
-	if [ "${1:-0}" -lt 5 ]; then
-		return
-	fi
+	integer total_seconds="$1"
+	integer days=$(( total_seconds / 60 / 60 / 24 ))
+	integer hours=$(( total_seconds / 60 / 60 % 24 ))
+	integer minutes=$(( total_seconds / 60 % 60 ))
+	integer seconds=$(( total_seconds % 60 ))
 
-	local human total_seconds=$1
-	local days=$(( total_seconds / 60 / 60 / 24 ))
-	local hours=$(( total_seconds / 60 / 60 % 24 ))
-	local minutes=$(( total_seconds / 60 % 60 ))
-	local seconds=$(( total_seconds % 60 ))
-
-	(( days > 0 )) && human+="${days}d "
-	(( hours > 0 )) && human+="${hours}h "
-	(( minutes > 0 )) && human+="${minutes}m "
-	human+="${seconds}s"
-
-	print -n -- $human
-}
-
-prompt_corrupt_preexec() {
-	timer=${timer:-$SECONDS}
+	local output=""
+	integer cascade=0
+	(( days > 0 )) && output+="${days}d " cascade=1
+	(( hours > 0 || cascade )) && output+="${hours}h " cascade=1
+	(( minutes > 0 || cascade )) && output+="${minutes}m "
+	print -- "${output}${seconds}s"
 }
 
 prompt_corrupt_precmd() {
 	local git_action git_branch runtime
 	local -at ps1 rps1 top_line
 
-	if [ $timer ]; then
-		psvar[1]=$(($SECONDS - $timer))
-		unset timer
+	psvar[5]=
+	if [[ -n "${prompt_corrupt_cmd_start_time}" ]]; then
+		local cmd_elapsed_time=$(( SECONDS - prompt_corrupt_cmd_start_time ))
+		if (( cmd_elapsed_time >= 5 )); then
+			psvar[5]=$(prompt_corrupt_human_time "${cmd_elapsed_time}")
+		fi
 	fi
+	prompt_corrupt_cmd_start_time=
 
 	vcs_info
 
@@ -67,7 +65,7 @@ prompt_corrupt_precmd() {
 	)
 
 	rps1=(
-		"$(prompt_corrupt_human_time "${psvar[1]}")"
+		'%5v'
 		'%8F%*%f'
 	)
 
@@ -77,6 +75,10 @@ prompt_corrupt_precmd() {
 	# man zshmisc /EXPANSION OF PROMPT SEQUENCES
 	PS1="${(j..)ps1}"
 	RPS1="${(j. .)rps1}"
+}
+
+prompt_corrupt_preexec() {
+	prompt_corrupt_cmd_start_time=${prompt_corrupt_cmd_start_time:-$SECONDS}
 }
 
 prompt_corrupt_setup() {
