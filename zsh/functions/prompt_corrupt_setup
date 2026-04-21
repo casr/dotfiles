@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 
+# psvar[4]: time command started
 # psvar[5]: human readable elapsed command time
+# psvar[6]: vcs branch
+# psvar[7]: vcs action
+# psvar[8]: virtual environment
 
 prompt_corrupt_human_time() {
 	integer total_seconds="$1"
@@ -18,67 +22,34 @@ prompt_corrupt_human_time() {
 }
 
 prompt_corrupt_precmd() {
-	local git_action git_branch runtime
-	local -at ps1 rps1 top_line
-
 	psvar[5]=
-	if [[ -n "${prompt_corrupt_cmd_start_time}" ]]; then
-		local cmd_elapsed_time=$(( SECONDS - prompt_corrupt_cmd_start_time ))
+	if [[ -n "${psvar[4]}" ]]; then
+		local cmd_elapsed_time=$(( SECONDS - psvar[4] ))
 		if (( cmd_elapsed_time >= 5 )); then
 			psvar[5]=$(prompt_corrupt_human_time "${cmd_elapsed_time}")
 		fi
 	fi
-	prompt_corrupt_cmd_start_time=
+	psvar[4]=
 
+	psvar[6]=
+	psvar[7]=
 	vcs_info
+	# vcs branch
+	[[ -n "${vcs_info_msg_0_}" ]] && psvar[6]="${vcs_info_msg_0_}"
+	# vcs action
+	[[ -n "${vcs_info_msg_1_}" ]] && psvar[7]="${vcs_info_msg_1_}"
 
-	if [ -n "${vcs_info_msg_0_}" ]; then
-		git_branch="%8F⺦%f${vcs_info_msg_0_}"
-	fi
-
-	if [ -n "${vcs_info_msg_1_}" ]; then
-		git_action="%8F${vcs_info_msg_1_}%f"
-	fi
-
-	top_line=(
-		# the current path
-		' %~'
-	)
-
+	psvar[8]=
 	if [ "${VIRTUAL_ENV+yes}" = yes ]; then
-		top_line+=(
-			'${VIRTUAL_ENV+%8F●%f${VIRTUAL_ENV##*/}}'
-		)
+		psvar[8]="${VIRTUAL_ENV##*/}"
 	fi
-
-	top_line+=(
-		"${git_branch}"
-		"${git_action}"
-	)
-
-	ps1=(
-		"${(@j.  .)top_line:#}"
-		$prompt_newline
-		# Indicate if user is running with privileges. i.e. root. If
-		# there is a job running in the background, prefix an asterisk
-		'%(1j.*. )%(!.#.$) '
-	)
-
-	rps1=(
-		'%5v'
-		'%8F%*%f'
-	)
 
 	# a gap between the last command's output is nice
 	print
-
-	# man zshmisc /EXPANSION OF PROMPT SEQUENCES
-	PS1="${(j..)ps1}"
-	RPS1="${(j. .)rps1}"
 }
 
 prompt_corrupt_preexec() {
-	prompt_corrupt_cmd_start_time=${prompt_corrupt_cmd_start_time:-$SECONDS}
+	psvar[4]=${psvar[4]:-$SECONDS}
 }
 
 prompt_corrupt_setup() {
@@ -93,7 +64,26 @@ prompt_corrupt_setup() {
 	zstyle ':vcs_info:*' formats '%b'
 	zstyle ':vcs_info:*' actionformats '%b' '%a'
 
-	prompt_opts=(cr sp percent subst)
+	# man zshmisc /EXPANSION OF PROMPT SEQUENCES
+	PS1=
+	# the current path
+	PS1+=' %~'
+	# virtualenv
+	PS1+='%(8V.  %8F●%f%8v.)'
+	# vcs branch
+	PS1+='%(6V.  %8F⺦%f%6v.)'
+	# vcs action
+	PS1+='%(7V.  %8F%7v%f.)'
+	PS1+="${prompt_newline}"
+	# Indicate if user is running with privileges. i.e. root. If
+	# there is a job running in the background, prefix an asterisk
+	PS1+='%(1j.*. )%(!.#.$) '
+
+	RPS1=
+	RPS1+='%(5V.%5v  .)'
+	RPS1+='%8F%*%f'
+
+	prompt_opts=(cr sp percent)
 }
 
 prompt_corrupt_setup "$@"
