@@ -66,22 +66,24 @@ prompt_corrupt_setup() {
 
 	# man zshmisc /EXPANSION OF PROMPT SEQUENCES
 	PS1=
+	# background jobs
+	PS1+='%(2j.%j.)%(1j.*  .)'
+	# time
+	PS1+='%8F%D{%H:%M}%f'
+	# time command took
+	PS1+='%(5V.  %5v.)'
 	# the current path
-	PS1+=' %~'
+	PS1+='  %~'
 	# virtualenv
-	PS1+='%(8V.  %8F●%f%8v.)'
+	PS1+='%(8V.  %8Fvenv(%f%8v%8F)%f.)'
 	# vcs branch
-	PS1+='%(6V.  %8F⺦%f%6v.)'
+	PS1+='%(6V.  %8Fgit(%f%6v%8F)%f.)'
 	# vcs action
 	PS1+='%(7V.  %8F%7v%f.)'
 	PS1+="${prompt_newline}"
-	# Indicate if user is running with privileges. i.e. root. If
-	# there is a job running in the background, prefix an asterisk
-	PS1+='%(1j.*. )%(!.#.$) '
-
-	RPS1=
-	RPS1+='%(5V.%5v  .)'
-	RPS1+='%8F%*%f'
+	# Indicate if user is running with privileges. i.e. root. Highlight
+	# prompt if previous command fails
+	PS1+='%(?.%f.%1F)%(!.#.$)%f '
 
 	prompt_opts=(cr sp percent)
 }
