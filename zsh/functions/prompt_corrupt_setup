@@ -40,8 +40,11 @@ prompt_corrupt_precmd() {
 	[[ -n "${vcs_info_msg_1_}" ]] && psvar[7]="${vcs_info_msg_1_}"
 
 	psvar[8]=
-	if [ "${VIRTUAL_ENV+yes}" = yes ]; then
-		psvar[8]="${VIRTUAL_ENV##*/}"
+	if [[ -n "${CONDA_DEFAULT_ENV}" ]]; then
+		psvar[8]="${CONDA_DEFAULT_ENV:t}"
+	fi
+	if [[ -n "${VIRTUAL_ENV}" ]]; then
+		psvar[8]="${VIRTUAL_ENV:t}"
 	fi
 
 	# a gap between the last command's output is nice
