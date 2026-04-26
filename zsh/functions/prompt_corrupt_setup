@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# psvar[1]: cmd executing state
+# psvar[2]: last cmd status
+# psvar[3]: current pid, i.e. this zsh's pid
 # psvar[4]: time command started
 # psvar[5]: human readable elapsed command time
 # psvar[6]: vcs branch
@@ -22,6 +25,18 @@ prompt_corrupt_human_time() {
 }
 
 prompt_corrupt_precmd() {
+	local -i cmd_status=$?
+	psvar[3]=$$
+
+	# track if a command just finished executing or if enter was hit on an
+	# empty prompt
+	if (( psvar[1] == 1 )); then
+		psvar[2]=${cmd_status}
+		psvar[1]=2
+	elif (( psvar[1] == 2 )); then
+		psvar[2]=
+	fi
+
 	psvar[5]=
 	if [[ -n "${psvar[4]}" ]]; then
 		local cmd_elapsed_time=$(( SECONDS - psvar[4] ))
@@ -46,12 +61,12 @@ prompt_corrupt_precmd() {
 	if [[ -n "${VIRTUAL_ENV}" ]]; then
 		psvar[8]="${VIRTUAL_ENV:t}"
 	fi
-
-	# a gap between the last command's output is nice
-	print
 }
 
 prompt_corrupt_preexec() {
+	print -n "\e]133;C\a"
+	psvar[1]=1
+
 	psvar[4]=${psvar[4]:-$SECONDS}
 }
 
@@ -68,7 +83,7 @@ prompt_corrupt_setup() {
 	zstyle ':vcs_info:*' actionformats '%b' '%a'
 
 	# man zshmisc /EXPANSION OF PROMPT SEQUENCES
-	PS1=
+	PS1="${prompt_newline}"
 	# background jobs
 	PS1+='%(2j.%j.)%(1j.*  .)'
 	# time
@@ -87,6 +102,17 @@ prompt_corrupt_setup() {
 	# Indicate if user is running with privileges. i.e. root. Highlight
 	# prompt if previous command fails
 	PS1+='%(?.%f.%1F)%(!.#.$)%f '
+
+	# semantic prompt
+	# OSC 133 aka \e]133; is the base of the commands
+	# A = start of prompt
+	# B = end of prompt
+	# C = start of output (see preexec)
+	# D = end of output. report cmd status if available
+	# P = prompt type. k=i for initial or k=s for secondary
+	# See: https://gitlab.freedesktop.org/Per_Bothner/specifications/-/blob/master/proposals/semantic-prompts.md
+	PS1=$'%{\e]133;D;%(2V.%2v;.)aid=%3v\a\e]133;A;cl=m;aid=%3v\a\e]133;P;k=i\a%}'"${PS1}"$'%{\e]133;B\a%}'
+	PS2=$'%{\e]133;P;k=s\a%}'"${PS2}"$'%{\e]133;B\a%}'
 
 	prompt_opts=(cr sp percent)
 }
