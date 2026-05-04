@@ -18,13 +18,14 @@ endfunction
 " statusline.vim    [Git:91b4ea5(combine)] <8/.vim/plugin | unix | vim | 100%
 " options.txt                                          . | unix | help |   9%
 
-set statusline=
 " <filename>
-set statusline+=\ %t
+set statusline=\ %t
 " save-state
 set statusline+=%-3.(%{&modified?&readonly?'[-]':'[+]':''}%)
 " git status
-set statusline+=%(\ %{FugitiveStatusline()}%)
+if exists('g:loaded_fugitive')
+  set statusline+=%(\ %{FugitiveStatusline()}%)
+endif
 " separation point
 set statusline+=%=
 " <directory>, truncate from start
