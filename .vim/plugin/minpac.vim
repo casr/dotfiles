@@ -13,12 +13,6 @@ function! s:manifest() abort
         \ ]
 
   let l:vim = [
-        \ 'habamax/vim-select',
-        \ 'prabirshrestha/asyncomplete-buffer.vim',
-        \ 'prabirshrestha/asyncomplete-lsp.vim',
-        \ 'prabirshrestha/asyncomplete.vim',
-        \ 'prabirshrestha/vim-lsp',
-        \ 'vim-test/vim-test',
         \ ]
 
   let l:nvim = [

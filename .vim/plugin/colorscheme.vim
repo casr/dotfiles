@@ -19,20 +19,6 @@ function! s:chromatine_additions()
   hi! link CmpItemAbbr chromatineComment
   hi! link CmpItemAbbrMatch chromatineBold
   hi! link CmpItemKind chromatineNone
-
-  " prabirshrestha/vim-lsp
-  hi! link LspInformationText chromatineComment
-  hi! link LspInformationVirtualText LspInformationText
-  hi! link LspInformationHighlight chromatineUnderlined
-  hi! link LspErrorText chromatineErrorMsg
-  hi! link LspWarningText chromatineVisual
-  hi! link LspHintText chromatineLineNC
-  hi! link LspErrorHighlight chromatineUnderlined
-  hi! link LspWarningHighlight chromatineUnderlined
-  hi! link LspHintHighlight chromatineUnderlined
-  hi! link LspErrorVirtualText chromatineErrorMsg
-  hi! link LspWarningVirtualText chromatineVisual
-  hi! link LspHintVirtualText chromatineLineNC
 endfunction
 
 augroup plugin_colorscheme
