@@ -3,7 +3,6 @@ function! s:manifest() abort
         \ 'AndrewRadev/splitjoin.vim',
         \ 'mhinz/vim-signify',
         \ 'ledger/vim-ledger',
-        \ 'romainl/vim-cool',
         \ 'romainl/vim-qf',
         \ 'tpope/vim-fugitive',
         \ 'tpope/vim-rhubarb',
