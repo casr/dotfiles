@@ -61,26 +61,6 @@ endif
 
 if has('nvim')
   set winborder=rounded
-else
-  if exists('*mkdir')
-    let &backupdir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/backup')
-    let &undodir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/undo')
-
-    if !isdirectory(&undodir)
-      call mkdir(&undodir, 'p', 0700)
-    endif
-
-    if !isdirectory(&backupdir)
-      call mkdir(&backupdir, 'p', 0700)
-    endif
-  endif
-
-  packadd! editorconfig
-endif
-
-if has('viminfo')
-  let &viminfo=&viminfo . ',n' .
-        \ simplify(fnamemodify($MYVIMRC, ':h') . '/info')
 endif
 
 if executable('rg')
@@ -90,3 +70,26 @@ else
   set grepformat=%f:%l:%m
   set grepprg=grep\ -InHR\ --exclude-dir=.git
 endif
+
+if has('nvim') | finish | endif
+
+if exists('*mkdir')
+  let &backupdir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/backup')
+  let &undodir=simplify(fnamemodify($MYVIMRC, ':p:h') . '/undo')
+
+  if !isdirectory(&undodir)
+    call mkdir(&undodir, 'p', 0700)
+  endif
+
+  if !isdirectory(&backupdir)
+    call mkdir(&backupdir, 'p', 0700)
+  endif
+endif
+
+if has('viminfo')
+  set viminfo^=r/tmp/ viminfo^=r/private/
+  let &viminfo=&viminfo . ',n' .
+        \ simplify(fnamemodify($MYVIMRC, ':h') . '/info')
+endif
+
+packadd! editorconfig
