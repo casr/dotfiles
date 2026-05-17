@@ -14,7 +14,7 @@ set completeopt=menuone,popup,noselect
 set cpoptions+=n
 set expandtab
 set fillchars=fold:·,foldopen:┌,foldclose:╓,foldsep:│,vert:│
-set foldcolumn=1
+let &foldcolumn=has('nvim') ? 'auto:4' : '1'
 set formatoptions+=nor
 set hidden
 set history=10000
@@ -34,9 +34,9 @@ set shortmess+=CFI shortmess-=S
 set showbreak=+++\ 
 set showcmd
 set showtabline=2
-set softtabstop=-1
-set signcolumn=yes
+let &signcolumn=has('nvim') ? 'auto:2-4' : 'yes'
 set smartcase
+set softtabstop=-1
 set splitbelow
 set splitkeep=screen
 set splitright
@@ -60,8 +60,6 @@ if &regexpengine ==# 1
 endif
 
 if has('nvim')
-  set foldcolumn=auto:4
-  set signcolumn=auto:2-4
   set winborder=rounded
 else
   if exists('*mkdir')
