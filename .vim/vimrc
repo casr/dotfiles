@@ -75,16 +75,6 @@ else
     endif
   endif
 
-  " :help tmux-integration
-  if !has('gui_running') && &term =~# '^\%(screen\|tmux\)'
-    set ttymouse=sgr
-
-    let &t_fe = "\<Esc>[?1004h"
-    let &t_fd = "\<Esc>[?1004l"
-    execute "set <FocusGained>=\<Esc>[I"
-    execute "set <FocusLost>=\<Esc>[O"
-  endif
-
   packadd! editorconfig
 endif
 
