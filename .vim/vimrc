@@ -11,7 +11,6 @@ set colorcolumn=+1
 set comments+=fb:•
 set commentstring=
 set completeopt=menuone,popup,noselect
-set cpoptions+=n
 set expandtab
 set fillchars=fold:·,foldopen:┌,foldclose:╓,foldsep:│,vert:│
 let &foldcolumn=has('nvim') ? 'auto:4' : '1'
@@ -31,7 +30,7 @@ set number
 set pumheight=10
 set shiftwidth=2
 set shortmess+=CFI shortmess-=S
-set showbreak=+++\ 
+set showbreak=\ 
 set showcmd
 set showtabline=2
 let &signcolumn=has('nvim') ? 'auto:2-4' : 'yes'
