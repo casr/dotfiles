@@ -9,18 +9,9 @@ local inlayHints = {
   },
 }
 
-return {
-  cmd = { "vtsls", "--stdio" },
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "vue",
-  },
-  root_markers = { "tsconfig.json", "package.json", "jsconfig.json", ".git" },
+vim.lsp.config("vtsls", {
   settings = {
     typescript = vim.tbl_extend("force", inlayHints, {}),
     javascript = vim.tbl_extend("force", inlayHints, {}),
   },
-}
+})
