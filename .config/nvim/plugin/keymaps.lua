@@ -12,6 +12,13 @@ vim.keymap.set("n", "yog", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end)
 
+vim.keymap.set("n", "K", function()
+  vim.lsp.buf.hover({ width = 60 })
+end)
+vim.keymap.set("i", "<C-s>", function()
+  vim.lsp.buf.signature_help({ width = 60 })
+end)
+
 if r_cmp then
   -- regular omnicompletion will fail with the extra capabilities from nvim-cmp
   -- so force the use of nvim-cmp

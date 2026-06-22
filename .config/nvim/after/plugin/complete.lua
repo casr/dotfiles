@@ -48,8 +48,13 @@ cmp.setup({
     { name = "emoji" },
   }),
   window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
+    completion = {
+      winhighlight = "",
+    },
+    documentation = {
+      winhighlight = "",
+      max_width = 60,
+    },
   },
 })
 
